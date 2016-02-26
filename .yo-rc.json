@@ -1,0 +1,26 @@
+{
+  "generator-jhipster": {
+    "baseName": "Lighthouse",
+    "packageName": "tr.com.turktelecom.lighthouse",
+    "packageFolder": "tr/com/turktelecom/lighthouse",
+    "authenticationType": "session",
+    "hibernateCache": "hazelcast",
+    "clusteredHttpSession": "hazelcast",
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "elasticsearch",
+    "useSass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "gulp",
+    "enableTranslation": true,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "85a40c5ca4e0f8a9f0b6136c1d7734d076823fa6",
+    "testFrameworks": [
+      "gatling",
+      "cucumber",
+      "protractor"
+    ]
+  }
+}

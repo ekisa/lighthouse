@@ -1,0 +1,26 @@
+{
+    "lighthouseApp": {
+        "defect" : {
+            "home": {
+                "title": "Defects",
+                "createLabel": "Créer un nouveau Defect",
+                "createOrEditLabel": "Créer ou éditer un Defect",
+                "search": "Search for Defect"
+            },
+            "created": "Un nouveau Defect a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Defect avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Defect avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Defect {{ id }} ?"
+            },
+            "detail": {
+                "title": "Defect"
+            },
+            "title": "Title",
+            "explanation": "Explanation",
+            "code": "Code",
+            "project": "Project"
+        }
+    }
+}
+

@@ -1,0 +1,22 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "defects",
+            "otherEntityName": "defect",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "project"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160225122148",
+    "dto": "no",
+    "service": "no",
+    "pagination": "pagination"
+}
