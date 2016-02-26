@@ -2,6 +2,7 @@ package tr.com.turktelecom.lighthouse.domain;
 
 import java.time.LocalDateTime;
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;

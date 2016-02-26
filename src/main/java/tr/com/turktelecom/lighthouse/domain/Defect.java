@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,13 +26,13 @@ public class Defect implements Serializable {
 
     @Column(name = "title")
     private String title;
-    
+
     @Column(name = "explanation")
     private String explanation;
-    
+
     @Column(name = "code")
     private String code;
-    
+
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
@@ -47,7 +48,7 @@ public class Defect implements Serializable {
     public String getTitle() {
         return title;
     }
-    
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -55,7 +56,7 @@ public class Defect implements Serializable {
     public String getExplanation() {
         return explanation;
     }
-    
+
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
@@ -63,7 +64,7 @@ public class Defect implements Serializable {
     public String getCode() {
         return code;
     }
-    
+
     public void setCode(String code) {
         this.code = code;
     }
