@@ -1,12 +1,12 @@
 package tr.com.turktelecom.lighthouse.config;
 
-import tr.com.turktelecom.lighthouse.config.liquibase.AsyncSpringLiquibase;
+//import tr.com.turktelecom.lighthouse.config.liquibase.AsyncSpringLiquibase;
 
 import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import liquibase.integration.spring.SpringLiquibase;
+//import liquibase.integration.spring.SpringLiquibase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -79,6 +79,8 @@ public class DatabaseConfiguration {
         }
         return new HikariDataSource(config);
     }
+
+    /*
     @Bean
     public SpringLiquibase liquibase(DataSource dataSource, DataSourceProperties dataSourceProperties,
         LiquibaseProperties liquibaseProperties) {
@@ -104,7 +106,7 @@ public class DatabaseConfiguration {
         }
         return liquibase;
     }
-
+    */
     @Bean
     public Hibernate4Module hibernate4Module() {
         return new Hibernate4Module();

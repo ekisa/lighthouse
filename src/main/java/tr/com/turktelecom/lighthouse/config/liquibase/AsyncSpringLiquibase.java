@@ -1,5 +1,5 @@
 package tr.com.turktelecom.lighthouse.config.liquibase;
-
+/*
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import org.springframework.util.StopWatch;
 import tr.com.turktelecom.lighthouse.config.Constants;
 import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.SpringLiquibase;
-
+*/
 /**
  * Specific liquibase.integration.spring.SpringLiquibase that will update the database asynchronously.
  * <p>
@@ -29,6 +29,7 @@ import liquibase.integration.spring.SpringLiquibase;
  *     </ul>
  * </p>
  */
+/*
 public class AsyncSpringLiquibase extends SpringLiquibase {
 
     private final Logger log = LoggerFactory.getLogger(AsyncSpringLiquibase.class);
@@ -65,3 +66,4 @@ public class AsyncSpringLiquibase extends SpringLiquibase {
         log.debug("Started Liquibase in {} ms", watch.getTotalTimeMillis());
     }
 }
+*/

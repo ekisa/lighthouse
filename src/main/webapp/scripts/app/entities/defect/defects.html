@@ -6,7 +6,7 @@
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="defect.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span 
+                    <span
 class="hidden-xs"                        translate="lighthouseApp.defect.home.createLabel">Create new Defect
                     </span>
                 </button>
@@ -34,7 +34,7 @@ class="hidden-xs"                        translate="lighthouseApp.defect.home.cr
                     <th jh-sort-by="title"><span translate="lighthouseApp.defect.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="explanation"><span translate="lighthouseApp.defect.explanation">Explanation</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="code"><span translate="lighthouseApp.defect.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="project.name"><span translate="lighthouseApp.defect.project">project</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="scan.name"><span translate="lighthouseApp.defect.scan">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -45,13 +45,13 @@ class="hidden-xs"                        translate="lighthouseApp.defect.home.cr
                     <td>{{defect.explanation}}</td>
                     <td>{{defect.code}}</td>
                     <td>
-                        <a ui-sref="project.detail({id:defect.project.id})">{{defect.project.name}}</a>
+                        <a ui-sref="scan.detail({id:defect.scan.id})">{{defect.scan.name}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
                                     ui-sref="defect.detail({id:defect.id})"
-                                    class="btn btn-info btn-sm"> 
+                                    class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
                             </button>
@@ -63,7 +63,7 @@ class="hidden-xs"                        translate="lighthouseApp.defect.home.cr
                             </button>
                             <button type="submit"
                                     ui-sref="defect.delete({id:defect.id})"
-                                    class="btn btn-danger btn-sm">                                    
+                                    class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
                             </button>

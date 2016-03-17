@@ -14,10 +14,14 @@
                 "question": "Are you sure you want to delete Project {{ id }}?"
             },
             "detail": {
-                "title": "Project"
+                "title": "Project",
+                "scans": "Scans"
             },
             "name": "Name",
-            "defects": "Defects"
+            "defects": "Defects",
+            "scan" : {
+                "scanTime" : "Scan Time"
+            }
         }
     }
 }

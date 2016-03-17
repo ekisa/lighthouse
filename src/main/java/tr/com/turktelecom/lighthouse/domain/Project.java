@@ -19,7 +19,7 @@ import java.util.Objects;
 @Table(name = "project")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "project")
-public class Project implements Serializable {
+public class Project extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +31,7 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Defect> defectss = new HashSet<>();
+    private Set<Scan> scans = new HashSet<Scan>();
 
     public Long getId() {
         return id;
@@ -49,12 +49,12 @@ public class Project implements Serializable {
         this.name = name;
     }
 
-    public Set<Defect> getDefectss() {
-        return defectss;
+    public Set<Scan> getScans() {
+        return scans;
     }
 
-    public void setDefectss(Set<Defect> defects) {
-        this.defectss = defects;
+    public void setScans(Set<Scan> scans) {
+        this.scans = scans;
     }
 
     @Override

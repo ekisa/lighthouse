@@ -1,0 +1,14 @@
+<table class="table table-striped table-hover" >
+    <thead>
+    <tr jh-sort="predicate" ascending="reverse" callback="loadAllScans()">
+        <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+        <th jh-sort-by="name"><span translate="lighthouseApp.project.scan.scanTime">Scan Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="scan in scans track by scan.id" ui-sref="project.detail.scanDetail({id:project.id, scanId:scan.id})">
+        <td>{{scan.id}}</td>
+        <td>{{scan.scanTime}}</td>
+    </tr>
+    </tbody>
+</table>

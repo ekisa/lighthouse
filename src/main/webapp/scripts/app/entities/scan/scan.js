@@ -3,63 +3,37 @@
 angular.module('lighthouseApp')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('project', {
+            .state('scan', {
                 parent: 'entity',
-                url: '/projects',
+                url: '/scan',
                 data: {
                     authorities: ['ROLE_USER'],
-                    pageTitle: 'lighthouseApp.project.home.title'
+                    pageTitle: 'lighthouseApp.scan.home.title'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/entities/project/projects.html',
-                        controller: 'ProjectController'
+                        templateUrl: 'scripts/app/entities/scan/scans.html',
+                        controller: 'ScanController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('project');
+                        $translatePartialLoader.addPart('scan');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }]
                 }
             })
-            .state('project.detail', {
+            /*
+            .state('scan.detail', {
                 parent: 'entity',
-                url: '/project/{id}',
-                data: {
-                    authorities: ['ROLE_USER'],
-                    pageTitle: 'lighthouseApp.project.detail.title'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'scripts/app/entities/project/project-detail.html',
-                        controller: 'ProjectDetailController'
-                    },
-                    'scans@project.detail': {
-                        templateUrl: 'scripts/app/entities/scan/scans.html',
-                        controller: 'ProjectDetailController'
-                    }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('project');
-                        return $translate.refresh();
-                    }],
-                    entity: ['$stateParams', 'Project', function($stateParams, Project) {
-                        return Project.get({id : $stateParams.id});
-                    }]
-                }
-            })
-            .state('project.detail.scanDetail', {
-                parent : 'project.detail',
-                url: '/scan/{scanId}',
+                url: 'project/{projectId}/scan/{id}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.scan.detail.title'
                 },
                 views: {
-                    'scanDetails@project.detail': {
+                    'scanDetails@': {
                         templateUrl: 'scripts/app/entities/scan/scan-detail.html',
                         controller: 'ScanDetailController'
                     }
@@ -70,23 +44,24 @@ angular.module('lighthouseApp')
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Scan', function($stateParams, Scan) {
-                        return Scan.get({id : $stateParams.scanId});
+                        return Scan.get({id : $stateParams.id});
                     }],
                     project: ['$stateParams', 'Project', function($stateParams, Project) {
-                        return Project.get({id : $stateParams.id});
+                        return Project.get({id : $stateParams.projectId});
                     }]
                 }
             })
-            .state('project.new', {
-                parent: 'project',
-                url: '/new',
+            */
+            .state('scan.new', {
+                parent: 'scan',
+                url: 'project/{projectId}/newScan',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'scripts/app/entities/project/project-dialog.html',
-                        controller: 'ProjectDialogController',
+                        templateUrl: 'scripts/app/entities/scan/scan-dialog.html',
+                        controller: 'ScanDialogController',
                         size: 'lg',
                         resolve: {
                             entity: function () {
@@ -97,53 +72,53 @@ angular.module('lighthouseApp')
                             }
                         }
                     }).result.then(function(result) {
-                        $state.go('project', null, { reload: true });
+                        $state.go('scan', null, { reload: true });
                     }, function() {
-                        $state.go('project');
+                        $state.go('scan');
                     })
                 }]
             })
-            .state('project.edit', {
-                parent: 'project',
-                url: '/{id}/edit',
+            .state('scan.edit', {
+                parent: 'scan',
+                url: 'project/{projectId}/editScan/{id}',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'scripts/app/entities/project/project-dialog.html',
-                        controller: 'ProjectDialogController',
+                        templateUrl: 'scripts/app/entities/scan/scan-dialog.html',
+                        controller: 'ScanDialogController',
                         size: 'lg',
                         resolve: {
-                            entity: ['Project', function(Project) {
-                                return Project.get({id : $stateParams.id});
+                            entity: ['Scan', function(Scan) {
+                                return Scan.get({id : $stateParams.id});
                             }]
                         }
                     }).result.then(function(result) {
-                        $state.go('project', null, { reload: true });
+                        $state.go('scan', null, { reload: true });
                     }, function() {
                         $state.go('^');
                     })
                 }]
             })
-            .state('project.delete', {
-                parent: 'project',
-                url: '/{id}/delete',
+            .state('scan.delete', {
+                parent: 'scan',
+                url: 'project/{projectId}/deleteScan/{id}',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'scripts/app/entities/project/project-delete-dialog.html',
-                        controller: 'ProjectDeleteController',
+                        templateUrl: 'scripts/app/entities/scan/scan-delete-dialog.html',
+                        controller: 'ScanDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['Project', function(Project) {
-                                return Project.get({id : $stateParams.id});
+                            entity: ['Scan', function(Scan) {
+                                return Scan.get({id : $stateParams.id});
                             }]
                         }
                     }).result.then(function(result) {
-                        $state.go('project', null, { reload: true });
+                        $state.go('scan', null, { reload: true });
                     }, function() {
                         $state.go('^');
                     })

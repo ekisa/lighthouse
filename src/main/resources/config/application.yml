@@ -50,7 +50,7 @@ jhipster:
     security:
         rememberme:
             # security key (this key should be unique for your application, and kept secret)
-            key: 85a40c5ca4e0f8a9f0b6136c1d7734d076823fa6
+            key: kjashkn23ou1981klnmkwef891e1nu19y891henndjk1n #85a40c5ca4e0f8a9f0b6136c1d7734d076823fa6
     swagger:
         title: Lighthouse API
         description: Lighthouse API documentation

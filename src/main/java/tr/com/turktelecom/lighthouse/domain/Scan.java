@@ -1,22 +1,24 @@
 package tr.com.turktelecom.lighthouse.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
- * A Defect.
+ * A Scan.
  */
 @Entity
-@Table(name = "defect")
+@Table(name = "SCAN")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "defect")
-public class Defect extends AbstractAuditingEntity implements Serializable {
+@Document(indexName = "scan")
+public class Scan extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,12 +30,15 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
     @Column(name = "explanation")
     private String explanation;
 
-    @Column(name = "code")
-    private String code;
-
     @ManyToOne
-    @JoinColumn(name = "scan_id")
-    private Scan scan;
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+    @OneToMany(mappedBy = "scan")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Defect> defects = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -59,20 +64,20 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
         this.explanation = explanation;
     }
 
-    public String getCode() {
-        return code;
+    public Project getProject() {
+        return project;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public Scan getScan() {
-        return scan;
+    public Set<Defect> getDefects() {
+        return defects;
     }
 
-    public void setScan(Scan scan) {
-        this.scan = scan;
+    public void setDefects(Set<Defect> defects) {
+        this.defects = defects;
     }
 
     @Override
@@ -83,11 +88,11 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Defect defect = (Defect) o;
-        if(defect.id == null || id == null) {
+        Scan scan = (Scan) o;
+        if(scan.id == null || id == null) {
             return false;
         }
-        return Objects.equals(id, defect.id);
+        return Objects.equals(id, scan.id);
     }
 
     @Override
@@ -97,11 +102,10 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "Defect{" +
+        return "Scan{" +
             "id=" + id +
             ", title='" + title + "'" +
             ", explanation='" + explanation + "'" +
-            ", code='" + code + "'" +
             '}';
     }
 }

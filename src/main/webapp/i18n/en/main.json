@@ -1,11 +1,11 @@
 {
     "main": {
-        "title": "Welcome!",
-        "subtitle": "You can find Turk Telekom security landscape below",
+        "title": "Welcome, {{username}}!",
+        "subtitle": "You can find the status of Projects assigned to you below",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         },
-        "usefulLinks": "Useful links:",
+        "usefulLinks": "Useful links;",
         "link": {
             "exploit-db": "Exploit-db search"
         },
