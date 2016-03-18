@@ -1,74 +1,26 @@
 <div>
-    <h2 translate="lighthouseApp.defect.home.title">Defects</h2>
+    <h2 translate="lighthouseApp.scan.home.title">Scan Results</h2>
     <jh-alert></jh-alert>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="defect.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span
-class="hidden-xs"                        translate="lighthouseApp.defect.home.createLabel">Create new Defect
-                    </span>
-                </button>
-            </div>
-            <div class="col-xs-8 no-padding-right">
-                <form name="searchForm" class="form-inline">
-                    <div class="input-group pull-right" >
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="{{ 'lighthouseApp.defect.home.search' | translate }}">
-                        <span  class="input-group-btn width-min" >
-                            <button class="btn btn-info" ng-click="search()">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <br/>
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
-                <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
+                <tr jh-sort="predicate" ascending="reverse" callback="loadAllDefects()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="title"><span translate="lighthouseApp.defect.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="explanation"><span translate="lighthouseApp.defect.explanation">Explanation</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="code"><span translate="lighthouseApp.defect.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="scan.name"><span translate="lighthouseApp.defect.scan">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="severity"><span translate="lighthouseApp.defect.severity">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="isFalsePositive"><span translate="lighthouseApp.defect.isFalsePositive">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="defect in defects track by defect.id">
-                    <td><a ui-sref="defect.detail({id:defect.id})">{{defect.id}}</a></td>
+                <tr ui-sref-active="active info" ng-repeat="defect in defects track by defect.id"
+                    ui-sref="project.detail.defects.detail({defectId:defect.id})">
+                    <td>{{defect.id}}</td>
                     <td>{{defect.title}}</td>
-                    <td>{{defect.explanation}}</td>
                     <td>{{defect.code}}</td>
-                    <td>
-                        <a ui-sref="scan.detail({id:defect.scan.id})">{{defect.scan.name}}</a>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    ui-sref="defect.detail({id:defect.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="defect.edit({id:defect.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="defect.delete({id:defect.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
-                            </button>
-                        </div>
-                    </td>
+                    <td>{{defect.severity}}</td>
+                    <td>{{defect.isFalsePositive}}</td>
                 </tr>
             </tbody>
         </table>

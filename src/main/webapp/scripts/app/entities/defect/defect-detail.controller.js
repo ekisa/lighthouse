@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .controller('DefectDetailController', function ($scope, $rootScope, $stateParams, entity, Defect, Project) {
-        $scope.defect = entity;
+    .controller('DefectDetailController', function ($scope, $rootScope, $stateParams, defect, scan, Defect) {
+        $scope.scan = scan;
+        $scope.defect = defect;
         $scope.load = function (id) {
             Defect.get({id: id}, function(result) {
                 $scope.defect = result;

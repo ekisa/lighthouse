@@ -2,7 +2,7 @@
     "lighthouseApp": {
         "defect" : {
             "home": {
-                "title": "Defects",
+                "title": "Defect Details",
                 "createLabel": "Create a new Defect",
                 "createOrEditLabel": "Create or edit a Defect",
                 "search": "Search for Defect"
@@ -14,12 +14,14 @@
                 "question": "Are you sure you want to delete Defect {{ id }}?"
             },
             "detail": {
-                "title": "Defect"
+                "title": "Defect Details"
             },
             "title": "Title",
             "explanation": "Explanation",
             "code": "Code",
-            "project": "Project"
+            "project": "Project",
+            "severity" : "Severity",
+            "isFalsePositive" : "False Positive"
         }
     }
 }

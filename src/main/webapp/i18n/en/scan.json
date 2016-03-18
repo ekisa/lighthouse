@@ -2,7 +2,7 @@
     "lighthouseApp": {
         "scan" : {
             "home": {
-                "title": "Scans",
+                "title": "Scan Results",
                 "createLabel": "Create a new Scan",
                 "createOrEditLabel": "Create or edit a Scan",
                 "search": "Search for Scan"

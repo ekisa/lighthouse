@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .controller('ScanDetailController', function ($scope, $rootScope, $stateParams, entity, project, Scan, Project) {
+    .controller('ScanDetailController', function ($scope, $rootScope, $stateParams, entity, project, Scan, Defect) {
         $scope.scan = entity;
         $scope.load = function (id) {
             Scan.get({id: id}, function(result) {
@@ -12,5 +12,4 @@ angular.module('lighthouseApp')
             $scope.scan = result;
         });
         $scope.$on('$destroy', unsubscribe);
-
     });

@@ -36,7 +36,7 @@ angular.module('lighthouseApp')
                         templateUrl: 'scripts/app/entities/project/project-detail.html',
                         controller: 'ProjectDetailController'
                     },
-                    'scans@project.detail': {
+                    'project.detail.scans@project.detail': {
                         templateUrl: 'scripts/app/entities/scan/scans.html',
                         controller: 'ProjectDetailController'
                     }
@@ -51,7 +51,7 @@ angular.module('lighthouseApp')
                     }]
                 }
             })
-            .state('project.detail.scanDetail', {
+            .state('project.detail.defects', {
                 parent : 'project.detail',
                 url: '/scan/{scanId}',
                 data: {
@@ -59,9 +59,9 @@ angular.module('lighthouseApp')
                     pageTitle: 'lighthouseApp.scan.detail.title'
                 },
                 views: {
-                    'scanDetails@project.detail': {
-                        templateUrl: 'scripts/app/entities/scan/scan-detail.html',
-                        controller: 'ScanDetailController'
+                    'project.detail.scan.defects@project.detail': {
+                        templateUrl: 'scripts/app/entities/defect/defects.html',
+                        controller: 'DefectController'
                     }
                 },
                 resolve: {
@@ -69,11 +69,31 @@ angular.module('lighthouseApp')
                         $translatePartialLoader.addPart('scan');
                         return $translate.refresh();
                     }],
-                    entity: ['$stateParams', 'Scan', function($stateParams, Scan) {
+                    scan: ['$stateParams', 'Scan', function($stateParams, Scan) {
                         return Scan.get({id : $stateParams.scanId});
+                    }]
+                }
+            })
+            .state('project.detail.defects.detail', {
+                parent : 'project.detail.defects',
+                url: '/defect/{defectId}',
+                data: {
+                    authorities: ['ROLE_USER'],
+                    pageTitle: 'lighthouseApp.defect.detail.title'
+                },
+                views: {
+                    'project.detail.scan.defects.detail@project.detail': {
+                        templateUrl: 'scripts/app/entities/defect/defect-detail.html',
+                        controller: 'DefectDetailController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('defect');
+                        return $translate.refresh();
                     }],
-                    project: ['$stateParams', 'Project', function($stateParams, Project) {
-                        return Project.get({id : $stateParams.id});
+                    defect: ['$stateParams', 'Defect', function($stateParams, Defect) {
+                        return Defect.get({id : $stateParams.defectId});
                     }]
                 }
             })

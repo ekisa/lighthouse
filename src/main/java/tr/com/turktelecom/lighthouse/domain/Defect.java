@@ -35,6 +35,12 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
     @JoinColumn(name = "scan_id")
     private Scan scan;
 
+    @Enumerated(EnumType.STRING)
+    private Severity severity;
+
+    @Column(name="is_false_positive")
+    private Boolean isFalsePositive = Boolean.FALSE;
+
     public Long getId() {
         return id;
     }
@@ -75,6 +81,22 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
         this.scan = scan;
     }
 
+    public Severity getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(Severity severity) {
+        this.severity = severity;
+    }
+
+    public Boolean getFalsePositive() {
+        return isFalsePositive;
+    }
+
+    public void setFalsePositive(Boolean falsePositive) {
+        isFalsePositive = falsePositive;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -102,6 +124,8 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
             ", title='" + title + "'" +
             ", explanation='" + explanation + "'" +
             ", code='" + code + "'" +
+            ", severity='" + severity + "'" +
+            ", isFalsePositive='" + isFalsePositive + "'" +
             '}';
     }
 }

@@ -70,8 +70,16 @@ Browser Upgrade Prompt
 .lighthouse {
     display: inline-block;
     width: 347px;
-    height: 497px;
+    height: 297px;
     background: url("../images/lighthouse.png") no-repeat center top;
+    background-size: contain;
+}
+
+.ttlogo {
+    display: inline-block;
+    width: 247px;
+    height: 197px;
+    background: url("../images/tt_logo.png") no-repeat center bottom;
     background-size: contain;
 }
 

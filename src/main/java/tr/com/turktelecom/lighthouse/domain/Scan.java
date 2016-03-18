@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
+import tr.com.turktelecom.lighthouse.domain.util.JSR310DateConverters;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -106,6 +107,7 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
             "id=" + id +
             ", title='" + title + "'" +
             ", explanation='" + explanation + "'" +
+            //", createdDate='" + JSR310DateConverters.ZonedDateTimeToDateConverter.INSTANCE.convert(getCreatedDate()) + "'" +
             '}';
     }
 }

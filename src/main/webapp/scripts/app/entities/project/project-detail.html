@@ -2,9 +2,9 @@
 <div>
     <h2><span translate="lighthouseApp.project.detail.title">Project</span> {{project.name}}</h2>
     <div class="table-responsive">
-
-        <div ui-view="scans"></div>
-        <div class="well" ui-view="scanDetails"></div>
+        <div ui-view="project.detail.scans"></div>
+        <div class="well" ui-view="project.detail.scan.defects"></div>
+        <div class="well" ui-view="project.detail.scan.defects.detail"></div>
 
     </div>
 
