@@ -21,7 +21,8 @@
             "code": "Code",
             "project": "Project",
             "severity" : "Severity",
-            "isFalsePositive" : "False Positive"
+            "isFalsePositive" : "False Positive",
+            "scan" : "Scan"
         }
     }
 }

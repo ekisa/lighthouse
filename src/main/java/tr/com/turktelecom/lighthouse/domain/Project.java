@@ -28,6 +28,9 @@ public class Project extends AbstractAuditingEntity implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "explanation")
+    private String explanation;
+
     @OneToMany(mappedBy = "project")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -47,6 +50,14 @@ public class Project extends AbstractAuditingEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 
     public Set<Scan> getScans() {
@@ -82,6 +93,7 @@ public class Project extends AbstractAuditingEntity implements Serializable {
         return "Project{" +
             "id=" + id +
             ", name='" + name + "'" +
+            ", explanation='" + explanation + "'" +
             '}';
     }
 }

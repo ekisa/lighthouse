@@ -38,7 +38,7 @@ angular.module('lighthouseApp')
                     },
                     'project.detail.scans@project.detail': {
                         templateUrl: 'scripts/app/entities/scan/scans.html',
-                        controller: 'ProjectDetailController'
+                        controller: 'ScanController'
                     }
                 },
                 resolve: {
@@ -67,6 +67,7 @@ angular.module('lighthouseApp')
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('scan');
+                        $translatePartialLoader.addPart('defect');
                         return $translate.refresh();
                     }],
                     scan: ['$stateParams', 'Scan', function($stateParams, Scan) {

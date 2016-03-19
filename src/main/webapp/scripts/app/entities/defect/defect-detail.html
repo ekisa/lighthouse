@@ -35,10 +35,11 @@
             </tr>
             <tr>
                 <td>
-                    <span translate="lighthouseApp.defect.scan">scan</span>
+                    <span translate="lighthouseApp.defect.project">Project</span> /
+                    <span translate="lighthouseApp.defect.scan">Scan</span>
                 </td>
                 <td>
-                    <a class="form-control-static" ui-sref="scan.detail({id:defect.scan.id})">{{defect.scan.name}}</a>
+                    <span class="form-control-static">{{project.name}} / {{defect.scan.id}}</span>
                 </td>
             </tr>
             </tbody>
