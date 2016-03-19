@@ -7,18 +7,10 @@
         <input type="text" class="form-control" name="explanation" id="field_explanation"
                ng-model="project.explanation" readonly/>
     </div>
-    Project : {{project}}<br/>
-    $Scope.project : {{$rootScope.project}}<br/>
-    Scan : {{scans}}<br/>
-    $Scope.scan : {{$rootScope.scan}}<br/>
-    Defects : {{defects}}<br/>
-    Defect : {{defect}}<br/>
-    $Scope.defect : {{$scope.defects}}<br/>
-    state : {{$state.id}}
     <div class="table-responsive">
         <div ui-view="project.detail.scans"></div>
-        <div class="well" ui-view="project.detail.scan.defects"></div>
-        <div class="well" ui-view="project.detail.scan.defects.detail"></div>
+        <div class="well" ui-view="project.detail.scan.defects" ng-show="defects.length"></div>
+        <div class="well" ui-view="project.detail.scan.defects.detail" ng-show="defect"></div>
 
     </div>
 
