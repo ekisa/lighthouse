@@ -1,7 +1,7 @@
 {
     "main": {
         "title": "Welcome, {{username}}!",
-        "subtitle": "You can find the status of Projects assigned to you below",
+        "subtitle": "You can find the status of Projects below",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         },
