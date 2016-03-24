@@ -2,7 +2,7 @@
 
 angular.module('lighthouseApp')
     .factory('Project', function ($resource, DateUtils) {
-        return $resource('api/projects/:id', {}, {
+        return $resource('api/projects/:projectId', {}, {
             'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',

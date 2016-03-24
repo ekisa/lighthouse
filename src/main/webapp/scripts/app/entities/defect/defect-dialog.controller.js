@@ -6,8 +6,8 @@ angular.module('lighthouseApp').controller('DefectDialogController',
 
         $scope.defect = entity;
         $scope.projects = Project.query();
-        $scope.load = function(id) {
-            Defect.get({id : id}, function(result) {
+        $scope.load = function(defectId) {
+            Defect.get({id : defectId}, function(result) {
                 $scope.defect = result;
             });
         };

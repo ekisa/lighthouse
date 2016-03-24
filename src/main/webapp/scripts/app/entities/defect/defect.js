@@ -21,12 +21,15 @@ angular.module('lighthouseApp')
                         $translatePartialLoader.addPart('defect');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
+                    }],
+                    scan: ['$stateParams', 'Scan', function ($stateParams, Scan) {
+                        return Scan.get({scanId : $stateParams.scanId});
                     }]
                 }
             })
             .state('defect.detail', {
                 parent: 'entity',
-                url: '/defect/{id}',
+                url: '/defects/{id}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.defect.detail.title'
@@ -43,7 +46,7 @@ angular.module('lighthouseApp')
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Defect', function($stateParams, Defect) {
-                        return Defect.get({id : $stateParams.id});
+                        return Defect.get({id : $stateParams.defectId});
                     }]
                 }
             })
@@ -64,7 +67,7 @@ angular.module('lighthouseApp')
                                     title: null,
                                     explanation: null,
                                     code: null,
-                                    id: null
+                                    defectId: null
                                 };
                             }
                         }
@@ -88,7 +91,7 @@ angular.module('lighthouseApp')
                         size: 'lg',
                         resolve: {
                             entity: ['Defect', function(Defect) {
-                                return Defect.get({id : $stateParams.id});
+                                return Defect.get({id : $stateParams.defectId});
                             }]
                         }
                     }).result.then(function(result) {
@@ -111,7 +114,7 @@ angular.module('lighthouseApp')
                         size: 'md',
                         resolve: {
                             entity: ['Defect', function(Defect) {
-                                return Defect.get({id : $stateParams.id});
+                                return Defect.get({id : $stateParams.defectId});
                             }]
                         }
                     }).result.then(function(result) {

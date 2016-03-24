@@ -44,7 +44,7 @@ angular.module('lighthouseApp')
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Scan', function($stateParams, Scan) {
-                        return Scan.get({id : $stateParams.id});
+                        return Scan.get({id : $stateParams.scanId});
                     }],
                     project: ['$stateParams', 'Project', function($stateParams, Project) {
                         return Project.get({id : $stateParams.projectId});
@@ -80,7 +80,7 @@ angular.module('lighthouseApp')
             })
             .state('scan.edit', {
                 parent: 'scan',
-                url: 'project/{projectId}/editScan/{id}',
+                url: 'project/{projectId}/editScan/{scanId}',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
@@ -91,7 +91,7 @@ angular.module('lighthouseApp')
                         size: 'lg',
                         resolve: {
                             entity: ['Scan', function(Scan) {
-                                return Scan.get({id : $stateParams.id});
+                                return Scan.get({projectId: $stateParams.projectId, scanId : $stateParams.scanId});
                             }]
                         }
                     }).result.then(function(result) {
@@ -103,7 +103,7 @@ angular.module('lighthouseApp')
             })
             .state('scan.delete', {
                 parent: 'scan',
-                url: 'project/{projectId}/deleteScan/{id}',
+                url: 'project/{projectId}/deleteScan/{scanId}',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
@@ -114,7 +114,7 @@ angular.module('lighthouseApp')
                         size: 'md',
                         resolve: {
                             entity: ['Scan', function(Scan) {
-                                return Scan.get({id : $stateParams.id});
+                                return Scan.get({projectId: $stateParams.projectId, scanId : $stateParams.scanId});
                             }]
                         }
                     }).result.then(function(result) {

@@ -64,7 +64,7 @@ angular.module('lighthouseApp')
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Project', function($stateParams, Project) {
-                        return Project.get({id : $stateParams.id});
+                        return Project.get({id : $stateParams.projectId});
                     }]
                 }
             });*/

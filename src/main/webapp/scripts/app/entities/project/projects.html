@@ -37,24 +37,24 @@ class="hidden-xs"                        translate="lighthouseApp.project.home.c
             </thead>
             <tbody>
                 <tr ng-repeat="project in projects track by project.id">
-                    <td><a ui-sref="project.detail({id:project.id})">{{project.id}}</a></td>
+                    <td><a ui-sref="project.detail({projectId:project.id})">{{project.id}}</a></td>
                     <td>{{project.name}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
-                                    ui-sref="project.detail({id:project.id})"
+                                    ui-sref="project.detail({projectId:project.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="project.edit({id:project.id})"
+                                    ui-sref="project.edit({projectId:project.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="project.delete({id:project.id})"
+                                    ui-sref="project.delete({projectId:project.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>

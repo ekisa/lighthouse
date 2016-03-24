@@ -1,13 +1,26 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .controller('ScanController', function ($scope, $state, Scan, ParseLinks) {
-        $scope.scans = [];
+    .controller('ScanController', function ($scope, $state, $stateParams, project, scans, Project, Scan, ParseLinks) {
+        $scope.scans = scans;
         $scope.predicate = 'id';
         $scope.reverse = true;
         $scope.page = 1;
+
+        $scope.project = project;
+
+        /*
+        $scope.load = function (projectId) {
+            Project.get({id: projectId}, function(result) {
+                $scope.project = result;
+            });
+        };
+
+        $scope.load($stateParams.projectId);
+        */
+/*
         $scope.loadAllScans = function() {
-            Scan.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
+            Scan.query({projectId: $scope.project.id, page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.totalItems = headers('X-Total-Count');
                 $scope.scans = result;
@@ -27,4 +40,5 @@ angular.module('lighthouseApp')
         $scope.clear = function () {
             $scope.scan = null;
         };
+*/
     });

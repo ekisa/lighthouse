@@ -3,8 +3,8 @@
 angular.module('lighthouseApp')
     .controller('ScanDetailController', function ($scope, $rootScope, $stateParams, entity, project, Scan, Defect) {
         $scope.scan = entity;
-        $scope.load = function (id) {
-            Scan.get({id: id}, function(result) {
+        $scope.load = function (projectId, scanId) {
+            Scan.get({projectId: projectId, scanId: scanId}, function(result) {
                 $scope.scan = result;
             });
         };

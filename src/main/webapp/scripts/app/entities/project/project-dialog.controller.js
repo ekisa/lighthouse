@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('lighthouseApp').controller('ProjectDialogController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Project', 'Defect',
-        function($scope, $stateParams, $uibModalInstance, entity, Project, Defect) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'project', 'Project', 'Defect',
+        function($scope, $stateParams, $uibModalInstance, project, Project, Defect) {
 
-        $scope.project = entity;
+        $scope.project = project;
         $scope.defects = Defect.query();
-        $scope.load = function(id) {
-            Project.get({id : id}, function(result) {
+        $scope.load = function(projectId) {
+            Project.get({projectId : projectId}, function(result) {
                 $scope.project = result;
             });
         };

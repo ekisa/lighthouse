@@ -7,8 +7,8 @@ angular.module('lighthouseApp')
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
-        $scope.confirmDelete = function (id) {
-            Defect.delete({id: id},
+        $scope.confirmDelete = function (defectId) {
+            Defect.delete({id: defectId},
                 function () {
                     $uibModalInstance.close(true);
                 });

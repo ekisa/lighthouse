@@ -1,12 +1,12 @@
 <table class="table table-striped table-hover" >
     <thead>
-    <tr jh-sort="predicate" ascending="reverse" callback="loadAllScans()">
+    <tr jh-sort="predicate" ascending="reverse">
         <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
         <th jh-sort-by="createdDate"><span translate="lighthouseApp.project.scan.scanTime">Scan Time</span> <span class="glyphicon glyphicon-sort"></span></th>
     </tr>
     </thead>
     <tbody>
-    <tr ui-sref-active="active info" ng-repeat="scan in scans track by scan.id" ui-sref="project.detail.defects({id:project.id, scanId:scan.id})">
+    <tr ui-sref-active="active info" ng-repeat="scan in scans track by scan.id" ui-sref="project.detail.defects({projectId:project.id, scanId:scan.id})">
         <td>{{scan.id}}</td>
         <td>{{scan.createdDate | date:'dd/MM/yy HH:mm'}}</td>
     </tr>

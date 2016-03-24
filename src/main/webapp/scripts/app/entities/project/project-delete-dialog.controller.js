@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('lighthouseApp')
-	.controller('ProjectDeleteController', function($scope, $uibModalInstance, entity, Project) {
+	.controller('ProjectDeleteController', function($scope, $uibModalInstance, project, Project) {
 
-        $scope.project = entity;
+        $scope.project = project;
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
-        $scope.confirmDelete = function (id) {
-            Project.delete({id: id},
+        $scope.confirmDelete = function (projectId) {
+            Project.delete({id: projectId},
                 function () {
                     $uibModalInstance.close(true);
                 });

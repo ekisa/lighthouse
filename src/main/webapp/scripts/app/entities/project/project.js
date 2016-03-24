@@ -26,7 +26,7 @@ angular.module('lighthouseApp')
             })
             .state('project.detail', {
                 parent: 'entity',
-                url: '/project/{id}',
+                url: '/projects/{projectId}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.project.detail.title'
@@ -34,11 +34,16 @@ angular.module('lighthouseApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/entities/project/project-detail.html',
-                        controller: 'ProjectDetailController'
+                        controller: ('ProjectDetailController', function($scope, project){
+                            $scope.project = project;
+                        })
                     },
                     'project.detail.scans@project.detail': {
                         templateUrl: 'scripts/app/entities/scan/scans.html',
-                        controller: 'ScanController'
+                        controller: ('ScanController', function($scope, project, scans){
+                            $scope.project = project;
+                            $scope.scans = scans;
+                        })
                     }
                 },
                 resolve: {
@@ -46,14 +51,17 @@ angular.module('lighthouseApp')
                         $translatePartialLoader.addPart('project');
                         return $translate.refresh();
                     }],
-                    entity: ['$stateParams', 'Project', function($stateParams, Project) {
-                        return Project.get({id : $stateParams.id});
+                    project: ['$stateParams', 'Project', function($stateParams, Project) {
+                        return Project.get({projectId : $stateParams.projectId});
+                    }],
+                    scans: ['$stateParams', 'Scan', function($stateParams, Scan) {
+                        return Scan.query({projectId : $stateParams.projectId});
                     }]
                 }
             })
             .state('project.detail.defects', {
                 parent : 'project.detail',
-                url: '/scan/{scanId}',
+                url: '/scans/{scanId}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.scan.detail.title'
@@ -71,13 +79,13 @@ angular.module('lighthouseApp')
                         return $translate.refresh();
                     }],
                     scan: ['$stateParams', 'Scan', function($stateParams, Scan) {
-                        return Scan.get({id : $stateParams.scanId});
+                        return Scan.get({projectId: $stateParams.projectId, scanId : $stateParams.scanId});
                     }]
                 }
             })
             .state('project.detail.defects.detail', {
                 parent : 'project.detail.defects',
-                url: '/defect/{defectId}',
+                url: '/defects/{defectId}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.defect.detail.title'
@@ -110,7 +118,7 @@ angular.module('lighthouseApp')
                         controller: 'ProjectDialogController',
                         size: 'lg',
                         resolve: {
-                            entity: function () {
+                            project: function () {
                                 return {
                                     name: null,
                                     id: null
@@ -126,7 +134,7 @@ angular.module('lighthouseApp')
             })
             .state('project.edit', {
                 parent: 'project',
-                url: '/{id}/edit',
+                url: '/{projectId}/edit',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
@@ -136,8 +144,8 @@ angular.module('lighthouseApp')
                         controller: 'ProjectDialogController',
                         size: 'lg',
                         resolve: {
-                            entity: ['Project', function(Project) {
-                                return Project.get({id : $stateParams.id});
+                            project: ['Project', function(Project) {
+                                return Project.get({projectId : $stateParams.projectId});
                             }]
                         }
                     }).result.then(function(result) {
@@ -149,7 +157,7 @@ angular.module('lighthouseApp')
             })
             .state('project.delete', {
                 parent: 'project',
-                url: '/{id}/delete',
+                url: '/{projectId}/delete',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
@@ -159,8 +167,8 @@ angular.module('lighthouseApp')
                         controller: 'ProjectDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['Project', function(Project) {
-                                return Project.get({id : $stateParams.id});
+                            project: ['Project', function(Project) {
+                                return Project.get({projectId : $stateParams.projectId});
                             }]
                         }
                     }).result.then(function(result) {
