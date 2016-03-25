@@ -30,7 +30,7 @@ import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
  * REST controller for managing Scan.
  */
 @RestController
-@RequestMapping("/api/projects/{projectId}")
+@RequestMapping("/api")
 public class ScanResource {
 
     private final Logger log = LoggerFactory.getLogger(ScanResource.class);
@@ -48,7 +48,7 @@ public class ScanResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Scan> createScan(@PathVariable String projectId, @RequestBody Scan scan) throws URISyntaxException {
+    public ResponseEntity<Scan> createScan(@RequestBody Scan scan) throws URISyntaxException {
         log.debug("REST request to save Scan : {}", scan);
         if (scan.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("scan", "idexists", "A new scan cannot already have an ID")).body(null);
@@ -67,10 +67,10 @@ public class ScanResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Scan> updateScan(@PathVariable String projectId, @RequestBody Scan scan) throws URISyntaxException {
+    public ResponseEntity<Scan> updateScan(@RequestBody Scan scan) throws URISyntaxException {
         log.debug("REST request to update Scan : {}", scan);
         if (scan.getId() == null) {
-            return createScan(projectId, scan);
+            return createScan(scan);
         }
         Scan result = scanRepository.save(scan);
         scanSearchRepository.save(result);
@@ -86,7 +86,7 @@ public class ScanResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Scan>> getAllScans(@PathVariable String projectId, Pageable pageable)
+    public ResponseEntity<List<Scan>> getAllScans(Pageable pageable, @RequestParam Long projectId)
         throws URISyntaxException {
         log.debug("REST request to get a page of Scans");
         Page<Scan> page = scanRepository.findAll(pageable);
@@ -101,7 +101,7 @@ public class ScanResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Scan> getScan(@PathVariable String projectId, @PathVariable Long id) {
+    public ResponseEntity<Scan> getScan(@PathVariable Long id) {
         log.debug("REST request to get Scan : {}", id);
         Scan scan = scanRepository.findOne(id);
         return Optional.ofNullable(scan)
@@ -118,7 +118,7 @@ public class ScanResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> deleteScan(@PathVariable String projectId, @PathVariable Long id) {
+    public ResponseEntity<Void> deleteScan(@PathVariable Long id) {
         log.debug("REST request to delete Scan : {}", id);
         scanRepository.delete(id);
         scanSearchRepository.delete(id);
@@ -133,7 +133,7 @@ public class ScanResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Scan> searchScans(@PathVariable String projectId, @PathVariable String query) {
+    public List<Scan> searchScans(@PathVariable String query) {
         log.debug("REST request to search Scans for query {}", query);
         return StreamSupport
             .stream(scanSearchRepository.search(queryStringQuery(query)).spliterator(), false)

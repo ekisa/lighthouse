@@ -1,5 +1,4 @@
 'use strict';
-//test
 angular.module('lighthouseApp')
     .config(function ($stateProvider) {
         $stateProvider
