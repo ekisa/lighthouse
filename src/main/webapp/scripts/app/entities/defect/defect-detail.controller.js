@@ -5,7 +5,7 @@ angular.module('lighthouseApp')
         $scope.scan = scan;
         $scope.defect = defect;
         $scope.load = function (defectId) {
-            Defect.get({id: defectId}, function(result) {
+            Defect.get({defectId: defectId, scanId: $scope.scan.id}, function(result) {
                 $scope.defect = result;
             });
         };

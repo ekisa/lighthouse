@@ -2,7 +2,7 @@
 
 angular.module('lighthouseApp')
     .factory('Defect', function ($resource, DateUtils) {
-        return $resource('api/defects/:id', {}, {
+        return $resource('api/defects/:defectId', {scanId:'@scan.id'}, {
             'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',

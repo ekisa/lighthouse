@@ -34,13 +34,13 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class DefectResource {
 
     private final Logger log = LoggerFactory.getLogger(DefectResource.class);
-        
+
     @Inject
     private DefectRepository defectRepository;
-    
+
     @Inject
     private DefectSearchRepository defectSearchRepository;
-    
+
     /**
      * POST  /defects -> Create a new defect.
      */
@@ -86,10 +86,10 @@ public class DefectResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Defect>> getAllDefects(Pageable pageable)
+    public ResponseEntity<List<Defect>> getAllDefects(Pageable pageable, @RequestParam Long scanId)
         throws URISyntaxException {
         log.debug("REST request to get a page of Defects");
-        Page<Defect> page = defectRepository.findAll(pageable); 
+        Page<Defect> page = defectRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/defects");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

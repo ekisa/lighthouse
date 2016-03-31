@@ -1,14 +1,15 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .controller('DefectController', function ($scope, $state, scan, Scan, Defect, ParseLinks) {
+    .controller('DefectController', function ($scope, $state, $stateParams, scan, Defect, ParseLinks) {
         $scope.scan = scan;
         $scope.defects = [];
         $scope.predicate = 'id';
         $scope.reverse = true;
         $scope.page = 1;
+
         $scope.loadAllDefects = function() {
-            Defect.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
+            Defect.query({scanId: $stateParams.scanId, page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.totalItems = headers('X-Total-Count');
                 $scope.defects = result;
@@ -28,4 +29,5 @@ angular.module('lighthouseApp')
         $scope.clear = function () {
             $scope.defect = null;
         };
+
     });

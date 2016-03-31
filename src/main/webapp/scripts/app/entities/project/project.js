@@ -25,7 +25,7 @@ angular.module('lighthouseApp')
             })
             .state('project.detail', {
                 parent: 'entity',
-                url: '/projects/{projectId}',
+                url: '/project/{projectId}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.project.detail.title'
@@ -60,7 +60,7 @@ angular.module('lighthouseApp')
             })
             .state('project.detail.defects', {
                 parent : 'project.detail',
-                url: '/scans/{scanId}',
+                url: '/scan/{scanId}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.scan.detail.title'
@@ -77,14 +77,14 @@ angular.module('lighthouseApp')
                         $translatePartialLoader.addPart('defect');
                         return $translate.refresh();
                     }],
-                    scan: ['$stateParams', 'Scan', function($stateParams, Scan) {
-                        return Scan.get({projectId: $stateParams.projectId, scanId : $stateParams.scanId});
+                    scan :  ['$stateParams', 'Scan', function($stateParams, Scan) {
+                        return Scan.get({scanId : $stateParams.scanId, projectId: $stateParams.projectId});
                     }]
                 }
             })
             .state('project.detail.defects.detail', {
                 parent : 'project.detail.defects',
-                url: '/defects/{defectId}',
+                url: '/defect/{defectId}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.defect.detail.title'
@@ -101,7 +101,10 @@ angular.module('lighthouseApp')
                         return $translate.refresh();
                     }],
                     defect: ['$stateParams', 'Defect', function($stateParams, Defect) {
-                        return Defect.get({id : $stateParams.defectId});
+                        return Defect.get({defectId : $stateParams.defectId});
+                    }],
+                    scan :  ['$stateParams', 'Scan', function($stateParams, Scan) {
+                        return Scan.get({scanId : $stateParams.scanId});
                     }]
                 }
             })
@@ -120,9 +123,10 @@ angular.module('lighthouseApp')
                             project: function () {
                                 return {
                                     name: null,
-                                    id: null
+                                    projectId: null
                                 };
-                            }
+                            },
+                            projectId : null
                         }
                     }).result.then(function(result) {
                         $state.go('project', null, { reload: true });

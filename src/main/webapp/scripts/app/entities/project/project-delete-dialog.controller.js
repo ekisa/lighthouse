@@ -8,7 +8,7 @@ angular.module('lighthouseApp')
             $uibModalInstance.dismiss('cancel');
         };
         $scope.confirmDelete = function (projectId) {
-            Project.delete({id: projectId},
+            Project.delete({projectId: projectId},
                 function () {
                     $uibModalInstance.close(true);
                 });

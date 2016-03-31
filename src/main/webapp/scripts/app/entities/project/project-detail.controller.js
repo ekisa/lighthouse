@@ -5,6 +5,7 @@ angular.module('lighthouseApp')
             function ($scope, $rootScope, $stateParams, project, Project, ParseLinks) {
                 $scope.project = project;
                 $scope.load = function (projectId) {
+                    alert("Project detail controller load methodu calıstı");
                     Project.get({projectId: projectId}, function(result) {
                         $scope.project = result;
                     });
