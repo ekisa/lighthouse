@@ -102,9 +102,6 @@ angular.module('lighthouseApp')
                     }],
                     defect: ['$stateParams', 'Defect', function($stateParams, Defect) {
                         return Defect.get({defectId : $stateParams.defectId});
-                    }],
-                    scan :  ['$stateParams', 'Scan', function($stateParams, Scan) {
-                        return Scan.get({scanId : $stateParams.scanId});
                     }]
                 }
             })
