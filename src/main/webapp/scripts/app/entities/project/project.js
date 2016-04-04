@@ -33,16 +33,11 @@ angular.module('lighthouseApp')
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/entities/project/project-detail.html',
-                        controller: ('ProjectDetailController', function($scope, project){
-                            $scope.project = project;
-                        })
+                        controller: 'ProjectDetailController'
                     },
                     'project.detail.scans@project.detail': {
                         templateUrl: 'scripts/app/entities/scan/scans.html',
-                        controller: ('ScanController', function($scope, project, scans){
-                            $scope.project = project;
-                            $scope.scans = scans;
-                        })
+                        controller: 'ScanController'
                     }
                 },
                 resolve: {
@@ -52,9 +47,6 @@ angular.module('lighthouseApp')
                     }],
                     project: ['$stateParams', 'Project', function($stateParams, Project) {
                         return Project.get({projectId : $stateParams.projectId});
-                    }],
-                    scans: ['$stateParams', 'Scan', function($stateParams, Scan) {
-                        return Scan.query({projectId : $stateParams.projectId});
                     }]
                 }
             })
