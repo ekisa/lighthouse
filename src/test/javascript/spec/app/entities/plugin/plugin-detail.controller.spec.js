@@ -2,35 +2,35 @@
 
 describe('Controller Tests', function() {
 
-    describe('Project Detail Controller', function() {
+    describe('Plugin Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockProject, MockDefect;
+        var MockEntity, MockPlugin, MockDefect;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
-            MockProject = jasmine.createSpy('MockProject');
+            MockPlugin = jasmine.createSpy('MockPlugin');
             MockDefect = jasmine.createSpy('MockDefect');
-            
+
 
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
                 'entity': MockEntity ,
-                'Project': MockProject,
+                'Plugin': MockPlugin,
                 'Defect': MockDefect
             };
             createController = function() {
-                $injector.get('$controller')("ProjectDetailController", locals);
+                $injector.get('$controller')("PluginDetailController", locals);
             };
         }));
 
 
         describe('Root Scope Listening', function() {
             it('Unregisters root scope listener upon scope destruction', function() {
-                var eventType = 'lighthouseApp:projectUpdate';
+                var eventType = 'lighthouseApp:pluginUpdate';
 
                 createController();
                 expect($rootScope.$$listenerCount[eventType]).toEqual(1);

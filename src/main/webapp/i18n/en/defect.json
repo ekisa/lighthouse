@@ -19,7 +19,7 @@
             "title": "Title",
             "explanation": "Explanation",
             "code": "Code",
-            "project": "Project",
+            "plugin": "Plugin",
             "severity" : "Severity",
             "isFalsePositive" : "False Positive",
             "scan" : "Scan"

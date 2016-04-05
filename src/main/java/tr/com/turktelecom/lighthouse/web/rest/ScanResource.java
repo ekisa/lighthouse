@@ -86,10 +86,10 @@ public class ScanResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Scan>> getAllScans(Pageable pageable, @RequestParam Long projectId)
+    public ResponseEntity<List<Scan>> getAllScans(Pageable pageable, @RequestParam Long pluginId)
         throws URISyntaxException {
         log.debug("REST request to get a page of Scans");
-        Page<Scan> page = scanRepository.findAllByProjectId(pageable, projectId);
+        Page<Scan> page = scanRepository.findAllByPluginId(pageable, pluginId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/scans");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

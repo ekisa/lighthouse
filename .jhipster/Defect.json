@@ -2,8 +2,8 @@
     "relationships": [
         {
             "relationshipId": 1,
-            "relationshipName": "project",
-            "otherEntityName": "project",
+            "relationshipName": "plugin",
+            "otherEntityName": "plugin",
             "relationshipType": "many-to-one",
             "otherEntityField": "name"
         }

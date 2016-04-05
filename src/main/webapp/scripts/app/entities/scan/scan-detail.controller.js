@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .controller('ScanDetailController', function ($scope, $rootScope, $stateParams, entity, project, Scan, Defect) {
+    .controller('ScanDetailController', function ($scope, $rootScope, $stateParams, entity, plugin, Scan, Defect) {
         $scope.scan = entity;
-        $scope.load = function (projectId, scanId) {
-            Scan.get({projectId: projectId, scanId: scanId}, function(result) {
+        $scope.load = function (pluginId, scanId) {
+            Scan.get({pluginId: pluginId, scanId: scanId}, function(result) {
                 $scope.scan = result;
             });
         };

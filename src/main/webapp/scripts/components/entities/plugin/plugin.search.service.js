@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .factory('ProjectSearch', function ($resource) {
-        return $resource('api/_search/projects/:query', {}, {
+    .factory('PluginSearch', function ($resource) {
+        return $resource('api/_search/plugins/:query', {}, {
             'query': { method: 'GET', isArray: true}
         });
     });

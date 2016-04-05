@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .controller('ProjectController', function ($scope, $state, Project, ProjectSearch, ParseLinks) {
+    .controller('PluginController', function ($scope, $state, Plugin, PluginSearch, ParseLinks) {
 
-        $scope.projects = [];
+        $scope.plugins = [];
         $scope.predicate = 'id';
         $scope.reverse = true;
         $scope.page = 1;
         $scope.loadAll = function() {
-            Project.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
+            Plugin.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.totalItems = headers('X-Total-Count');
-                $scope.projects = result;
+                $scope.plugins = result;
             });
         };
         $scope.loadPage = function(page) {
@@ -22,8 +22,8 @@ angular.module('lighthouseApp')
 
 
         $scope.search = function () {
-            ProjectSearch.query({query: $scope.searchQuery}, function(result) {
-                $scope.projects = result;
+            PluginSearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.plugins = result;
             }, function(response) {
                 if(response.status === 404) {
                     $scope.loadAll();
@@ -37,7 +37,7 @@ angular.module('lighthouseApp')
         };
 
         $scope.clear = function () {
-            $scope.project = {
+            $scope.plugin = {
                 name: null,
                 id: null
             };

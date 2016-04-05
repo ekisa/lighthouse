@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('lighthouseApp')
-	.controller('ProjectDeleteController', function($scope, $uibModalInstance, project, Project) {
+	.controller('PluginDeleteController', function($scope, $uibModalInstance, plugin, Plugin) {
 
-        $scope.project = project;
+        $scope.plugin = plugin;
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
-        $scope.confirmDelete = function (projectId) {
-            Project.delete({projectId: projectId},
+        $scope.confirmDelete = function (pluginId) {
+            Plugin.delete({pluginId: pluginId},
                 function () {
                     $uibModalInstance.close(true);
                 });

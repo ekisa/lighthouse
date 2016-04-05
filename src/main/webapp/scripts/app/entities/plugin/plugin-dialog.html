@@ -4,19 +4,19 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="clear()">&times;</button>
-        <h4 class="modal-title" id="myProjectLabel" translate="lighthouseApp.project.home.createOrEditLabel">Create or edit a Project</h4>
+        <h4 class="modal-title" id="myPluginLabel" translate="lighthouseApp.plugin.home.createOrEditLabel">Create or edit a Plugin</h4>
     </div>
     <div class="modal-body">
         <jh-alert-error></jh-alert-error>
         <div class="form-group">
             <label for="id" translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="project.id" readonly />
+                    ng-model="plugin.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="lighthouseApp.project.name" for="field_name">Name</label>
+            <label class="control-label" translate="lighthouseApp.plugin.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="project.name"
+                    ng-model="plugin.name"
                      />
         </div>
 

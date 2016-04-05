@@ -22,20 +22,20 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="title" type="varchar(255)"/>
-            
+
             <column name="explanation" type="varchar(255)"/>
-            
+
             <column name="code" type="varchar(255)"/>
-            
-            <column name="project_id" type="bigint"/>
+
+            <column name="plugin_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
-        <addForeignKeyConstraint baseColumnNames="project_id"
+
+        <addForeignKeyConstraint baseColumnNames="plugin_id"
                                  baseTableName="defect"
-                                 constraintName="fk_defect_project_id"
+                                 constraintName="fk_defect_plugin_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="project"/>
+                                 referencedTableName="plugin"/>
 
     </changeSet>
 </databaseChangeLog>

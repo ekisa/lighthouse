@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 
 /**
- * Performance test for the Project entity.
+ * Performance test for the Plugin entity.
  */
-class ProjectGatlingTest extends Simulation {
+class PluginGatlingTest extends Simulation {
 
     val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
     // Log all HTTP requests
@@ -37,7 +37,7 @@ class ProjectGatlingTest extends Simulation {
         "X-CSRF-TOKEN" -> "${csrf_token}"
     )
 
-    val scn = scenario("Test the Project entity")
+    val scn = scenario("Test the Plugin entity")
         .exec(http("First unauthenticated request")
         .get("/api/account")
         .headers(headers_http)
@@ -59,26 +59,26 @@ class ProjectGatlingTest extends Simulation {
         .check(headerRegex("Set-Cookie", "CSRF-TOKEN=(.*); [P,p]ath=/").saveAs("csrf_token")))
         .pause(10)
         .repeat(2) {
-            exec(http("Get all projects")
-            .get("/api/projects")
+            exec(http("Get all plugins")
+            .get("/api/plugins")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
-            .exec(http("Create new project")
-            .post("/api/projects")
+            .exec(http("Create new plugin")
+            .post("/api/plugins")
             .headers(headers_http_authenticated)
             .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
-            .check(headerRegex("Location", "(.*)").saveAs("new_project_url")))
+            .check(headerRegex("Location", "(.*)").saveAs("new_plugin_url")))
             .pause(10)
             .repeat(5) {
-                exec(http("Get created project")
-                .get("${new_project_url}")
+                exec(http("Get created plugin")
+                .get("${new_plugin_url}")
                 .headers(headers_http_authenticated))
                 .pause(10)
             }
-            .exec(http("Delete created project")
-            .delete("${new_project_url}")
+            .exec(http("Delete created plugin")
+            .delete("${new_plugin_url}")
             .headers(headers_http_authenticated))
             .pause(10)
         }

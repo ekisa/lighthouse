@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
-import tr.com.turktelecom.lighthouse.domain.util.JSR310DateConverters;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,8 +31,8 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
     private String explanation;
 
     @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+    @JoinColumn(name = "plugin_id")
+    private Plugin plugin;
 
     @OneToMany(mappedBy = "scan")
     @JsonIgnore
@@ -65,12 +64,12 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
         this.explanation = explanation;
     }
 
-    public Project getProject() {
-        return project;
+    public Plugin getPlugin() {
+        return plugin;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setPlugin(Plugin plugin) {
+        this.plugin = plugin;
     }
 
     public Set<Defect> getDefects() {

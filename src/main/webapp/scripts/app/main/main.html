@@ -24,7 +24,7 @@
                     <thead>
                         <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
                             <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                            <th jh-sort-by="name"><span translate="lighthouseApp.project.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                            <th jh-sort-by="name"><span translate="lighthouseApp.plugin.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                             <th>Low</th>
                             <th>Medium</th>
                             <th>High</th>
@@ -32,10 +32,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="project in projects track by project.id">
-                        <td><a ui-sref="project.detail({projectId:project.id})">{{project.id}}</a></td>
+                    <tr ng-repeat="plugin in plugins track by plugin.id">
+                        <td><a ui-sref="plugin.detail({pluginId:plugin.id})">{{plugin.id}}</a></td>
                         <td>
-                            <a ui-sref="project.detail({projectId:project.id})">{{project.name}}</a>
+                            <a ui-sref="plugin.detail({pluginId:plugin.id})">{{plugin.name}}</a>
                         </td>
                         <td></td>
                         <td></td>
@@ -44,7 +44,7 @@
                         <td class="text-right">
                             <div class="btn-group flex-btn-group-container">
                                 <button type="submit"
-                                        ui-sref="project.detail({id:project.id})"
+                                        ui-sref="plugin.detail({id:plugin.id})"
                                         class="btn btn-info btn-sm">
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                     <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>

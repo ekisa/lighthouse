@@ -18,53 +18,53 @@ angular.module('lighthouseApp')
                 resolve: {
                     mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
                         $translatePartialLoader.addPart('main');
-                        $translatePartialLoader.addPart('project')
+                        $translatePartialLoader.addPart('plugin')
                         return $translate.refresh();
                     }]
                 }
             })
             /*
-            .state('home.project', {
+            .state('home.plugin', {
                 parent: 'entity',
-                url: '/projects',
+                url: '/plugins',
                 data: {
                     authorities: ['ROLE_USER'],
-                    pageTitle: 'lighthouseApp.project.home.title'
+                    pageTitle: 'lighthouseApp.plugin.home.title'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/entities/project/projects.html',
-                        controller: 'ProjectController'
+                        templateUrl: 'scripts/app/entities/plugin/plugins.html',
+                        controller: 'PluginController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('project');
+                        $translatePartialLoader.addPart('plugin');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }]
                 }
             })
-            .state('home.project.detail', {
+            .state('home.plugin.detail', {
                 parent: 'entity',
-                url: '/project/{id}',
+                url: '/plugin/{id}',
                 data: {
                     authorities: ['ROLE_USER'],
-                    pageTitle: 'lighthouseApp.project.detail.title'
+                    pageTitle: 'lighthouseApp.plugin.detail.title'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/entities/project/project-detail.html',
-                        controller: 'ProjectDetailController'
+                        templateUrl: 'scripts/app/entities/plugin/plugin-detail.html',
+                        controller: 'PluginDetailController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('project');
+                        $translatePartialLoader.addPart('plugin');
                         return $translate.refresh();
                     }],
-                    entity: ['$stateParams', 'Project', function($stateParams, Project) {
-                        return Project.get({id : $stateParams.projectId});
+                    entity: ['$stateParams', 'Plugin', function($stateParams, Plugin) {
+                        return Plugin.get({id : $stateParams.pluginId});
                     }]
                 }
             });*/

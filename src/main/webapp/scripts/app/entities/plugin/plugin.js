@@ -2,63 +2,63 @@
 angular.module('lighthouseApp')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('project', {
+            .state('plugin', {
                 parent: 'entity',
-                url: '/projects',
+                url: '/plugins',
                 data: {
                     authorities: ['ROLE_USER'],
-                    pageTitle: 'lighthouseApp.project.home.title'
+                    pageTitle: 'lighthouseApp.plugin.home.title'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/entities/project/projects.html',
-                        controller: 'ProjectController'
+                        templateUrl: 'scripts/app/entities/plugin/plugins.html',
+                        controller: 'PluginController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('project');
+                        $translatePartialLoader.addPart('plugin');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }]
                 }
             })
-            .state('project.detail', {
+            .state('plugin.detail', {
                 parent: 'entity',
-                url: '/project/{projectId}',
+                url: '/plugin/{pluginId}',
                 data: {
                     authorities: ['ROLE_USER'],
-                    pageTitle: 'lighthouseApp.project.detail.title'
+                    pageTitle: 'lighthouseApp.plugin.detail.title'
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/entities/project/project-detail.html',
-                        controller: 'ProjectDetailController'
+                        templateUrl: 'scripts/app/entities/plugin/plugin-detail.html',
+                        controller: 'PluginDetailController'
                     },
-                    'project.detail.scans@project.detail': {
+                    'plugin.detail.scans@plugin.detail': {
                         templateUrl: 'scripts/app/entities/scan/scans.html',
                         controller: 'ScanController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('project');
+                        $translatePartialLoader.addPart('plugin');
                         return $translate.refresh();
                     }],
-                    project: ['$stateParams', 'Project', function($stateParams, Project) {
-                        return Project.get({projectId : $stateParams.projectId});
+                    plugin: ['$stateParams', 'Plugin', function($stateParams, Plugin) {
+                        return Plugin.get({pluginId : $stateParams.pluginId});
                     }]
                 }
             })
-            .state('project.detail.defects', {
-                parent : 'project.detail',
+            .state('plugin.detail.defects', {
+                parent : 'plugin.detail',
                 url: '/scan/{scanId}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.scan.detail.title'
                 },
                 views: {
-                    'project.detail.scan.defects@project.detail': {
+                    'plugin.detail.scan.defects@plugin.detail': {
                         templateUrl: 'scripts/app/entities/defect/defects.html',
                         controller: 'DefectController'
                     }
@@ -70,19 +70,19 @@ angular.module('lighthouseApp')
                         return $translate.refresh();
                     }],
                     scan :  ['$stateParams', 'Scan', function($stateParams, Scan) {
-                        return Scan.get({scanId : $stateParams.scanId, projectId: $stateParams.projectId});
+                        return Scan.get({scanId : $stateParams.scanId, pluginId: $stateParams.pluginId});
                     }]
                 }
             })
-            .state('project.detail.defects.detail', {
-                parent : 'project.detail.defects',
+            .state('plugin.detail.defects.detail', {
+                parent : 'plugin.detail.defects',
                 url: '/defect/{defectId}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.defect.detail.title'
                 },
                 views: {
-                    'project.detail.scan.defects.detail@project.detail': {
+                    'plugin.detail.scan.defects.detail@plugin.detail': {
                         templateUrl: 'scripts/app/entities/defect/defect-detail.html',
                         controller: 'DefectDetailController'
                     }
@@ -97,74 +97,74 @@ angular.module('lighthouseApp')
                     }]
                 }
             })
-            .state('project.new', {
-                parent: 'project',
+            .state('plugin.new', {
+                parent: 'plugin',
                 url: '/new',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'scripts/app/entities/project/project-dialog.html',
-                        controller: 'ProjectDialogController',
+                        templateUrl: 'scripts/app/entities/plugin/plugin-dialog.html',
+                        controller: 'PluginDialogController',
                         size: 'lg',
                         resolve: {
-                            project: function () {
+                            plugin: function () {
                                 return {
                                     name: null,
-                                    projectId: null
+                                    pluginId: null
                                 };
                             },
-                            projectId : null
+                            pluginId : null
                         }
                     }).result.then(function(result) {
-                        $state.go('project', null, { reload: true });
+                        $state.go('plugin', null, { reload: true });
                     }, function() {
-                        $state.go('project');
+                        $state.go('plugin');
                     })
                 }]
             })
-            .state('project.edit', {
-                parent: 'project',
-                url: '/{projectId}/edit',
+            .state('plugin.edit', {
+                parent: 'plugin',
+                url: '/{pluginId}/edit',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'scripts/app/entities/project/project-dialog.html',
-                        controller: 'ProjectDialogController',
+                        templateUrl: 'scripts/app/entities/plugin/plugin-dialog.html',
+                        controller: 'PluginDialogController',
                         size: 'lg',
                         resolve: {
-                            project: ['Project', function(Project) {
-                                return Project.get({projectId : $stateParams.projectId});
+                            plugin: ['Plugin', function(Plugin) {
+                                return Plugin.get({pluginId : $stateParams.pluginId});
                             }]
                         }
                     }).result.then(function(result) {
-                        $state.go('project', null, { reload: true });
+                        $state.go('plugin', null, { reload: true });
                     }, function() {
                         $state.go('^');
                     })
                 }]
             })
-            .state('project.delete', {
-                parent: 'project',
-                url: '/{projectId}/delete',
+            .state('plugin.delete', {
+                parent: 'plugin',
+                url: '/{pluginId}/delete',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'scripts/app/entities/project/project-delete-dialog.html',
-                        controller: 'ProjectDeleteController',
+                        templateUrl: 'scripts/app/entities/plugin/plugin-delete-dialog.html',
+                        controller: 'PluginDeleteController',
                         size: 'md',
                         resolve: {
-                            project: ['Project', function(Project) {
-                                return Project.get({projectId : $stateParams.projectId});
+                            plugin: ['Plugin', function(Plugin) {
+                                return Plugin.get({pluginId : $stateParams.pluginId});
                             }]
                         }
                     }).result.then(function(result) {
-                        $state.go('project', null, { reload: true });
+                        $state.go('plugin', null, { reload: true });
                     }, function() {
                         $state.go('^');
                     })

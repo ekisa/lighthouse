@@ -27,7 +27,7 @@ angular.module('lighthouseApp')
             /*
             .state('scan.detail', {
                 parent: 'entity',
-                url: 'project/{projectId}/scan/{id}',
+                url: 'plugin/{pluginId}/scan/{id}',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'lighthouseApp.scan.detail.title'
@@ -46,15 +46,15 @@ angular.module('lighthouseApp')
                     entity: ['$stateParams', 'Scan', function($stateParams, Scan) {
                         return Scan.get({id : $stateParams.scanId});
                     }],
-                    project: ['$stateParams', 'Project', function($stateParams, Project) {
-                        return Project.get({id : $stateParams.projectId});
+                    plugin: ['$stateParams', 'Plugin', function($stateParams, Plugin) {
+                        return Plugin.get({id : $stateParams.pluginId});
                     }]
                 }
             })
             */
             .state('scan.new', {
                 parent: 'scan',
-                url: 'project/{projectId}/newScan',
+                url: 'plugin/{pluginId}/newScan',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
@@ -80,7 +80,7 @@ angular.module('lighthouseApp')
             })
             .state('scan.edit', {
                 parent: 'scan',
-                url: 'project/{projectId}/editScan/{scanId}',
+                url: 'plugin/{pluginId}/editScan/{scanId}',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
@@ -91,7 +91,7 @@ angular.module('lighthouseApp')
                         size: 'lg',
                         resolve: {
                             entity: ['Scan', function(Scan) {
-                                return Scan.get({projectId: $stateParams.projectId, scanId : $stateParams.scanId});
+                                return Scan.get({pluginId: $stateParams.pluginId, scanId : $stateParams.scanId});
                             }]
                         }
                     }).result.then(function(result) {
@@ -103,7 +103,7 @@ angular.module('lighthouseApp')
             })
             .state('scan.delete', {
                 parent: 'scan',
-                url: 'project/{projectId}/deleteScan/{scanId}',
+                url: 'plugin/{pluginId}/deleteScan/{scanId}',
                 data: {
                     authorities: ['ROLE_USER'],
                 },
@@ -114,7 +114,7 @@ angular.module('lighthouseApp')
                         size: 'md',
                         resolve: {
                             entity: ['Scan', function(Scan) {
-                                return Scan.get({projectId: $stateParams.projectId, scanId : $stateParams.scanId});
+                                return Scan.get({pluginId: $stateParams.pluginId, scanId : $stateParams.scanId});
                             }]
                         }
                     }).result.then(function(result) {

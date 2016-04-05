@@ -13,13 +13,13 @@ import java.util.Set;
 import java.util.Objects;
 
 /**
- * A Project.
+ * A Plugin.
  */
 @Entity
-@Table(name = "project")
+@Table(name = "plugin")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "project")
-public class Project extends AbstractAuditingEntity implements Serializable {
+@Document(indexName = "plugin")
+public class Plugin extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +31,7 @@ public class Project extends AbstractAuditingEntity implements Serializable {
     @Column(name = "explanation")
     private String explanation;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "plugin")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Scan> scans = new HashSet<Scan>();
@@ -76,11 +76,11 @@ public class Project extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Project project = (Project) o;
-        if(project.id == null || id == null) {
+        Plugin plugin = (Plugin) o;
+        if(plugin.id == null || id == null) {
             return false;
         }
-        return Objects.equals(id, project.id);
+        return Objects.equals(id, plugin.id);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class Project extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "Project{" +
+        return "Plugin{" +
             "id=" + id +
             ", name='" + name + "'" +
             ", explanation='" + explanation + "'" +

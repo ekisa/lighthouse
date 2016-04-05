@@ -1,7 +1,6 @@
 package tr.com.turktelecom.lighthouse.repository.search;
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import tr.com.turktelecom.lighthouse.domain.Project;
 import tr.com.turktelecom.lighthouse.domain.Scan;
 
 /**

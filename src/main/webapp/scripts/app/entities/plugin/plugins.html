@@ -1,18 +1,18 @@
 <div>
-    <h2 translate="lighthouseApp.project.home.title">Projects</h2>
+    <h2 translate="lighthouseApp.plugin.home.title">Plugins</h2>
     <jh-alert></jh-alert>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="project.new" >
+                <button class="btn btn-primary" ui-sref="plugin.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span class="hidden-xs" translate="lighthouseApp.project.home.createLabel">Create new Project</span>
+                    <span class="hidden-xs" translate="lighthouseApp.plugin.home.createLabel">Create new Plugin</span>
                 </button>
             </div>
             <div class="col-xs-8 no-padding-right">
                 <form name="searchForm" class="form-inline">
                     <div class="input-group pull-right" >
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="{{ 'lighthouseApp.project.home.search' | translate }}">
+                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="{{ 'lighthouseApp.plugin.home.search' | translate }}">
                         <span  class="input-group-btn width-min" >
                             <button class="btn btn-info" ng-click="search()">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -29,30 +29,30 @@
             <thead>
                 <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="name"><span translate="lighthouseApp.project.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="name"><span translate="lighthouseApp.plugin.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="project in projects track by project.id">
-                    <td><a ui-sref="project.detail({projectId:project.id})">{{project.id}}</a></td>
-                    <td>{{project.name}}</td>
+                <tr ng-repeat="plugin in plugins track by plugin.id">
+                    <td><a ui-sref="plugin.detail({pluginId:plugin.id})">{{plugin.id}}</a></td>
+                    <td>{{plugin.name}}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
-                                    ui-sref="project.detail({projectId:project.id})"
+                                    ui-sref="plugin.detail({pluginId:plugin.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="project.edit({projectId:project.id})"
+                                    ui-sref="plugin.edit({pluginId:plugin.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="project.delete({projectId:project.id})"
+                                    ui-sref="plugin.delete({pluginId:plugin.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>

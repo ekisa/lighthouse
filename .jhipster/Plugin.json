@@ -5,7 +5,7 @@
             "relationshipName": "defects",
             "otherEntityName": "defect",
             "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "project"
+            "otherEntityRelationshipName": "plugin"
         }
     ],
     "fields": [

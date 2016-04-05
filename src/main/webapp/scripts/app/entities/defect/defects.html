@@ -15,7 +15,7 @@
             </thead>
             <tbody>
                 <tr ui-sref-active="active info" ng-repeat="defect in defects track by defect.id"
-                    ui-sref="project.detail.defects.detail({defectId:defect.id})">
+                    ui-sref="plugin.detail.defects.detail({defectId:defect.id})">
                     <td>{{defect.id}}</td>
                     <td>{{defect.title}}</td>
                     <td>{{defect.code}}</td>
