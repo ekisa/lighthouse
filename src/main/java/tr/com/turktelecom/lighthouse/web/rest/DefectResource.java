@@ -89,7 +89,7 @@ public class DefectResource {
     public ResponseEntity<List<Defect>> getAllDefects(Pageable pageable, @RequestParam Long scanId)
         throws URISyntaxException {
         log.debug("REST request to get a page of Defects");
-        Page<Defect> page = defectRepository.findAll(pageable);
+        Page<Defect> page = defectRepository.findAllByScanId(pageable, scanId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/defects");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

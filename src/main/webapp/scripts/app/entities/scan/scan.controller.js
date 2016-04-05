@@ -3,7 +3,6 @@
 angular.module('lighthouseApp')
     .controller('ScanController', function ($scope, $state, $stateParams, project, Project, Scan, ParseLinks) {
         $scope.project = project;
-        //$scope.scans = scans;
         $scope.predicate = 'id';
         $scope.reverse = true;
         $scope.page = 1;

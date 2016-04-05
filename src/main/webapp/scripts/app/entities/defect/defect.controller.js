@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .controller('DefectController', function ($scope, $state, $stateParams, scan, Defect, ParseLinks) {
-        $scope.scan = scan;
-        $scope.defects = [];
+    .controller('DefectController', function ($scope, $state, $stateParams, Defect, ParseLinks) {
         $scope.predicate = 'id';
         $scope.reverse = true;
         $scope.page = 1;

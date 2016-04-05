@@ -89,7 +89,7 @@ public class ScanResource {
     public ResponseEntity<List<Scan>> getAllScans(Pageable pageable, @RequestParam Long projectId)
         throws URISyntaxException {
         log.debug("REST request to get a page of Scans");
-        Page<Scan> page = scanRepository.findAll(pageable);
+        Page<Scan> page = scanRepository.findAllByProjectId(pageable, projectId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/scans");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
