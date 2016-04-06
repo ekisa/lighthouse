@@ -5,7 +5,6 @@ angular.module('lighthouseApp')
             function ($scope, $rootScope, $stateParams, plugin, Plugin, ParseLinks) {
                 $scope.plugin = plugin;
                 $scope.load = function (pluginId) {
-                    alert("Plugin detail controller load methodu calıstı");
                     Plugin.get({pluginId: pluginId}, function(result) {
                         $scope.plugin = result;
                     });
