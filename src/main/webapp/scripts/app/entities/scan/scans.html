@@ -1,14 +1,19 @@
-<table class="table table-striped table-condensed table-hover" callback="loadAllScans()">
-    <thead>
-    <tr jh-sort="predicate" ascending="reverse">
-        <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-        <th jh-sort-by="createdDate"><span translate="lighthouseApp.plugin.scan.scanTime">Scan Time</span> <span class="glyphicon glyphicon-sort"></span></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ui-sref-active="active info" ng-repeat="scan in scans track by scan.id" ui-sref="plugin.detail.defects({pluginId:plugin.id, scanId:scan.id})">
-        <td>{{scan.id}}</td>
-        <td>{{scan.createdDate | date:'dd/MM/yy HH:mm'}}</td>
-    </tr>
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+        <tr jh-sort="predicate" ascending="reverse" callback="loadAllScans()">
+            <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <th jh-sort-by="createdDate"><span translate="lighthouseApp.plugin.scan.scanTime">Scan Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ui-sref-active="active info" ng-repeat="scan in scans track by scan.id" ui-sref="plugin.detail.defects({pluginId:plugin.id, scanId:scan.id})">
+            <td>{{scan.id}}</td>
+            <td>{{scan.createdDate | date:'dd/MM/yy HH:mm'}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="text-center">
+    <uib-pagination items-per-page="5" boundary-link-numbers="true" class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAllScans()"></uib-pagination>
+</div>

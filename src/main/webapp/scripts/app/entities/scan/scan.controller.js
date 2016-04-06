@@ -18,7 +18,7 @@ angular.module('lighthouseApp')
         */
 
         $scope.loadAllScans = function() {
-            Scan.query({pluginId: $stateParams.pluginId, page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
+            Scan.query({pluginId: $stateParams.pluginId, page: $scope.page - 1, size: 5, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.totalItems = headers('X-Total-Count');
                 $scope.scans = result;
