@@ -12,12 +12,18 @@
         <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
-                    <a ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse.in">
+                    <a ui-sref="home" ng-switch-when="true" data-toggle="collapse" data-target=".navbar-collapse.in">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="hidden-sm" translate="global.menu.home">Home</span>
                     </a>
                 </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="plugin" ng-switch-when="true" data-toggle="collapse" data-target=".navbar-collapse.in">
+                        <span translate="global.menu.plugins">Plugins</span>
+                    </a>
+                </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+                <!--
                 <li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
                         <span>
@@ -33,9 +39,13 @@
                         &#xA0;<span translate="global.menu.entities.plugin">Plugin</span></a></li>
                         <li ui-sref-active="active" ><a ui-sref="defect" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
                         &#xA0;<span translate="global.menu.entities.defect">Defect</span></a></li>
+                 -->
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                <!--
                     </ul>
                 </li>
+                -->
+
                 <li ng-class="{active: $state.includes('account')}" class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="" id="account-menu">
                         <span>

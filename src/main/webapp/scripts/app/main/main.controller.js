@@ -11,15 +11,19 @@ angular.module('lighthouseApp')
         $scope.predicate = 'id';
         $scope.reverse = true;
         $scope.page = 1;
-        $scope.loadAll = function() {
-            Plugin.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
+        $scope.loadAllPlugins = function() {
+            Plugin.query({page: $scope.page - 1, size: 10, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.totalItems = headers('X-Total-Count');
                 $scope.plugins = result;
             });
         };
 
-        $scope.loadAll();
+        $scope.loadPage = function(page) {
+            $scope.page = page;
+            $scope.loadAllPlugins();
+        };
 
+        $scope.loadAllPlugins();
 
     });
