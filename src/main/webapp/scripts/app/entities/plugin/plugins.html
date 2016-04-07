@@ -25,11 +25,14 @@
     </div>
     <br/>
     <div class="table-responsive">
-        <table class="jh-table table table-striped">
+        <table class="jh-table table table-condensed table-striped">
             <thead>
                 <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="name"><span translate="lighthouseApp.plugin.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th>Low</th>
+                    <th>Medium</th>
+                    <th>High</th>
                     <th></th>
                 </tr>
             </thead>
@@ -37,6 +40,9 @@
                 <tr ng-repeat="plugin in plugins track by plugin.id">
                     <td><a ui-sref="plugin.detail({pluginId:plugin.id})">{{plugin.id}}</a></td>
                     <td>{{plugin.name}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
