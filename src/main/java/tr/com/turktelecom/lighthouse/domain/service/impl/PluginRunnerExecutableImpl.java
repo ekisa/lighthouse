@@ -11,7 +11,6 @@ import tr.com.turktelecom.lighthouse.service.util.DateTimeUtil;
 
 import java.io.*;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +29,7 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunnerImpl {
         File errorLogFile = this.createLogFile("error", plugin, pluginStartTimestamp);
         File outputLogFile = this.createLogFile("output", plugin, pluginStartTimestamp);
         try {
-            this.logToFile(outputLogFile, "\nRun started at " + DateTimeUtil.formatTimeStamp(pluginStartTimestamp) + "\n");
+            this.logToFile(outputLogFile, "\nRun started at " + DateTimeUtil.formatTimeStamp(pluginStartTimestamp, DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
 
             List<String> args = new ArrayList<String>();
             args.add(executablePluginContext.getCommand());
@@ -45,12 +44,12 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunnerImpl {
             Process process = processBuilder.start();
             int returnVal = process.waitFor();
 
-            this.logToFile(outputLogFile, "\n Run completed successfully at " + DateTimeUtil.formatTimeStamp(ZonedDateTime.now()) + "\n");
+            this.logToFile(outputLogFile, "\n Run completed successfully at " + DateTimeUtil.formatTimeStamp(ZonedDateTime.now(), DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
             errorLogFile.delete();
         } catch (IOException e) {
             try {
                 e.printStackTrace();
-                logToFile(errorLogFile, "\nPlugin run failed at " + DateTimeUtil.formatTimeStamp(ZonedDateTime.now()) + ". Execution started at : " + DateTimeUtil.formatTimeStamp(pluginStartTimestamp) + ".\n" +
+                logToFile(errorLogFile, "\nPlugin run failed at " + DateTimeUtil.formatTimeStamp(ZonedDateTime.now(), DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + ". Execution started at : " + DateTimeUtil.formatTimeStamp(pluginStartTimestamp, DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + ".\n" +
                     ExceptionUtils.getFullStackTrace(e));
                 throw new PluginRunFailedException("Plugin run edilmek istediği sırada hata olustu", e);
             } catch (IOException e1) {
@@ -104,7 +103,7 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunnerImpl {
             + File.separator + "plugins"
             + File.separator + plugin.getFolderName()
             + File.separator + "processLogs"
-            + File.separator + "process- "+ type +" -log-" + DateTimeUtil.formatTimeStamp(timeStamp) + ".txt");
+            + File.separator + "process-" + type + "-log-" + DateTimeUtil.formatTimeStamp(timeStamp, DateTimeUtil.PATTERN.DATE_TIME_PATTERN_FOR_FILE_NAMES) + ".txt");
     }
 
 

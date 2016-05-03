@@ -33,7 +33,6 @@ import java.util.Set;
  * Service class for managing plugins.
  */
 @Service
-@Transactional
 public class PluginService {
 
     private final Logger log = LoggerFactory.getLogger(PluginService.class);
@@ -44,7 +43,7 @@ public class PluginService {
     @Inject
     private PluginRepository pluginRepository;
 
-    //TODO : Transactional oldu mu, job çalıştırılarak kontrol edilecek
+    //TODO : Transactional olma gereksinimleri incelenecek
     //TODO : Exceptionlar handle edilecek
     public void runPlugin(Plugin plugin) {
         try {
