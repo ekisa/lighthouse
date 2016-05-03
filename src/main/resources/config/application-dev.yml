@@ -25,6 +25,8 @@ spring:
         username: root
         password: root
     jpa:
+        hibernate:
+            ddl-auto: update
         database-platform: org.hibernate.dialect.MySQLInnoDBDialect
         database: MYSQL
         show_sql: true
@@ -83,3 +85,7 @@ jhipster:
             host: localhost
             port: 2003
             prefix: Lighthouse
+
+pluginRunner:
+    python:
+        home: T:\Swf\Lang\Python-3.5.1

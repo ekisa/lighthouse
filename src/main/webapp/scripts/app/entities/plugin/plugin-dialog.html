@@ -10,14 +10,19 @@
         <jh-alert-error></jh-alert-error>
         <div class="form-group">
             <label for="id" translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="plugin.id" readonly />
+            <input type="text" class="form-control" id="id" name="id" ng-model="plugin.id" readonly />
         </div>
         <div class="form-group">
             <label class="control-label" translate="lighthouseApp.plugin.name" for="field_name">Name</label>
-            <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="plugin.name"
-                     />
+            <input type="text" class="form-control" name="name" id="field_name" ng-model="plugin.name" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="lighthouseApp.plugin.pluginContext.executableName" for="field_executableName">Key</label>
+            <input type="text" class="form-control" name="executableName" id="field_executableName" ng-model="plugin.pluginContext.executableName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="lighthouseApp.plugin.schedule" for="field_schedule">Schedule</label>
+            <input type="text" class="form-control" name="schedule" id="field_schedule" ng-model="plugin.schedule" />
         </div>
 
     </div>

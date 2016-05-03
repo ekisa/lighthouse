@@ -22,6 +22,9 @@
             "explanation" : "Explanation",
             "scan" : {
                 "scanTime" : "Scan Time"
+            },
+            "pluginContext" : {
+                "executableName": "Executable Name"
             }
         }
     }
