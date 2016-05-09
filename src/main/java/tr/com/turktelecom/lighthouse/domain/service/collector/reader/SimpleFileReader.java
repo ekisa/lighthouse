@@ -9,6 +9,7 @@ import tr.com.turktelecom.lighthouse.domain.Defect;
 import tr.com.turktelecom.lighthouse.domain.Scan;
 import tr.com.turktelecom.lighthouse.domain.Severity;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginRunFailedException;
+import tr.com.turktelecom.lighthouse.service.util.DateTimeUtil;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -81,6 +82,7 @@ public class SimpleFileReader implements FileReader {
                     }else {
                         defect.setNeedManuelCheck(Boolean.FALSE);
                     }
+                    scan.setTitle(pluginName);
                     scan.addDefect(defect);
                 }
             }

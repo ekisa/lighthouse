@@ -10,9 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A Scan.
@@ -21,6 +19,7 @@ import java.util.Set;
 @Table(name = "SCAN")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "scan")
+@NamedEntityGraph(name = "graph.Scan.defects", attributeNodes = @NamedAttributeNode("defects"))
 public class Scan extends AbstractAuditingEntity implements Serializable {
 
     @Id
@@ -104,5 +103,23 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
     public void addDefect(Defect defect) {
         defect.setScan(this);
         this.getDefects().add(defect);
+    }
+
+    public void analyzeDifferences(Scan previousScan) {
+        if (previousScan == null) {
+            return;
+        }
+
+        Map<String, Defect> latestDefects = new HashMap<String, Defect>();
+        for (Defect latestDefect : this.getDefects()) {
+            latestDefects.put(new StringBuffer().append(latestDefect.getSourceIP()).append("-").append(latestDefect.getTitle()).toString(), latestDefect);
+        }
+
+        for (Defect previousDefect : previousScan.getDefects()) {
+            String defectKey = new StringBuffer().append(previousDefect.getSourceIP()).append("-").append(previousDefect.getTitle()).toString();
+            if (latestDefects.containsKey(defectKey)) {
+                latestDefects.get(defectKey).setPreviousDefect(previousDefect);
+            }
+        }
     }
 }

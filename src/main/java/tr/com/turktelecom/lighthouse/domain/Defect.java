@@ -54,11 +54,15 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
     @Column(name = "protocol")
     private String protocol;
 
-    @Column(name="need_manuek_checl")
+    @Column(name="need_manuel_check")
     private Boolean needManuelCheck;
 
     @Column(name = "host_name")
     private String hostName;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "previous_defect")
+    private Defect previousDefect;
 
     public Long getId() {
         return id;
@@ -141,14 +145,13 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
         return "Defect{" +
             "id=" + id +
             ", sourceIP='" + sourceIP + '\'' +
-            ", title='" + title + '\'' +
+            ", hostName='" + hostName + '\'' +
+            ", port='" + port + '\'' +
+            ", protocol='" + protocol + '\'' +
             ", code='" + code + '\'' +
             ", severity=" + severity +
             ", isFalsePositive=" + isFalsePositive +
-            ", port='" + port + '\'' +
-            ", protocol='" + protocol + '\'' +
             ", needManuelCheck=" + needManuelCheck +
-            ", hostName='" + hostName + '\'' +
             '}';
     }
 
@@ -190,5 +193,13 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
 
     public String getHostName() {
         return hostName;
+    }
+
+    public void setPreviousDefect(Defect previousDefect) {
+        this.previousDefect = previousDefect;
+    }
+
+    public Defect getPreviousDefect() {
+        return previousDefect;
     }
 }

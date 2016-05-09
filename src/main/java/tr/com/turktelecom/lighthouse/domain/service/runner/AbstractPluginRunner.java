@@ -9,10 +9,12 @@ import tr.com.turktelecom.lighthouse.domain.Scan;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginContextNotSupportedException;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginRunFailedException;
 import tr.com.turktelecom.lighthouse.domain.service.collector.PluginResultCollector;
+import tr.com.turktelecom.lighthouse.repository.ScanRepository;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 /**
  * Created by 010235 on 22.04.2016.
@@ -25,12 +27,23 @@ public abstract class AbstractPluginRunner implements PluginRunner {
     @Inject
     protected Environment environment;
 
+    @Inject
+    private ScanRepository scanRepository;
+
     private final Logger log = LoggerFactory.getLogger(AbstractPluginRunner.class);
 
     @Override
     public Scan run(Plugin plugin) throws PluginContextNotSupportedException, PluginRunFailedException {
         runInternal(plugin);
-        return resultCollector.collectResults(plugin);
+        Scan previousScan = null;
+        if (plugin.getId() != null) {
+            previousScan = scanRepository.findTopByPluginIdOrderByCreatedDateDesc(plugin.getId());
+        }
+        Scan lastScan = resultCollector.collectResults(plugin);
+
+        lastScan.analyzeDifferences(previousScan);
+
+        return lastScan;
     }
 
 

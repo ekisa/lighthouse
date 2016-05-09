@@ -1,5 +1,6 @@
 package tr.com.turktelecom.lighthouse.service.scheduled;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -44,10 +45,16 @@ public class PluginScheduler {
         List<Plugin> plugins = pluginRepository.findAllByActivatedIsTrueAndNextRunDateBefore(now);
         for (Plugin plugin : plugins) {
             log.debug("Running plugin : {}", plugin.getName());
-            Scan scan = pluginService.runPlugin(plugin);
-            scan.setTitle(DateTimeUtil.formatTimeStamp(now, DateTimeUtil.PATTERN.DATE_TIME_PATTERN_FOR_FILE_NAMES));
+            Scan lastScan =  pluginService.runPlugin(plugin);
+            if(StringUtils.isNotEmpty(lastScan.getTitle())){
+                //Add timestamp to scan title
+                lastScan.setTitle(lastScan.getTitle() + " " + DateTimeUtil.formatTimeStamp(now, DateTimeUtil.PATTERN.DATE_TIME_PATTERN_FOR_FILE_NAMES));
+            }else{
+                lastScan.setTitle(DateTimeUtil.formatTimeStamp(now, DateTimeUtil.PATTERN.DATE_TIME_PATTERN_FOR_FILE_NAMES));
+            }
 
-            pluginService.persist(plugin, scan);
+
+            pluginService.persist(plugin, lastScan);
             log.debug("Finished running plugin : {}", plugin.getName());
         }
     }
