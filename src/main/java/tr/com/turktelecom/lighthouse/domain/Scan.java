@@ -1,11 +1,14 @@
 package tr.com.turktelecom.lighthouse.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -27,14 +30,11 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "explanation")
-    private String explanation;
-
     @ManyToOne
     @JoinColumn(name = "plugin_id")
     private Plugin plugin;
 
-    @OneToMany(mappedBy = "scan")
+    @OneToMany(mappedBy = "scan", cascade = CascadeType.ALL)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Defect> defects = new HashSet<>();
@@ -54,14 +54,6 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getExplanation() {
-        return explanation;
-    }
-
-    public void setExplanation(String explanation) {
-        this.explanation = explanation;
     }
 
     public Plugin getPlugin() {
@@ -105,8 +97,12 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
         return "Scan{" +
             "id=" + id +
             ", title='" + title + "'" +
-            ", explanation='" + explanation + "'" +
             //", createdDate='" + JSR310DateConverters.ZonedDateTimeToDateConverter.INSTANCE.convert(getCreatedDate()) + "'" +
             '}';
+    }
+
+    public void addDefect(Defect defect) {
+        defect.setScan(this);
+        this.getDefects().add(defect);
     }
 }

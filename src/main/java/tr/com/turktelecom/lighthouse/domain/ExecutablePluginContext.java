@@ -26,6 +26,11 @@ public class ExecutablePluginContext extends PluginContext implements Serializab
     @Length(max = 20)
     private String executableName;
 
+    @Column(name = "input_file_path")
+    private String inputFilePath;
+
+    @Column(name = "output_file_path")
+    private String outputFilePath;
 
     public String getCommand() {
         return command;
@@ -43,11 +48,29 @@ public class ExecutablePluginContext extends PluginContext implements Serializab
         this.executableName = executableName;
     }
 
+    public String getInputFilePath() {
+        return inputFilePath;
+    }
+
+    public void setInputFilePath(String inputFilePath) {
+        this.inputFilePath = inputFilePath;
+    }
+
+    public String getOutputFilePath() {
+        return outputFilePath;
+    }
+
+    public void setOutputFilePath(String outputFilePath) {
+        this.outputFilePath = outputFilePath;
+    }
+
     @Override
     public String toString() {
         return "ExecutablePluginContext{" +
             "command='" + command + '\'' +
             ", executableName='" + executableName + '\'' +
+            ", inputFilePath='" + inputFilePath + '\'' +
+            ", outputFilePath='" + outputFilePath + '\'' +
             '}';
     }
 }

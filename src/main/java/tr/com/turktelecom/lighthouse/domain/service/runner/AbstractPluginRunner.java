@@ -1,32 +1,36 @@
-package tr.com.turktelecom.lighthouse.domain.service.impl;
+package tr.com.turktelecom.lighthouse.domain.service.runner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 import tr.com.turktelecom.lighthouse.domain.Plugin;
+import tr.com.turktelecom.lighthouse.domain.Scan;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginContextNotSupportedException;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginRunFailedException;
-import tr.com.turktelecom.lighthouse.domain.service.PluginRunner;
+import tr.com.turktelecom.lighthouse.domain.service.collector.PluginResultCollector;
 
 import javax.inject.Inject;
 import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
  * Created by 010235 on 22.04.2016.
  */
-public abstract class AbstractPluginRunnerImpl implements PluginRunner {
+public abstract class AbstractPluginRunner implements PluginRunner {
 
     @Inject
-    Environment environment;
+    protected PluginResultCollector resultCollector;
 
-    private final Logger log = LoggerFactory.getLogger(AbstractPluginRunnerImpl.class);
+    @Inject
+    protected Environment environment;
+
+    private final Logger log = LoggerFactory.getLogger(AbstractPluginRunner.class);
 
     @Override
-    public void run(Plugin plugin) throws PluginContextNotSupportedException, PluginRunFailedException {
+    public Scan run(Plugin plugin) throws PluginContextNotSupportedException, PluginRunFailedException {
         runInternal(plugin);
+        return resultCollector.collectResults(plugin);
     }
 
 

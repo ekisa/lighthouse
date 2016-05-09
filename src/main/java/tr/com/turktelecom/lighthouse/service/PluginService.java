@@ -2,32 +2,19 @@ package tr.com.turktelecom.lighthouse.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import tr.com.turktelecom.lighthouse.domain.Authority;
 import tr.com.turktelecom.lighthouse.domain.Plugin;
-import tr.com.turktelecom.lighthouse.domain.User;
+import tr.com.turktelecom.lighthouse.domain.Scan;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginContextNotSupportedException;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginRunFailedException;
-import tr.com.turktelecom.lighthouse.domain.service.PluginRunner;
-import tr.com.turktelecom.lighthouse.repository.AuthorityRepository;
-import tr.com.turktelecom.lighthouse.repository.PersistentTokenRepository;
+import tr.com.turktelecom.lighthouse.domain.service.runner.PluginRunner;
 import tr.com.turktelecom.lighthouse.repository.PluginRepository;
-import tr.com.turktelecom.lighthouse.repository.UserRepository;
-import tr.com.turktelecom.lighthouse.repository.search.UserSearchRepository;
-import tr.com.turktelecom.lighthouse.security.SecurityUtils;
-import tr.com.turktelecom.lighthouse.service.util.RandomUtil;
-import tr.com.turktelecom.lighthouse.web.rest.dto.ManagedUserDTO;
+import tr.com.turktelecom.lighthouse.service.util.DebugUtils;
 
 import javax.inject.Inject;
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 /**
  * Service class for managing plugins.
@@ -40,18 +27,28 @@ public class PluginService {
     @Inject
     private PluginRunner pluginRunner;
 
-    @Inject
-    private PluginRepository pluginRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     //TODO : Transactional olma gereksinimleri incelenecek
     //TODO : Exceptionlar handle edilecek
-    public void runPlugin(Plugin plugin) {
+    public Scan runPlugin(Plugin plugin) {
         try {
-            pluginRunner.run(plugin);
+            return pluginRunner.run(plugin);
         } catch (PluginContextNotSupportedException e) {
             e.printStackTrace();
         } catch (PluginRunFailedException e) {
             e.printStackTrace();
         }
+
+        return null;
+    }
+
+    @Transactional
+    public void persist(Plugin plugin, Scan scan) {
+        //DebugUtils.showTransactionStatus("PluginService.persist");
+        plugin = entityManager.merge(plugin);
+        plugin.addScan(scan);
+        //DebugUtils.showTransactionStatus("PluginService.persist2");
     }
 }

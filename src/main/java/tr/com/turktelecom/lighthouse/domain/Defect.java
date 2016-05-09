@@ -1,7 +1,9 @@
 package tr.com.turktelecom.lighthouse.domain;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
@@ -16,16 +18,21 @@ import java.util.Objects;
 @Table(name = "defect")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "defect")
+@BatchSize(size = 20)
 public class Defect extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "source_ip")
+    private String sourceIP;
+
     @Column(name = "title")
     private String title;
 
     @Column(name = "explanation")
+    @Length(max = 2000)
     private String explanation;
 
     @Column(name = "code")
@@ -40,6 +47,18 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
 
     @Column(name="is_false_positive")
     private Boolean isFalsePositive = Boolean.FALSE;
+
+    @Column(name = "port")
+    private String port;
+
+    @Column(name = "protocol")
+    private String protocol;
+
+    @Column(name="need_manuek_checl")
+    private Boolean needManuelCheck;
+
+    @Column(name = "host_name")
+    private String hostName;
 
     public Long getId() {
         return id;
@@ -121,11 +140,55 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "Defect{" +
             "id=" + id +
-            ", title='" + title + "'" +
-            ", explanation='" + explanation + "'" +
-            ", code='" + code + "'" +
-            ", severity='" + severity + "'" +
-            ", isFalsePositive='" + isFalsePositive + "'" +
+            ", sourceIP='" + sourceIP + '\'' +
+            ", title='" + title + '\'' +
+            ", code='" + code + '\'' +
+            ", severity=" + severity +
+            ", isFalsePositive=" + isFalsePositive +
+            ", port='" + port + '\'' +
+            ", protocol='" + protocol + '\'' +
+            ", needManuelCheck=" + needManuelCheck +
+            ", hostName='" + hostName + '\'' +
             '}';
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setNeedManuelCheck(Boolean needManuelCheck) {
+        this.needManuelCheck = needManuelCheck;
+    }
+
+    public Boolean getNeedManuelCheck() {
+        return needManuelCheck;
+    }
+
+    public String getSourceIP() {
+        return sourceIP;
+    }
+
+    public void setSourceIP(String sourceIP) {
+        this.sourceIP = sourceIP;
+    }
+
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
+
+    public String getHostName() {
+        return hostName;
     }
 }

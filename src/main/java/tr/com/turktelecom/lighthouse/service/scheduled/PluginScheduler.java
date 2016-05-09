@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import tr.com.turktelecom.lighthouse.domain.Plugin;
+import tr.com.turktelecom.lighthouse.domain.Scan;
 import tr.com.turktelecom.lighthouse.repository.PluginRepository;
 import tr.com.turktelecom.lighthouse.service.PluginService;
+import tr.com.turktelecom.lighthouse.service.util.DateTimeUtil;
+import tr.com.turktelecom.lighthouse.service.util.DebugUtils;
 
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
@@ -41,7 +44,10 @@ public class PluginScheduler {
         List<Plugin> plugins = pluginRepository.findAllByActivatedIsTrueAndNextRunDateBefore(now);
         for (Plugin plugin : plugins) {
             log.debug("Running plugin : {}", plugin.getName());
-            pluginService.runPlugin(plugin);
+            Scan scan = pluginService.runPlugin(plugin);
+            scan.setTitle(DateTimeUtil.formatTimeStamp(now, DateTimeUtil.PATTERN.DATE_TIME_PATTERN_FOR_FILE_NAMES));
+
+            pluginService.persist(plugin, scan);
             log.debug("Finished running plugin : {}", plugin.getName());
         }
     }

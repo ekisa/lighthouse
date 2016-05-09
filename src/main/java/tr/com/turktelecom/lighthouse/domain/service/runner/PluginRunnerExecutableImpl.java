@@ -1,4 +1,4 @@
-package tr.com.turktelecom.lighthouse.domain.service.impl;
+package tr.com.turktelecom.lighthouse.domain.service.runner;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -20,7 +20,7 @@ import java.util.Map;
  * Created by 010235 on 29.04.2016.
  */
 @Component
-public class PluginRunnerExecutableImpl extends AbstractPluginRunnerImpl {
+public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
 
     @Override
     protected void runInternal(Plugin plugin) throws PluginContextNotSupportedException, PluginRunFailedException{
@@ -44,7 +44,7 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunnerImpl {
             Process process = processBuilder.start();
             int returnVal = process.waitFor();
 
-            this.logToFile(outputLogFile, "\n Run completed successfully at " + DateTimeUtil.formatTimeStamp(ZonedDateTime.now(), DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
+            this.logToFile(outputLogFile, "\nRun completed successfully at " + DateTimeUtil.formatTimeStamp(ZonedDateTime.now(), DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
             errorLogFile.delete();
         } catch (IOException e) {
             try {

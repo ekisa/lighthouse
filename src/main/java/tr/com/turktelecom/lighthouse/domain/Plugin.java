@@ -2,13 +2,15 @@ package tr.com.turktelecom.lighthouse.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -21,8 +23,7 @@ import java.util.*;
 @Table(name = "plugin")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "plugin")
-@NamedEntityGraph(name = "graph.Plugin.args",
-    attributeNodes = @NamedAttributeNode("args"))
+@NamedEntityGraph(name = "graph.Plugin.args", attributeNodes = @NamedAttributeNode("args"))
 public class Plugin extends AbstractAuditingEntity implements Serializable {
 
     @Id
@@ -49,19 +50,25 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
     @Column(name = "next_run_date")
     private ZonedDateTime nextRunDate = ZonedDateTime.now();
 
-    @OneToMany(mappedBy = "plugin")
+    @OneToMany(mappedBy = "plugin", cascade = CascadeType.ALL )
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<Scan> scans = new HashSet<Scan>();
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "plugin_context")
     private PluginContext pluginContext;
 
+    @Column(name = "output_format")
+    private String outputFormat;
+
     @ElementCollection
     @JoinTable(name="executable_args", joinColumns=@JoinColumn(name="id"))
     @MapKeyColumn (name="arg")
     @Column(name="value")
+    @BatchSize(size = 20)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Map<String,String> args = new HashMap<String, String>();
 
     public Long getId() {
@@ -168,11 +175,26 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "Plugin{" +
             "id=" + id +
-            ", name='" + name + "'" +
-            ", explanation='" + explanation + "'" +
-            ", schedule='" + schedule + "'" +
-            ", activated='" + activated + "'" +
+            ", name='" + name + '\'' +
+            ", explanation='" + explanation + '\'' +
+            ", folderName='" + folderName + '\'' +
+            ", schedule='" + schedule + '\'' +
+            ", activated=" + activated +
+            ", nextRunDate=" + nextRunDate +
+            ", outputFormat='" + outputFormat + '\'' +
             '}';
     }
 
+    public void addScan(Scan scan) {
+        scan.setPlugin(this);
+        this.getScans().add(scan);
+    }
+
+    public String getOutputFormat() {
+        return outputFormat;
+    }
+
+    public void setOutputFormat(String outputFormat) {
+        this.outputFormat = outputFormat;
+    }
 }
