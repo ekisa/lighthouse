@@ -117,5 +117,7 @@
         "emailexists": "E-mail is already in use!",
         "idexists": "A new {{ entityName }} cannot already have an ID"
     },
-    "footer": "Created by <b>TT Security Architecture Team</b>"
+    "footer": "Created by <b>TT Security Architecture Team</b>",
+    "yes" : "Yes",
+    "no" : "No"
 }

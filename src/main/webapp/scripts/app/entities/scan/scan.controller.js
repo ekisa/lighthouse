@@ -3,8 +3,8 @@
 angular.module('lighthouseApp')
     .controller('ScanController', function ($scope, $state, $stateParams, plugin, Plugin, Scan, ParseLinks) {
         $scope.plugin = plugin;
-        $scope.predicate = 'id';
-        $scope.reverse = true;
+        $scope.predicate = 'createdDate';
+        $scope.reverse = false;
         $scope.page = 1;
 
         /*

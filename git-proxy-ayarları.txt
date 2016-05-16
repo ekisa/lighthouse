@@ -1,1 +1,4 @@
 git config --global https.proxy https://010235:SIFRE@10.1.241.20:8080
+
+npm için;
+C:\Users\010235\.npmrc dosyasi

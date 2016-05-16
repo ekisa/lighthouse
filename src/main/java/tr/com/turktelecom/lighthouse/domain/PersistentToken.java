@@ -31,6 +31,7 @@ public class PersistentToken implements Serializable {
     private static final int MAX_USER_AGENT_LEN = 255;
 
     @Id
+    @Access(AccessType.PROPERTY)
     private String series;
 
     @JsonIgnore

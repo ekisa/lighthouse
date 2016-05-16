@@ -6,7 +6,7 @@ angular.module('lighthouseApp')
             restrict: 'E',
             template: '<div class="alerts" ng-cloak="">' +
                             '<div ng-repeat="alert in alerts" ng-class="[alert.position, {\'toast\': alert.toast}]">' +
-                                '<uib-alert ng-cloak="" type="{{alert.type}}" close="alert.close()"><pre>{{ alert.msg }}</pre></uib-alert>' +
+                                '<uib-alert dismiss-on-timeout="3500" ng-cloak="" type="{{alert.type}}" close="alert.close()"><pre>{{ alert.msg }}</pre></uib-alert>' +
                             '</div>' +
                       '</div>',
             controller: ['$scope',

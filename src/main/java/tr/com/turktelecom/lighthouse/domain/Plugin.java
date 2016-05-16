@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
+import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -28,6 +29,7 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Access(AccessType.PROPERTY)
     private Long id;
 
     @Column(name = "name")
@@ -54,10 +56,12 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @LazyCollection(LazyCollectionOption.EXTRA)
+    @BatchSize(size = 20)
     private Set<Scan> scans = new HashSet<Scan>();
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "plugin_context")
+    @Fetch(FetchMode.JOIN)
     private PluginContext pluginContext;
 
     @Column(name = "output_format")

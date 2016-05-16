@@ -11,6 +11,8 @@ angular.module('lighthouseApp')
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'save': { method:'POST' },
+            'find': { method:'POST' }
         });
     });

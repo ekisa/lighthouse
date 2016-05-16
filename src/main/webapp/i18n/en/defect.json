@@ -22,7 +22,10 @@
             "plugin": "Plugin",
             "severity" : "Severity",
             "isFalsePositive" : "False Positive",
-            "scan" : "Scan"
+            "scan" : "Scan",
+            "newDefect" : "New Defect",
+            "needManuelCheck" : "Need Manuel Investigation",
+            "sourceIP" : "Source IP"
         }
     }
 }

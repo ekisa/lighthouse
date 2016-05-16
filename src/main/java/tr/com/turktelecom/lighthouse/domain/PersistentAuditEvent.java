@@ -18,6 +18,7 @@ public class PersistentAuditEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "event_id")
+    @Access(AccessType.PROPERTY)
     private Long id;
 
     @NotNull

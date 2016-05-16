@@ -1,5 +1,6 @@
 package tr.com.turktelecom.lighthouse.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -18,11 +19,11 @@ import java.util.Objects;
 @Table(name = "defect")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "defect")
-@BatchSize(size = 20)
 public class Defect extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Access(AccessType.PROPERTY)
     private Long id;
 
     @Column(name = "source_ip")
@@ -38,15 +39,15 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
     @Column(name = "code")
     private String code;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "scan_id")
     private Scan scan;
 
     @Enumerated(EnumType.STRING)
     private Severity severity;
 
-    @Column(name="is_false_positive")
-    private Boolean isFalsePositive = Boolean.FALSE;
+    @Column(name="false_positive")
+    private Boolean falsePositive = Boolean.FALSE;
 
     @Column(name = "port")
     private String port;
@@ -113,11 +114,11 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
     }
 
     public Boolean getFalsePositive() {
-        return isFalsePositive;
+        return falsePositive;
     }
 
     public void setFalsePositive(Boolean falsePositive) {
-        isFalsePositive = falsePositive;
+        this.falsePositive = falsePositive;
     }
 
     @Override
@@ -150,7 +151,7 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
             ", protocol='" + protocol + '\'' +
             ", code='" + code + '\'' +
             ", severity=" + severity +
-            ", isFalsePositive=" + isFalsePositive +
+            ", falsePositive=" + falsePositive +
             ", needManuelCheck=" + needManuelCheck +
             '}';
     }

@@ -1,6 +1,8 @@
 package tr.com.turktelecom.lighthouse.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -18,10 +20,15 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="plugin_content_type", discriminatorType=DiscriminatorType.STRING)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "plugin_content_type", visible=true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = ExecutablePluginContext.class, name = "EXECUTABLE"),
+})
 public abstract class PluginContext extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Access(AccessType.PROPERTY)
     private Long id;
 
     @OneToOne(mappedBy = "pluginContext")
