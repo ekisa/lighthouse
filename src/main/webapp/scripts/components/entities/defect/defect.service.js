@@ -12,7 +12,6 @@ angular.module('lighthouseApp')
                 }
             },
             'update': { method:'PUT' },
-            'save': { method:'POST' },
-            'find': { method:'POST' }
+            'save': { method:'POST' }
         });
     });

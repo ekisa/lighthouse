@@ -4,69 +4,6 @@
 'use strict';
 
 angular.module('lighthouseApp')
-    .directive('myTableSearchText', function(DefectSearch) {
-        return {
-            restrict: 'E',
-            transclude: true,
-            replace: true,
-            scope:{
-                mySearch : '@',
-                myTranslate : '@',
-                mySearchDTO : '='
-            },
-            require: '^stTable',
-            template:
-                          '<span translate="{{myTranslate}}">text</span>' +
-                          '<input placeholder="Search" st-search="{{mySearch}}" />' +
-                          '<span class="glyphicon glyphicon-sort"></span>',
-
-            controller: ['$scope',
-                function($scope) {
-
-
-                    this.addSearchCriteria = function (key, operation, value) {
-                        if (operation === null){
-                            operation = ":";
-                        }
-
-                        if($scope.mySearchDTO.specifications == null){
-                            $scope.mySearchDTO.specifications = [];
-                        }
-                        var searchCriteria = key + operation + value;
-                        alert(searchCriteria);
-                        $scope.mySearchDTO.specifications.push(searchCriteria);
-
-                        $scope.$apply();
-                        $scope.callback();
-
-
-
-                    }
-
-                    //$scope.alerts = AlertService.get();
-                    $scope.$on('$destroy', function () {
-                        //$scope.alerts = [];
-                    });
-                }
-            ],
-            link: function(scope, element, attrs, tableCtrl){
-                $scope.watch("searchDTO", function())
-            }
-        }
-    })
-    .directive('myTableSearchTextListener', function () {
-        return {
-            restrict: 'A',
-            scope: false,
-            require: '^myTableSearchText',
-            link: function (scope, element, attrs, parentCtrl) {
-                element.bind('keydown', function () {
-                    parentCtrl.addSearchCriteria(attrs.myTableSearchTextListener, null, element.val());
-                    alert(attrs.myTableSearchTextListener);
-                });
-            }
-        };
-    })
     .filter('customFilter', ['$filter', function($filter) {
         var filterFilter = $filter('filter');
         var standardComparator = function standardComparator(obj, text) {
@@ -175,4 +112,4 @@ angular.module('lighthouseApp')
             var output = filterFilter(array, expression, customComparator);
             return output;
         };
-    }])
+    }]);

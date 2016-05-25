@@ -1,5 +1,7 @@
 package tr.com.turktelecom.lighthouse.domain;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Created by 010235 on 17.03.2016.
  */
@@ -38,5 +40,10 @@ public enum Severity {
             "title='" + title + '\'' +
             "no='" + no + '\'' +
             '}';
+    }
+
+    @JsonValue
+    public String getTitle() {
+        return title;
     }
 }

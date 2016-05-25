@@ -2,9 +2,17 @@ package tr.com.turktelecom.lighthouse.web.rest.util;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
+import org.springframework.util.StringUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Utility class for handling pagination.
@@ -18,25 +26,86 @@ public class PaginationUtil {
 
     public static HttpHeaders generatePaginationHttpHeaders(Page<?> page, String baseUrl)
         throws URISyntaxException {
+        return generatePaginationHttpHeaders(page, baseUrl, null);
+    }
+
+    public static HttpHeaders generatePaginationHttpHeaders(Page<?> page, String baseUrl, Map<String, String> parameters)
+        throws URISyntaxException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", "" + page.getTotalElements());
         String link = "";
         if ((page.getNumber() + 1) < page.getTotalPages()) {
-            link = "<" + (new URI(baseUrl +"?page=" + (page.getNumber() + 1) + "&size=" + page.getSize())).toString() + ">; rel=\"next\",";
+            link = "<" + (new URI(baseUrl +"?page=" + (page.getNumber() + 1) + "&size=" + page.getSize())).toString() + appendParameters(parameters) +">; rel=\"next\",";
         }
         // prev link
         if ((page.getNumber()) > 0) {
-            link += "<" + (new URI(baseUrl +"?page=" + (page.getNumber() - 1) + "&size=" + page.getSize())).toString() + ">; rel=\"prev\",";
+            link += "<" + (new URI(baseUrl +"?page=" + (page.getNumber() - 1) + "&size=" + page.getSize())).toString() + appendParameters(parameters) + ">; rel=\"prev\",";
         }
         // last and first link
         int lastPage = 0;
         if (page.getTotalPages() > 0) {
             lastPage = page.getTotalPages() - 1;
         }
-        link += "<" + (new URI(baseUrl +"?page=" + lastPage + "&size=" + page.getSize())).toString() + ">; rel=\"last\",";
-        link += "<" + (new URI(baseUrl +"?page=" + 0 + "&size=" + page.getSize())).toString() + ">; rel=\"first\"";
+        link += "<" + (new URI(baseUrl +"?page=" + lastPage + "&size=" + page.getSize())).toString() + appendParameters(parameters) +  ">; rel=\"last\",";
+        link += "<" + (new URI(baseUrl +"?page=" + 0 + "&size=" + page.getSize())).toString() + appendParameters(parameters) + ">; rel=\"first\"";
         headers.add(HttpHeaders.LINK, link);
         return headers;
+    }
+
+    private static String appendParameters(Map<String, String> parameters) {
+        if (parameters == null) {
+            return "";
+        }
+
+        Iterator<String> iterator = parameters.keySet().iterator();
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("&filterParams=");
+        while (iterator.hasNext()) {
+            String parameter = iterator.next();
+            try {
+                buffer.append(URLEncoder.encode(parameter, "UTF-8")).append("=").append(URLEncoder.encode(parameters.get(parameter), "UTF-8"));
+                if (iterator.hasNext()) {
+                    buffer.append("&");
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return buffer.toString();
+    }
+
+    public static Map<String, String> getOnlyFilteringParameters(Map<String, String> requestParameters, String... requiredParameters) {
+        Map<String, String> parameters = new HashMap<String, String>(requestParameters);
+        parameters.remove("cacheBuster");
+        parameters.remove("page");
+        parameters.remove("size");
+        parameters.remove("sort");
+        if (requiredParameters != null) {
+            for (String requiredParameter : requiredParameters) {
+                parameters.remove(requiredParameter);
+            }
+        }
+        return parameters;
+    }
+
+    public static Map<String, String> extractFilterParams(Map<String, String> filterParams) {
+        String[] filterCriterias = filterParams.get("filterParams").split("&");
+        for (String filterParam : filterCriterias) {
+            filterParam = filterParam.trim();
+            try {
+                String paramName = filterParam.split("=")[0];
+                String paramVal = filterParam.split("=")[1];
+                if (!StringUtils.isEmpty(paramName) && !StringUtils.isEmpty(paramVal)) {
+                    filterParams.put(URLDecoder.decode(paramName, "UTF8"), URLDecoder.decode(paramVal, "UTF8"));
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                continue;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        filterParams.remove("filterParams");
+        return filterParams;
     }
 }

@@ -3,26 +3,124 @@
 
     <div class="table-responsive">
 
-<!--
-        <table st-set-filter="customFilter" st-table="displayedDefects" st-safe-src="defects" class="table table-bordered table-striped">
+
+        <!--<table st-set-filter="customFilter" st-pipe="callServer" st-table="displayedDefects" st-safe-src="defects" class="table table-bordered table-striped">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th st-sort="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                <!--<th><my-table-search-text my-search="sourceIP" my-translate="lighthouseApp.defect.sourceIP" my-table-search-text-listener="sourceIP" my-search-dto="searchDTO"></my-table-search-text></th>-->
+                <!--<th>-->
+                    <!--<span translate="lighthouseApp.defect.title">Title</span> <span class="glyphicon glyphicon-sort"></span>-->
+                    <!--<input placeholder="Search" st-search="title" ng-model="defectSearchDTO.title"/>-->
+                <!--</th>-->
+                <!--<th st-sort="code"><span translate="lighthouseApp.defect.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                <!--<th st-sort="severity"><span translate="lighthouseApp.defect.severity">scan</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                <!--<th st-sort="falsePositive" ><span translate="lighthouseApp.defect.isFalsePositive">scan</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                <!--<th st-sort="needManuelCheck"><span translate="lighthouseApp.defect.needManuelCheck">scan</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                <!--<th st-sort="newDefect"><span translate="lighthouseApp.defect.newDefect">scan</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                <!--<th></th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr ng-repeat="defect in displayedDefects">-->
+                <!--<td>{{defect.id}}</td>-->
+                <!--<td>{{defect.sourceIP}}</td>-->
+                <!--<td>{{defect.title}}</td>-->
+                <!--<td>{{defect.code}}</td>-->
+                <!--<td>{{defect.severity}}</td>-->
+                <!--<td align="center" style="width: 10%">-->
+                    <!--<span ng-show="defect.falsePositive" ng-click="switchFalsePositiveFlag(defect, false)" class="glyphicon glyphicon-check" style="color: darkgreen"></span>-->
+                    <!--<span ng-show="!defect.falsePositive" ng-click="switchFalsePositiveFlag(defect, true)" class="glyphicon glyphicon-minus" style="color: gray"></span>-->
+                <!--</td>-->
+                <!--<td align="center" style="width: 10%">-->
+                    <!--<span ng-show="defect.needManuelCheck" ng-click="switchNeedManuelCheckFlag(defect, false)" class="glyphicon glyphicon-check" style="color: darkgreen"></span>-->
+                    <!--<span ng-show="!defect.needManuelCheck" ng-click="switchNeedManuelCheckFlag(defect, true)" class="glyphicon glyphicon-minus" style="color: gray"></span>-->
+                <!--</td>-->
+                <!--<td align="center" style="width: 10%">-->
+                    <!--<span ng-show="defect.previousDefect != null" class="glyphicon glyphicon-check" style="color: darkgreen"></span>-->
+                    <!--<span ng-show="defect.previousDefect == null" class="glyphicon glyphicon-minus" style="color: gray"></span>-->
+                <!--</td>-->
+                <!--<td style="width:auto;"></td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+            <!--<tfoot ng-hide="isLoading">-->
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td colspan="10" class="text-center">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div st-pagination="" st-items-by-page="10" st-displayed-pages="5" ></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</td>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+            <!--</tfoot>-->
+        <!--</table>-->
+
+
+
+        <!--<table class="jh-table table table-striped table-condensed">-->
+            <!--<thead>-->
+                <!--<tr jh-sort="predicate" ascending="reverse" callback="loadAllDefects()">-->
+                    <!--<th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="sourceIP"><span translate="lighthouseApp.defect.sourceIP">SourceIP</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="title"><span translate="lighthouseApp.defect.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="code"><span translate="lighthouseApp.defect.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="severity"><span translate="lighthouseApp.defect.severity">scan</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="falsePositive"><span translate="lighthouseApp.defect.isFalsePositive">scan</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="needManuelCheck"><span translate="lighthouseApp.defect.needManuelCheck">scan</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th jh-sort-by="newDefect"><span translate="lighthouseApp.defect.newDefect">scan</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+                    <!--<th></th>-->
+                <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+                <!--<tr ui-sref-active="active info" ng-repeat="defect in defects track by defect.id "-->
+                    <!--ui-sref="plugin.detail.defects.detail({defectId:defect.id})">-->
+                    <!--<td>{{defect.id}}</td>-->
+                    <!--<td>{{defect.sourceIP}}</td>-->
+                    <!--<td>{{defect.title}}</td>-->
+                    <!--<td>{{defect.code}}</td>-->
+                    <!--<td>{{defect.severity}}</td>-->
+                    <!--<td align="center" style="width: 10%">-->
+                        <!--<span ng-show="defect.falsePositive" ng-click="switchFalsePositiveFlag(defect, false)" class="glyphicon glyphicon-check" style="color: darkgreen"></span>-->
+                        <!--<span ng-show="!defect.falsePositive" ng-click="switchFalsePositiveFlag(defect, true)" class="glyphicon glyphicon-minus" style="color: gray"></span>-->
+                    <!--</td>-->
+                    <!--<td align="center" style="width: 10%">-->
+                        <!--<span ng-show="defect.needManuelCheck" ng-click="switchNeedManuelCheckFlag(defect, false)" class="glyphicon glyphicon-check" style="color: darkgreen"></span>-->
+                        <!--<span ng-show="!defect.needManuelCheck" ng-click="switchNeedManuelCheckFlag(defect, true)" class="glyphicon glyphicon-minus" style="color: gray"></span>-->
+                    <!--</td>-->
+                    <!--<td align="center" style="width: 10%">-->
+                        <!--<span ng-show="defect.previousDefect != null" class="glyphicon glyphicon-check" style="color: darkgreen"></span>-->
+                        <!--<span ng-show="defect.previousDefect == null" class="glyphicon glyphicon-minus" style="color: gray"></span>-->
+                    <!--</td>-->
+                    <!--<td style="width:auto;"></td>-->
+                <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+
+        <div>
+            <my-search-form my-collection="defects" my-search-dto="searchDTO" page="page" size="size" sort="sort" search-method="loadAllDefects(predicateObject)" >
+                <table>
+                    <tr>
+                        <td><my-search-form-field my-label="lighthouseApp.defect.sourceIP" my-search="sourceIP"></my-search-form-field></td>
+                        <td><my-search-form-field my-label="lighthouseApp.defect.title" my-search="title" ></my-search-form-field></td>
+                    </tr>
+                </table>
+            </my-search-form>
+        </div>
+
+        <table class="jh-table table table-striped table-condensed">
             <thead>
-            <tr>
-                <th st-sort="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th><my-table-search-text my-search="sourceIP" my-translate="lighthouseApp.defect.sourceIP" my-table-search-text-listener="sourceIP" my-search-dto="searchDTO"></my-table-search-text></th>
-                <th>
-                    <span translate="lighthouseApp.defect.title">Title</span> <span class="glyphicon glyphicon-sort"></span>
-                    <input placeholder="Search" st-search="title" ng-model="defectSearchDTO.title"/>
-                </th>
-                <th st-sort="code"><span translate="lighthouseApp.defect.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th st-sort="severity"><span translate="lighthouseApp.defect.severity">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th st-sort="falsePositive" ><span translate="lighthouseApp.defect.isFalsePositive">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th st-sort="needManuelCheck"><span translate="lighthouseApp.defect.needManuelCheck">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th st-sort="newDefect"><span translate="lighthouseApp.defect.newDefect">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+            <tr jh-sort="predicate" ascending="reverse" callback="searchDefects(predicateObject)">
+                <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="sourceIP"><span translate="lighthouseApp.defect.sourceIP">SourceIP</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="title"><span translate="lighthouseApp.defect.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="code"><span translate="lighthouseApp.defect.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="severity"><span translate="lighthouseApp.defect.severity">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="falsePositive"><span translate="lighthouseApp.defect.isFalsePositive">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="needManuelCheck"><span translate="lighthouseApp.defect.needManuelCheck">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="newDefect"><span translate="lighthouseApp.defect.newDefect">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="defect in displayedDefects">
+            <tr ui-sref-active="active info" ng-repeat="defect in defects track by defect.id "
+                ui-sref="plugin.detail.defects.detail({defectId:defect.id})">
                 <td>{{defect.id}}</td>
                 <td>{{defect.sourceIP}}</td>
                 <td>{{defect.title}}</td>
@@ -43,53 +141,12 @@
                 <td style="width:auto;"></td>
             </tr>
             </tbody>
-            <tfoot></tfoot>
-        </table>
--->
-
-
-        <table class="jh-table table table-striped table-condensed">
-            <thead>
-                <tr jh-sort="predicate" ascending="reverse" callback="loadAllDefects()">
-                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="sourceIP"><span translate="lighthouseApp.defect.sourceIP">SourceIP</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="title"><span translate="lighthouseApp.defect.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="code"><span translate="lighthouseApp.defect.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="severity"><span translate="lighthouseApp.defect.severity">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="falsePositive"><span translate="lighthouseApp.defect.isFalsePositive">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="needManuelCheck"><span translate="lighthouseApp.defect.needManuelCheck">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="newDefect"><span translate="lighthouseApp.defect.newDefect">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ui-sref-active="active info" ng-repeat="defect in defects track by defect.id "
-                    ui-sref="plugin.detail.defects.detail({defectId:defect.id})">
-                    <td>{{defect.id}}</td>
-                    <td>{{defect.sourceIP}}</td>
-                    <td>{{defect.title}}</td>
-                    <td>{{defect.code}}</td>
-                    <td>{{defect.severity}}</td>
-                    <td align="center" style="width: 10%">
-                        <span ng-show="defect.falsePositive" ng-click="switchFalsePositiveFlag(defect, false)" class="glyphicon glyphicon-check" style="color: darkgreen"></span>
-                        <span ng-show="!defect.falsePositive" ng-click="switchFalsePositiveFlag(defect, true)" class="glyphicon glyphicon-minus" style="color: gray"></span>
-                    </td>
-                    <td align="center" style="width: 10%">
-                        <span ng-show="defect.needManuelCheck" ng-click="switchNeedManuelCheckFlag(defect, false)" class="glyphicon glyphicon-check" style="color: darkgreen"></span>
-                        <span ng-show="!defect.needManuelCheck" ng-click="switchNeedManuelCheckFlag(defect, true)" class="glyphicon glyphicon-minus" style="color: gray"></span>
-                    </td>
-                    <td align="center" style="width: 10%">
-                        <span ng-show="defect.previousDefect != null" class="glyphicon glyphicon-check" style="color: darkgreen"></span>
-                        <span ng-show="defect.previousDefect == null" class="glyphicon glyphicon-minus" style="color: gray"></span>
-                    </td>
-                    <td style="width:auto;"></td>
-                </tr>
-            </tbody>
         </table>
 
-    </div>
     <div class="text-center">
-        <uib-pagination items-per-page="10" boundary-link-numbers="true"  class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAllDefects()"></uib-pagination>
+        <uib-pagination items-per-page="10" boundary-link-numbers="true"  class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAllDefects(searchDTO)"></uib-pagination>
+        <!--<uib-pagination items-per-page="10" boundary-link-numbers="true"  class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="searchDefects(predicateObject)"></uib-pagination>-->
     </div>
+
     <jh-alert></jh-alert>
 </div>

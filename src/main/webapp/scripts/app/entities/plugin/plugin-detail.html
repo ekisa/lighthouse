@@ -8,7 +8,7 @@
     </div>
 
     <div ui-view="plugin.detail.scans"></div>
-    <div class="well" ui-view="plugin.detail.scan.defects" ng-show="defects.length"></div>
+    <div class="well" ui-view="plugin.detail.scan.defects" ng-show="defects.length || !angular.equals(searchDTO, {}) "></div>
     <div class="well" ui-view="plugin.detail.scan.defects.detail" ng-show="defect"></div>
 
     <button type="submit"

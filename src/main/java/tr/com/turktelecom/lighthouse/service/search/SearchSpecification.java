@@ -2,10 +2,7 @@ package tr.com.turktelecom.lighthouse.service.search;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
 /**
  * Created by 010235 on 13.05.2016.
@@ -20,6 +17,9 @@ public class SearchSpecification<T> implements Specification<T> {
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+        if(criteria.getKey().contains(".")){
+            return builder.equal(getPath(Long.class, root, criteria.getKey()), criteria.getValue());
+        }
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return builder.greaterThanOrEqualTo(root.<String> get(criteria.getKey()), criteria.getValue().toString());
         }
@@ -34,5 +34,15 @@ public class SearchSpecification<T> implements Specification<T> {
             }
         }
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    static public<T, R> Path<R> getPath(Class<R> resultType, Path<T> root, String path) {
+        String[] pathElements = path.split("\\.");
+        Path<?> retVal = root;
+        for (String pathEl : pathElements) {
+            retVal = (Path<R>) retVal.get(pathEl);
+        }
+        return (Path<R>) retVal;
     }
 }

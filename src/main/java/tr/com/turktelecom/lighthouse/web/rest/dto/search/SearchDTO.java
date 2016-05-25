@@ -1,24 +1,35 @@
 package tr.com.turktelecom.lighthouse.web.rest.dto.search;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.domain.Sort;
+import tr.com.turktelecom.lighthouse.domain.util.CustomSearchDeserializer;
+import tr.com.turktelecom.lighthouse.domain.util.CustomSortDeserializer;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by 010235 on 13.05.2016.
  */
-public abstract class SearchDTO {
+//@JsonDeserialize(using = SearchDTODeserializer.class)
+public class SearchDTO{
 
+    @NotNull
     private int page;
+    @NotNull
     private int size;
-    private String sort;
-    private String[] specifications;
+    @JsonDeserialize(using=CustomSortDeserializer.class)
+    private Sort sort;
 
+    @JsonDeserialize(using=CustomSearchDeserializer.class)
+    private Search search;
 
     public SearchDTO() {
+    }
+
+    public SearchDTO(int page, int size, Sort sort) {
+        this.page = page;
+        this.size = size;
+        this.sort = sort;
     }
 
     public int getPage() {
@@ -37,20 +48,20 @@ public abstract class SearchDTO {
         this.size = size;
     }
 
-    public String getSort() {
+    public Sort getSort() {
         return sort;
     }
 
-    public void setSort(String sort) {
+    public void setSort(Sort sort) {
         this.sort = sort;
     }
 
-    public String[] getSpecifications() {
-        return specifications;
+    public Search getSearch() {
+        return search;
     }
 
-    public void setSpecifications(String[] specifications) {
-        this.specifications = specifications;
+    public void setSearch(Search search) {
+        this.search = search;
     }
 }
 
