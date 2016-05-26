@@ -1,15 +1,17 @@
 package tr.com.turktelecom.lighthouse.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.data.domain.*;
 import tr.com.turktelecom.lighthouse.domain.Plugin;
 import tr.com.turktelecom.lighthouse.repository.PluginRepository;
+import tr.com.turktelecom.lighthouse.repository.PluginRepositoryCustom;
 import tr.com.turktelecom.lighthouse.repository.search.PluginSearchRepository;
+import tr.com.turktelecom.lighthouse.web.rest.dto.PluginHomeDTO;
 import tr.com.turktelecom.lighthouse.web.rest.util.HeaderUtil;
 import tr.com.turktelecom.lighthouse.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +43,9 @@ public class PluginResource {
 
     @Inject
     private PluginSearchRepository pluginSearchRepository;
+
+    @Inject
+    PluginRepositoryCustom pluginRepositoryCustom;
 
     /**
      * POST  /plugins -> Create a new plugin.
@@ -92,6 +98,27 @@ public class PluginResource {
         Page<Plugin> page = pluginRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/plugins");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /plugin-last-scan-defects-count -> get defect count of the last scan of a given plugin, grouped by severity.
+     */
+    @RequestMapping(value = "/plugin-last-scan-defects-count-grouped-by-severity",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<PluginHomeDTO>> getLastScanDefectsCountGroupedBySeverity(Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get plugin-last-scan-defects-count-grouped-by-severity");
+        Page<Plugin> plugins = pluginRepository.findAll(new PageRequest(pageable.getOffset(), pageable.getPageSize(), new Sort("id")));
+        List<Long> pluginIds = new ArrayList<Long>();
+        for (Plugin plugin : plugins.getContent()) {
+            pluginIds.add(plugin.getId());
+        }
+        List<PluginHomeDTO> pluginHomeDTOs = pluginRepositoryCustom.defectsCountGroupedBySeverity(pluginIds, pageable);
+        Page responsePage = new PageImpl(pluginHomeDTOs, pageable, plugins.getTotalElements());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(responsePage, "/api/plugin-last-scan-defects-count-grouped-by-severity");
+        return new ResponseEntity<>(responsePage.getContent(), headers, HttpStatus.OK);
     }
 
     /**

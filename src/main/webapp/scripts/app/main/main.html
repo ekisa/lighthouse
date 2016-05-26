@@ -23,22 +23,26 @@
                     <div class="table-responsive">
                         <table class="jh-table table table-striped table-condensed table-hover">
                             <thead>
-                                <tr jh-sort="predicate" ascending="reverse" callback="loadAllPlugins()">
-                                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                                    <th jh-sort-by="name"><span translate="lighthouseApp.plugin.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                                    <th>Low</th>
-                                    <th>Medium</th>
-                                    <th>High</th>
+                                <tr jh-sort="predicate" ascending="reverse" callback="loadPluginHomeDTOs()">
+                                    <th jh-sort-by="pluginId"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                                    <th jh-sort-by="pluginName"><span translate="lighthouseApp.plugin.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                                    <th jh-sort-by="severityOrder"><span translate="lighthouseApp.plugin.critical"></span><span class="glyphicon glyphicon-sort"></th>
+                                    <th jh-sort-by="severityOrder"><span translate="lighthouseApp.plugin.high"></span></th>
+                                    <th jh-sort-by="severityOrder"><span translate="lighthouseApp.plugin.medium"></span></th>
+                                    <th jh-sort-by="severityOrder"><span translate="lighthouseApp.plugin.low"></span></th>
+                                    <th jh-sort-by="severityOrder"><span translate="lighthouseApp.plugin.info"></span></th>
                                     <!--<th></th>-->
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="plugin in plugins track by plugin.id" ui-sref="plugin.detail({pluginId:plugin.id})">
-                                <td>{{plugin.id}}</td>
-                                <td>{{plugin.name}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr ng-repeat="plugin in plugins track by plugin.pluginId" ui-sref="plugin.detail({pluginId:plugin.pluginId})">
+                                <td>{{plugin.pluginId}}</td>
+                                <td>{{plugin.pluginName}}</td>
+                                <td>{{plugin.defectsCountBySeverity.CRITICAL == null ? '-' : plugin.defectsCountBySeverity.CRITICAL}}</td>
+                                <td>{{plugin.defectsCountBySeverity.HIGH == null ? '-' : plugin.defectsCountBySeverity.HIGH}}</td>
+                                <td>{{plugin.defectsCountBySeverity.MEDIUM == null ? '-' : plugin.defectsCountBySeverity.MEDIUM}}</td>
+                                <td>{{plugin.defectsCountBySeverity.LOW == null ? '-' : plugin.defectsCountBySeverity.LOW}}</td>
+                                <td>{{plugin.defectsCountBySeverity.INFO == null ? '-' : plugin.defectsCountBySeverity.INFO}}</td>
                                 <!--
                                 <td class="text-right">
                                     <div class="btn-group flex-btn-group-container">
@@ -57,7 +61,7 @@
                     </div>
 
                     <div class="text-center">
-                        <uib-pagination items-per-page="10" boundary-link-numbers="true"  class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAllPlugins()"></uib-pagination>
+                        <uib-pagination items-per-page="10" boundary-link-numbers="true"  class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadPluginHomeDTOs()"></uib-pagination>
                     </div>
             </div>
         </div>

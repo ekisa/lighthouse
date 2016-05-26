@@ -14,4 +14,9 @@ angular.module('lighthouseApp')
             'update': { method:'PUT' },
             'delete': { method:'DELETE'}
         });
+    })
+.factory('PluginHomeDTO', function ($resource) {
+    return $resource('api/plugin-last-scan-defects-count-grouped-by-severity', {}, {
+        'query': { method: 'GET', isArray: true}
     });
+});

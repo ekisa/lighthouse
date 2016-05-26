@@ -25,7 +25,12 @@
             },
             "pluginContext" : {
                 "executableName": "Executable Name"
-            }
+            },
+            "critical" : "Critical",
+            "high" : "High",
+            "medium" : "Medium",
+            "low" : "Low",
+            "info" : "Info"
         }
     }
 }
