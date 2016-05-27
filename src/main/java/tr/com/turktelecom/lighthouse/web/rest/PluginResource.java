@@ -4,7 +4,6 @@ import com.codahale.metrics.annotation.Timed;
 import org.springframework.data.domain.*;
 import tr.com.turktelecom.lighthouse.domain.Plugin;
 import tr.com.turktelecom.lighthouse.repository.PluginRepository;
-import tr.com.turktelecom.lighthouse.repository.PluginRepositoryCustom;
 import tr.com.turktelecom.lighthouse.repository.search.PluginSearchRepository;
 import tr.com.turktelecom.lighthouse.service.PluginService;
 import tr.com.turktelecom.lighthouse.web.rest.dto.PluginHomeDTO;
@@ -44,10 +43,6 @@ public class PluginResource {
 
     @Inject
     private PluginSearchRepository pluginSearchRepository;
-
-    @Inject PluginRepositoryCustom pluginRepositoryCustom;
-
-    @Inject private PluginService pluginService;
 
     /**
      * POST  /plugins -> Create a new plugin.

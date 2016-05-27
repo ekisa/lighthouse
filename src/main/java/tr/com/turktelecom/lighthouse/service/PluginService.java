@@ -67,32 +67,4 @@ public class PluginService {
         //DebugUtils.showTransactionStatus("PluginService.persist2");
     }
 
-
-    public List<PluginHomeDTO> getLastScanDefectsCountGroupedBySeverity(Pageable pageable) {
-
-//        Page<Plugin> plugins = pluginRepository.findAll(new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), new Sort("id")));
-//        Map<Long, PluginHomeDTO> map = new HashMap<Long, PluginHomeDTO>();
-//        for (Plugin plugin : plugins) {
-//            Scan lastScan = scanRepository.findTopByPluginIdOrderByCreatedDateDesc(plugin.getId());
-//            int critical=0, high=0, medium = 0, low = 0, info = 0;
-//            for (Defect defect : lastScan.getDefects()) {
-//                switch (defect.getSeverity()) {
-//                    case CRITICAL: critical++;
-//                    case HIGH: high++;
-//                    case MEDIUM: medium++;
-//                    case LOW: low++;
-//                    case INFO: info++;
-//                }
-//            }
-//
-//            PluginHomeDTO pluginHomeDTO = new PluginHomeDTO();
-//            pluginHomeDTO.setPluginId(plugin.getId());
-//            pluginHomeDTO.setLastScanId(lastScan.getId());
-//            pluginHomeDTO.setPluginName(plugin.getName());
-//            //pluginHomeDTO.set
-//
-//
-//        }
-        return null;
-    }
 }
