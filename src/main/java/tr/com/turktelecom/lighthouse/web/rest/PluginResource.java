@@ -108,12 +108,6 @@ public class PluginResource {
         throws URISyntaxException {
         log.debug("REST request to get plugin-last-scan-defects-count-grouped-by-severity");
         Page<Plugin> plugins = pluginRepository.findAll(new PageRequest(pageable.getPageNumber(), pageable.getPageSize()));
-//        List<Long> pluginIds = new ArrayList<Long>();
-//        for (Plugin plugin : plugins.getContent()) {
-//            pluginIds.add(plugin.getId());
-//        }
-//        List<PluginHomeDTO> pluginHomeDTOs = pluginRepositoryCustom.defectsCountGroupedBySeverity(pluginIds, pageable);
-
         String sort = pageable.getSort().toString().replace(":", "");
         int i = sort.indexOf(",");
         if (i > 0) {
