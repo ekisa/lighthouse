@@ -8,11 +8,11 @@ angular.module('lighthouseApp')
         });
 
         $scope.plugins = [];
-        $scope.predicate = 'severityOrder';
+        $scope.predicate = 'severity';
         $scope.reverse = false;
         $scope.page = 1;
         $scope.loadPluginHomeDTOs = function() {
-            PluginHomeDTO.query({page: $scope.page - 1, size: 10, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'severityOrder']}, function(result, headers) {
+            PluginHomeDTO.query({page: $scope.page - 1, size: 10, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'severity']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.totalItems = headers('X-Total-Count');
                 $scope.plugins = result;

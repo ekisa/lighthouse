@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * Created by 010235 on 17.03.2016.
  */
-public enum Severity {
+public enum Severity implements Comparable<Severity>{
 
     CRITICAL("CRITICAL", "4"), HIGH("HIGH", "3"), MEDIUM("MEDIUM", "2"), LOW("LOW", "1"), INFO("INFO", "0");
 
@@ -45,5 +45,9 @@ public enum Severity {
     @JsonValue
     public String getTitle() {
         return title;
+    }
+
+    public String getNo() {
+        return no;
     }
 }

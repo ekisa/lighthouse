@@ -24,7 +24,9 @@ import java.util.*;
 @Table(name = "plugin")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "plugin")
-@NamedEntityGraph(name = "graph.Plugin.args", attributeNodes = @NamedAttributeNode("args"))
+@NamedEntityGraphs(value = {
+    @NamedEntityGraph(name = "graph.Plugin.args", attributeNodes = @NamedAttributeNode("args"))
+})
 public class Plugin extends AbstractAuditingEntity implements Serializable {
 
     @Id
@@ -57,7 +59,8 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @LazyCollection(LazyCollectionOption.EXTRA)
     @BatchSize(size = 20)
-    private Set<Scan> scans = new HashSet<Scan>();
+    @OrderColumn(name = "created_date")
+    private List<Scan> scans = new ArrayList<Scan>();
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "plugin_context")
@@ -107,11 +110,11 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
         this.schedule = schedule;
     }
 
-    public Set<Scan> getScans() {
+    public List<Scan> getScans() {
         return scans;
     }
 
-    public void setScans(Set<Scan> scans) {
+    public void setScans(List<Scan> scans) {
         this.scans = scans;
     }
 
