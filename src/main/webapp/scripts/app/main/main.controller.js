@@ -9,7 +9,7 @@ angular.module('lighthouseApp')
 
         $scope.plugins = [];
         $scope.predicate = 'severity';
-        $scope.reverse = false;
+        $scope.reverse = true;
         $scope.page = 1;
         $scope.loadPluginHomeDTOs = function() {
             PluginHomeDTO.query({page: $scope.page - 1, size: 10, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'severity']}, function(result, headers) {

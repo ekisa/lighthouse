@@ -3,16 +3,22 @@
 angular.module('lighthouseApp')
     .controller('DefectController', function ($scope, $state, $stateParams, Defect, DefectSearch, ParseLinks, customFilterFilter, $q, $httpParamSerializer) {
         $scope.predicate = 'severity';
-        $scope.reverse = true;
+        $scope.reverse = false;
         $scope.page = 1;
         $scope.defects = [];
         $scope.searchDTO = {};
 
         $scope.loadAllDefects = function(predicateObject) {
-            Defect.query({scanId: $stateParams.scanId, filterParams: $httpParamSerializer(predicateObject), page: $scope.page - 1, size: 10, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
-                $scope.links = ParseLinks.parse(headers('link'));
-                $scope.totalItems = headers('X-Total-Count');
-                $scope.defects = result;
+            Defect.query({
+                    scanId: $stateParams.scanId,
+                    filterParams: $httpParamSerializer(predicateObject),
+                    page: $scope.page - 1,
+                    size: 10,
+                    sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']
+                }, function(result, headers) {
+                    $scope.links = ParseLinks.parse(headers('link'));
+                    $scope.totalItems = headers('X-Total-Count');
+                    $scope.defects = result;
             });
         };
         $scope.loadPage = function(page) {
@@ -41,26 +47,26 @@ angular.module('lighthouseApp')
         }
 
 
-        $scope.searchDefects = function (predicateObject) {
-            var deferred = $q.defer();
-            DefectSearch.query({
-                page: $scope.page - 1,
-                size: $scope.size,
-                sort: $scope.sort,
-                search: predicateObject,
-                scanId: $stateParams.scanId
-            }, function (result, headers) {
-                $scope.links = ParseLinks.parse(headers('link'));
-                $scope.totalItems = headers('X-Total-Count');
-                deferred.resolve(result);
-            }, function () {
-                deferred.reject();
-            });
-
-            deferred.promise.then(function (result) {
-                $scope.defects = result;
-            })
-        };
+        //$scope.searchDefects = function (predicateObject) {
+        //    var deferred = $q.defer();
+        //    DefectSearch.query({
+        //        page: $scope.page - 1,
+        //        size: $scope.size,
+        //        sort: $scope.sort,
+        //        search: predicateObject,
+        //        scanId: $stateParams.scanId
+        //    }, function (result, headers) {
+        //        $scope.links = ParseLinks.parse(headers('link'));
+        //        $scope.totalItems = headers('X-Total-Count');
+        //        deferred.resolve(result);
+        //    }, function () {
+        //        deferred.reject();
+        //    });
+        //
+        //    deferred.promise.then(function (result) {
+        //        $scope.defects = result;
+        //    })
+        //};
 
         //$scope.callServer = function(tableState) {
         //    $scope.isLoading = true;

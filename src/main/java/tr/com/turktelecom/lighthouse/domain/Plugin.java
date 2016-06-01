@@ -1,7 +1,6 @@
 package tr.com.turktelecom.lighthouse.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.Length;
@@ -59,7 +58,7 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @LazyCollection(LazyCollectionOption.EXTRA)
     @BatchSize(size = 20)
-    @OrderColumn(name = "created_date")
+    //@OrderColumn(name = "created_date")
     private List<Scan> scans = new ArrayList<Scan>();
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -70,13 +69,10 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
     @Column(name = "output_format")
     private String outputFormat;
 
-    @ElementCollection
-    @JoinTable(name="executable_args", joinColumns=@JoinColumn(name="id"))
-    @MapKeyColumn (name="arg")
-    @Column(name="value")
+    @OneToMany(mappedBy = "plugin", cascade = CascadeType.ALL )
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Map<String,String> args = new HashMap<String, String>();
+    private List<PluginArgument> args = new ArrayList<PluginArgument>();
 
     public Long getId() {
         return id;
@@ -150,11 +146,11 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
         this.folderName = folderName;
     }
 
-    public Map<String, String> getArgs() {
+    public List<PluginArgument> getArgs() {
         return args;
     }
 
-    public void setArgs(Map<String, String> args) {
+    public void setArgs(List<PluginArgument> args) {
         this.args = args;
     }
 

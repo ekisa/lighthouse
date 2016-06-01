@@ -5,16 +5,15 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * Created by 010235 on 17.03.2016.
  */
-public enum Severity implements Comparable<Severity>{
+public enum Severity{
+    INFO("0","INFO"),LOW("1", "LOW"), MEDIUM("2", "MEDIUM"), HIGH("3", "HIGH"), CRITICAL("4", "CRITICAL");
 
-    CRITICAL("CRITICAL", "4"), HIGH("HIGH", "3"), MEDIUM("MEDIUM", "2"), LOW("LOW", "1"), INFO("INFO", "0");
-
-    private String title;
     private String no;
+    private String title;
 
-    Severity(String title, String no){
-        this.title = title;
+    Severity(String no, String title){
         this.no = no;
+        this.title = title;
     }
 
     public static Severity fromNo(String no){
@@ -30,15 +29,15 @@ public enum Severity implements Comparable<Severity>{
             case "4":
                 return CRITICAL;
             default:
-                return INFO;
+                return null;
         }
     }
 
     @Override
     public String toString() {
         return "Severity{" +
-            "title='" + title + '\'' +
             "no='" + no + '\'' +
+            "title='" + title + '\'' +
             '}';
     }
 

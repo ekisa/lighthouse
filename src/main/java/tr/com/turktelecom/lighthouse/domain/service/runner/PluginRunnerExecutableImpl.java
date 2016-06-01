@@ -5,11 +5,13 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.stereotype.Component;
 import tr.com.turktelecom.lighthouse.domain.Plugin;
 import tr.com.turktelecom.lighthouse.domain.ExecutablePluginContext;
+import tr.com.turktelecom.lighthouse.domain.PluginArgument;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginContextNotSupportedException;
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginRunFailedException;
 import tr.com.turktelecom.lighthouse.service.util.DateTimeUtil;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,22 +25,31 @@ import java.util.Map;
 public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
 
     @Override
-    protected void runInternal(Plugin plugin) throws PluginContextNotSupportedException, PluginRunFailedException{
+    protected void runInternal(Plugin plugin, ZonedDateTime pluginStartTimestamp) throws PluginContextNotSupportedException, PluginRunFailedException{
         ExecutablePluginContext executablePluginContext = this.findPluginContext(plugin);
-        ZonedDateTime pluginStartTimestamp = ZonedDateTime.now();
         File errorLogFile = this.createLogFile("error", plugin, pluginStartTimestamp);
         File outputLogFile = this.createLogFile("output", plugin, pluginStartTimestamp);
         try {
             this.logToFile(outputLogFile, "\nRun started at " + DateTimeUtil.formatTimeStamp(pluginStartTimestamp, DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
 
             List<String> args = new ArrayList<String>();
-            args.add(executablePluginContext.getCommand());
-            args.add(executablePluginContext.getExecutableName());
+            String command = executablePluginContext.getCommand();
+            if ("bash".equals(command)) {
+                args.add("/bin/bash");
+            }else {
+                args.add(command);
+            }
+
+            String executableName = executablePluginContext.getExecutableName();
+            if (StringUtils.isNotEmpty(executableName)) {
+                args.add(executableName);
+            }
+
             this.addOptionalArgs(plugin, args);
 
             ProcessBuilder processBuilder = new ProcessBuilder(args.toArray(new String[0]));
             this.setProcessPath(executablePluginContext, processBuilder);
-            processBuilder.directory(super.findWorkingDirectory(plugin));
+            processBuilder.directory(this.findWorkingDirectory(plugin));
             processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(errorLogFile));
             processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(outputLogFile));
             Process process = processBuilder.start();
@@ -76,14 +87,14 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
     }
 
     private void addOptionalArgs(Plugin plugin, List<String> args) {
-        Iterator<Map.Entry<String, String>> iterator = plugin.getArgs().entrySet().iterator();
+        Iterator<PluginArgument> iterator = plugin.getArgs().iterator();
         while(iterator.hasNext()) {
-            Map.Entry<String, String> entry = iterator.next();
-            if(StringUtils.isNotEmpty(entry.getKey())){
-                args.add(entry.getKey());
+            PluginArgument pluginArgument = iterator.next();
+            if(StringUtils.isNotEmpty(pluginArgument.getArg())){
+                args.add(pluginArgument.getArg());
             }
-            if(StringUtils.isNotEmpty(entry.getValue())){
-                args.add(entry.getValue());
+            if(StringUtils.isNotEmpty(pluginArgument.getValue())){
+                args.add(pluginArgument.getValue());
             }
         }
     }
@@ -98,8 +109,8 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
         fileWriter.close();
     }
 
-    private File createLogFile(String type, Plugin plugin, ZonedDateTime timeStamp) {
-        return new File(findBaseDirectoryURI()
+    private File createLogFile(String type, Plugin plugin, ZonedDateTime timeStamp) throws PluginRunFailedException {
+        return new File(findBaseDirectoryURI(((ExecutablePluginContext) plugin.getPluginContext()).getCommand())
             + File.separator + "plugins"
             + File.separator + plugin.getFolderName()
             + File.separator + "processLogs"
@@ -115,4 +126,23 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
         return (ExecutablePluginContext) plugin.getPluginContext();
     }
 
+    protected String findBaseDirectoryURI(String command) throws PluginRunFailedException {
+        String baseDirectoryURI = "";
+        if (StringUtils.isEmpty(command)) {
+            throw new PluginRunFailedException("Executable context command name bos birakilamaz");
+        }
+        if (StringUtils.isEmpty(environment.getProperty("pluginRunner." + command + ".baseDirectoryURI"))) {
+            baseDirectoryURI = Paths.get(".").toAbsolutePath().normalize().toString();
+        }
+        else {
+            baseDirectoryURI = environment.getProperty("pluginRunner." + command + ".baseDirectoryURI");
+        }
+        return baseDirectoryURI;
+    }
+
+    protected File findWorkingDirectory(Plugin plugin) throws PluginRunFailedException {
+        return new File(this.findBaseDirectoryURI(((ExecutablePluginContext) plugin.getPluginContext()).getCommand())
+            + File.separator + "plugins"
+            + File.separator + plugin.getFolderName());
+    }
 }

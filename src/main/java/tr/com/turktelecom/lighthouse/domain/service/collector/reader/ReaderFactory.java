@@ -14,6 +14,8 @@ public class ReaderFactory {
                 return new SimpleFileReader();
             case "NESSUS":
                 return new NessusXMLReader();
+            case "O-SAFT":
+                return new OSaftFileReader();
             default:
                 return new NessusXMLReader();
         }

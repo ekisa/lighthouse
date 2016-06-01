@@ -89,3 +89,9 @@ jhipster:
 pluginRunner:
     python:
         home: T:\Swf\Lang\Python-3.5.1
+    bash:
+        home: ~
+    perl:
+        home: T:\Swf\Lang\Perl\Strawberry\perl\bin
+    T:\Swf\Lang\Perl\Strawberry\perl\bin\perl.exe:
+        home: T:\Swf\Lang\Perl\Strawberry\perl\bin

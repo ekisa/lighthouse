@@ -10,10 +10,12 @@ import tr.com.turktelecom.lighthouse.domain.exceptions.PluginContextNotSupported
 import tr.com.turktelecom.lighthouse.domain.exceptions.PluginRunFailedException;
 import tr.com.turktelecom.lighthouse.domain.service.collector.PluginResultCollector;
 import tr.com.turktelecom.lighthouse.repository.ScanRepository;
+import tr.com.turktelecom.lighthouse.service.util.DateTimeUtil;
 
 import javax.inject.Inject;
 import java.io.File;
 import java.nio.file.Paths;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 /**
@@ -34,36 +36,22 @@ public abstract class AbstractPluginRunner implements PluginRunner {
 
     @Override
     public Scan run(Plugin plugin) throws PluginContextNotSupportedException, PluginRunFailedException {
-        runInternal(plugin);
+        ZonedDateTime pluginStartTimestamp = ZonedDateTime.now();
+        runInternal(plugin, pluginStartTimestamp);
         Scan previousScan = null;
         if (plugin.getId() != null) {
             previousScan = scanRepository.findTopByPluginIdOrderByCreatedDateDesc(plugin.getId());
         }
         Scan lastScan = resultCollector.collectResults(plugin);
-
+        lastScan.setTitle(DateTimeUtil.formatTimeStamp(ZonedDateTime.now(), DateTimeUtil.PATTERN.DATE_TIME_PATTERN));
         lastScan.analyzeDifferences(previousScan);
 
         return lastScan;
     }
 
 
-    protected abstract void runInternal(Plugin plugin) throws PluginContextNotSupportedException, PluginRunFailedException;
+    protected abstract void runInternal(Plugin plugin, ZonedDateTime pluginStartTimestamp) throws PluginContextNotSupportedException, PluginRunFailedException;
 
 
-    protected String findBaseDirectoryURI() {
-        String baseDirectoryURI = "";
-        if (StringUtils.isEmpty(environment.getProperty("pluginRunner.python.baseDirectoryURI"))) {
-            baseDirectoryURI = Paths.get(".").toAbsolutePath().normalize().toString();
-        }
-        else {
-            baseDirectoryURI = environment.getProperty("pluginRunner.python.baseDirectoryURI");
-        }
-        return baseDirectoryURI;
-    }
 
-    protected File findWorkingDirectory(Plugin plugin) {
-        return new File(this.findBaseDirectoryURI()
-            + File.separator + "plugins"
-            + File.separator + plugin.getFolderName());
-    }
 }

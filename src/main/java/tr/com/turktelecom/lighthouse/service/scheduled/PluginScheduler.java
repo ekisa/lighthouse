@@ -1,6 +1,5 @@
 package tr.com.turktelecom.lighthouse.service.scheduled;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,8 +8,6 @@ import tr.com.turktelecom.lighthouse.domain.Plugin;
 import tr.com.turktelecom.lighthouse.domain.Scan;
 import tr.com.turktelecom.lighthouse.repository.PluginRepository;
 import tr.com.turktelecom.lighthouse.service.PluginService;
-import tr.com.turktelecom.lighthouse.service.util.DateTimeUtil;
-import tr.com.turktelecom.lighthouse.service.util.DebugUtils;
 
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
@@ -42,19 +39,11 @@ public class PluginScheduler {
     public void runPlugins() {
         log.debug("Plugin scheduler started running...");
         ZonedDateTime now = ZonedDateTime.now();
-        List<Plugin> plugins = pluginRepository.findAllByActivatedIsTrueAndNextRunDateBefore(now);
+        List<Plugin> plugins = pluginRepository.findDistinctByActivatedIsTrueAndNextRunDateBefore(now);
         for (Plugin plugin : plugins) {
             log.debug("Running plugin : {}", plugin.getName());
-            Scan lastScan =  pluginService.runPlugin(plugin);
-            if(StringUtils.isNotEmpty(lastScan.getTitle())){
-                //Add timestamp to scan title
-                lastScan.setTitle(lastScan.getTitle() + " " + DateTimeUtil.formatTimeStamp(now, DateTimeUtil.PATTERN.DATE_TIME_PATTERN_FOR_FILE_NAMES));
-            }else{
-                lastScan.setTitle(DateTimeUtil.formatTimeStamp(now, DateTimeUtil.PATTERN.DATE_TIME_PATTERN_FOR_FILE_NAMES));
-            }
-
-
-            pluginService.persist(plugin, lastScan);
+            Scan lastScan =  pluginService.startNewScan(plugin);
+            pluginService.addScan(plugin, lastScan);
             log.debug("Finished running plugin : {}", plugin.getName());
         }
     }

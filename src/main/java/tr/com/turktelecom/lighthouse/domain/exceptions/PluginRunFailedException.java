@@ -6,6 +6,10 @@ package tr.com.turktelecom.lighthouse.domain.exceptions;
 public class PluginRunFailedException extends Exception {
 
     public PluginRunFailedException(String message, Exception e) {
-        super(message);
+        super(message, e);
+    }
+
+    public PluginRunFailedException(String s) {
+        super(s);
     }
 }

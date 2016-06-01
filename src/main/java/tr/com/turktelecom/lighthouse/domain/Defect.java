@@ -43,7 +43,7 @@ public class Defect extends AbstractAuditingEntity implements Serializable {
     @JoinColumn(name = "scan_id")
     private Scan scan;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private Severity severity;
 
     @Column(name="false_positive")

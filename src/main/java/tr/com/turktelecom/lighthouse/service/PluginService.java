@@ -41,13 +41,9 @@ public class PluginService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Inject private PluginRepository pluginRepository;
-
-    @Inject private ScanRepository scanRepository;
-
     //TODO : Transactional olma gereksinimleri incelenecek
     //TODO : Exceptionlar handle edilecek
-    public Scan runPlugin(Plugin plugin) {
+    public Scan startNewScan(Plugin plugin) {
         try {
             return pluginRunner.run(plugin);
         } catch (PluginContextNotSupportedException e) {
@@ -60,11 +56,12 @@ public class PluginService {
     }
 
     @Transactional
-    public void persist(Plugin plugin, Scan scan) {
-        //DebugUtils.showTransactionStatus("PluginService.persist");
+    public Plugin addScan(Plugin plugin, Scan scan) {
+        //DebugUtils.showTransactionStatus("PluginService.addScan");
         plugin = entityManager.merge(plugin);
         plugin.addScan(scan);
-        //DebugUtils.showTransactionStatus("PluginService.persist2");
+        return plugin;
+        //DebugUtils.showTransactionStatus("PluginService.addScan");
     }
 
 }
