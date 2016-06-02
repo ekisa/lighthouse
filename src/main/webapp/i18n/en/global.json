@@ -5,6 +5,9 @@
         "menu": {
             "home": "Home",
             "search": "Search",
+            "search":{
+                "tip": "Use '%' to create 'like' queries (Ex: %john doe%)"
+            } ,
             "plugins" : "Plugins",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {

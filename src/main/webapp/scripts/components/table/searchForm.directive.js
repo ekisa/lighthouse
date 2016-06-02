@@ -34,11 +34,14 @@ angular.module('lighthouseApp')
                     $scope.$on('$destroy', function () {
                         $scope.myCollection = [];
                         $scope.mySearchDto = null;
+                        $scope.page = null;
+                        $scope.size = null;
+                        $scope.sort = null;
+                        $scope.searchMethod = null;
                     });
                 }
             ],
             link: function(scope, element, attrs, ctrl){
-                console.log("table link called");
                 scope.searchMethod();
 
                 //alert(JSON.stringify(element));
@@ -70,7 +73,7 @@ angular.module('lighthouseApp')
             template:
                     '<span translate="{{myLabel}}">text</span>' +
                     '<span class="glyphicon glyphicon-sort"></span>' +
-                    '<input placeholder="Search.." ng-model="searchValue" ng-change="search(searchValue)"/>',
+                    '<input placeholder="Search.." ng-model="searchValue" ng-change="search(searchValue)" title="{{\'global.menu.search.tip\' | translate}}"/>',
 
 
             controller: ['$scope',
