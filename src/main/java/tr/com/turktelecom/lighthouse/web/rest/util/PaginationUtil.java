@@ -9,10 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Utility class for handling pagination.
@@ -90,6 +87,9 @@ public class PaginationUtil {
     }
 
     public static Map<String, String> extractFilterParams(Map<String, String> filterParams) {
+        return extractFilterParams(filterParams, new HashMap<String, Class>());
+    }
+    public static Map<String, String> extractFilterParams(Map<String, String> filterParams, Map<String, Class> enumParameters) {
         String[] filterCriterias = filterParams.get("filterParams").split("&");
         for (String filterParam : filterCriterias) {
             filterParam = filterParam.trim();
@@ -97,6 +97,10 @@ public class PaginationUtil {
                 String paramName = filterParam.split("=")[0];
                 String paramVal = filterParam.split("=")[1];
                 if (!StringUtils.isEmpty(paramName) && !StringUtils.isEmpty(paramVal)) {
+                    //Eğer ki bu bir enum değeri ise object yerine name değerini gönderiyoruz
+                    if (enumParameters.get(paramName) != null) {
+                        paramVal = Enum.valueOf(enumParameters.get(paramName), paramVal).name();
+                    }
                     filterParams.put(URLDecoder.decode(paramName, "UTF8"), URLDecoder.decode(paramVal, "UTF8"));
                 }
             } catch (ArrayIndexOutOfBoundsException e) {

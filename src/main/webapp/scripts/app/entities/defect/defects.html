@@ -1,15 +1,18 @@
 <div>
-    <h4 translate="lighthouseApp.scan.home.title">Defect Results</h4>
+    <h4 translate="lighthouseApp.scan.home.title" translate-values="{count:'{{totalItems}}'}">Defect Results</h4>
 
     <div class="table-responsive">
         <table class="jh-table table table-striped table-condensed" my-search-form my-collection="defects" my-search-dto="searchDTO" page="page" size="size" sort="sort" search-method="loadAllDefects()">
             <thead>
                 <tr>
                     <td></td>
-                    <td><my-search-form-field my-label="lighthouseApp.defect.sourceIP" my-search="sourceIP"></my-search-form-field></td>
-                    <td><my-search-form-field my-label="lighthouseApp.defect.title" my-search="title" ></my-search-form-field></td>
+                    <td><my-search-form-field my-search="sourceIP"></my-search-form-field></td>
+                    <td><my-search-form-field my-search="title" ></my-search-form-field></td>
                     <td></td>
-                    <td><my-search-form-field my-label="lighthouseApp.defect.severity" my-search="severity" ></my-search-form-field></td>
+                    <td>
+                        <my-search-form-enum-field my-search="severity" enum-list="['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFO']" ></my-search-form-enum-field>
+
+                    </td>
                     <td></td>
                     <td></td>
                     <td></td>

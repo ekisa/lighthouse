@@ -2,7 +2,7 @@
     "lighthouseApp": {
         "scan" : {
             "home": {
-                "title": "Defects",
+                "title": "{{count}} Defects found",
                 "createLabel": "Create a new Scan",
                 "createOrEditLabel": "Create or edit a Scan",
                 "search": "Search for Scan"

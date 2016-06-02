@@ -67,13 +67,10 @@ angular.module('lighthouseApp')
             require: '^^mySearchForm',
             transclude: false,
             scope: {
-                mySearch: '@',
-                myLabel: '@'
+                mySearch: '@'
             },
             template:
-                    '<span translate="{{myLabel}}">text</span>' +
-                    '<span class="glyphicon glyphicon-sort"></span>' +
-                    '<input placeholder="Search.." ng-model="searchValue" ng-change="search(searchValue)" title="{{\'global.menu.search.tip\' | translate}}"/>',
+                    '<input placeholder="Filter.." ng-model="searchValue" ng-change="search(searchValue)" title="{{\'global.menu.search.tip\' | translate}}"/>',
 
 
             controller: ['$scope',
@@ -84,7 +81,6 @@ angular.module('lighthouseApp')
 
                     $scope.$on('$destroy', function () {
                         $scope.mySearch = null;
-                        $scope.myLabel = null;
                     });
                 }
             ],
@@ -101,6 +97,37 @@ angular.module('lighthouseApp')
             }
         };
     })
+    .directive('mySearchFormEnumField', function() {
+    return {
+        restrict: 'E',
+        //replace: false,
+        require: '^^mySearchForm',
+        transclude: false,
+        scope: {
+            mySearch: '@'
+        },
+        template:
+        '<select ng-model="searchValue" ng-options="enum as enum for enum in enumList" ng-change="search(searchValue)">' +
+            '<option value="">-- Filter --</option>' +
+        '</select>',
+        controller: ['$scope',
+            function ($scope) {
+                $scope.search = function search(searchValue){
+                    $scope.searchControl.addSearchCriteria($scope.mySearch, searchValue);
+                };
+
+                $scope.$on('$destroy', function () {
+                    $scope.mySearch = null;
+                });
+            }
+        ],
+        link: function (scope, element, attrs, searchControl) {
+            scope.searchControl = searchControl;
+            //Array yaratıyoruz, yoksa string olarak görüyor
+            scope.enumList = scope.$eval(attrs.enumList);
+        }
+    };
+})
     .directive('mySearchKeyListener', function () {
         return {
             restrict: 'A',

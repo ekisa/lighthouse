@@ -8,6 +8,7 @@ import org.springframework.data.domain.*;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import tr.com.turktelecom.lighthouse.domain.Defect;
+import tr.com.turktelecom.lighthouse.domain.Severity;
 import tr.com.turktelecom.lighthouse.repository.DefectRepository;
 import tr.com.turktelecom.lighthouse.repository.search.DefectSearchRepository;
 import tr.com.turktelecom.lighthouse.service.DefectService;
@@ -129,6 +130,10 @@ public class DefectResource {
     public ResponseEntity<List<DefectDTO>> searchDefects(Pageable pageable, @RequestParam Long scanId, @RequestParam Map<String,String> filterParams)
         throws URISyntaxException {
 
+        if (scanId == null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("defect", "noScanId", "Scan ID must be specified")).body(null);
+        }
+
         Map<String, String> responseParams = PaginationUtil.getOnlyFilteringParameters(filterParams, "scanId");
         if (StringUtils.isEmpty(responseParams.get("filterParams"))) {
             return getAllDefects(pageable, scanId);
@@ -140,15 +145,13 @@ public class DefectResource {
         Root<Defect> rootToCount = criteriaQueryToCount.from(Defect.class);
         responseParams = PaginationUtil.extractFilterParams(responseParams);
 
-        if (scanId == null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("defect", "noScanId", "Scan ID must be specified")).body(null);
-        }
-
         Integer page = Optional.ofNullable(pageable.getPageNumber()).map(Integer::valueOf).orElse(0);
         Integer size = Optional.ofNullable(pageable.getPageSize()).map(Integer::valueOf).orElse(10);
         Sort sort = Optional.ofNullable(pageable.getSort()).orElse(new Sort("id"));
 
-        List<Predicate> predicateList = PersistenceUtil.toPredicates(responseParams, criteriaBuilderToCount, rootToCount);
+        Map<String, Class> enumParameters = new HashMap<String, Class>();
+        enumParameters.put("severity", Severity.class);
+        List<Predicate> predicateList = PersistenceUtil.toPredicates(responseParams, criteriaBuilderToCount, rootToCount, enumParameters);
         Predicate scanIdPredicate = criteriaBuilderToCount.equal(PersistenceUtil.getPath(Long.class, rootToCount, "scan.id"), scanId);
         predicateList.add(scanIdPredicate);
         Predicate predicatesToCount = criteriaBuilderToCount.and(predicateList.toArray(new Predicate[predicateList.size()]));
@@ -173,7 +176,7 @@ public class DefectResource {
                 }
             });
             criteriaQueryToSearch.orderBy(orderList);
-            predicateList = PersistenceUtil.toPredicates(responseParams, criteriaBuilderToSearch, rootToSearch);
+            predicateList = PersistenceUtil.toPredicates(responseParams, criteriaBuilderToSearch, rootToSearch, enumParameters);
             scanIdPredicate = criteriaBuilderToSearch.equal(PersistenceUtil.getPath(Long.class, rootToSearch, "scan.id"), scanId);
             predicateList.add(scanIdPredicate);
 
