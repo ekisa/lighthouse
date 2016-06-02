@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
+import javax.persistence.metamodel.EntityType;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -160,6 +161,18 @@ public class DefectResource {
             CriteriaBuilder criteriaBuilderToSearch = entityManager.getCriteriaBuilder();
             CriteriaQuery<Defect> criteriaQueryToSearch = criteriaBuilderToSearch.createQuery(Defect.class);
             Root<Defect> rootToSearch = criteriaQueryToSearch.from(Defect.class);
+            List<Order> orderList = new ArrayList<Order>();
+            sort.spliterator().trySplit().forEachRemaining(order -> {
+                if (order.getDirection().equals(Sort.Direction.ASC)) {
+                    Order orderItem = criteriaBuilderToSearch.asc(rootToSearch.get(order.getProperty()));
+                    orderList.add(orderItem);
+                }
+                else if (order.getDirection().equals(Sort.Direction.DESC)) {
+                    Order orderItem = criteriaBuilderToSearch.desc(rootToSearch.get(order.getProperty()));
+                    orderList.add(orderItem);
+                }
+            });
+            criteriaQueryToSearch.orderBy(orderList);
             predicateList = PersistenceUtil.toPredicates(responseParams, criteriaBuilderToSearch, rootToSearch);
             scanIdPredicate = criteriaBuilderToSearch.equal(PersistenceUtil.getPath(Long.class, rootToSearch, "scan.id"), scanId);
             predicateList.add(scanIdPredicate);

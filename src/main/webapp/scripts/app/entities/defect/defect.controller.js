@@ -8,24 +8,25 @@ angular.module('lighthouseApp')
         $scope.defects = [];
         $scope.searchDTO = {};
 
-        $scope.loadAllDefects = function(predicateObject) {
+        $scope.loadAllDefects = function() {
             Defect.query({
-                    scanId: $stateParams.scanId,
-                    filterParams: $httpParamSerializer(predicateObject),
-                    page: $scope.page - 1,
-                    size: 10,
-                    sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']
-                }, function(result, headers) {
-                    $scope.links = ParseLinks.parse(headers('link'));
-                    $scope.totalItems = headers('X-Total-Count');
-                    $scope.defects = result;
+                scanId: $stateParams.scanId,
+                filterParams: $httpParamSerializer($scope.searchDTO),
+                page: $scope.page - 1,
+                size: 10,
+                sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']
+            }, function(result, headers) {
+                $scope.links = ParseLinks.parse(headers('link'));
+                $scope.totalItems = headers('X-Total-Count');
+                $scope.defects = result;
             });
         };
+
         $scope.loadPage = function(page) {
             $scope.page = page;
             $scope.loadAllDefects();
         };
-        $scope.loadAllDefects();
+        //$scope.loadAllDefects();
 
         $scope.refresh = function () {
             $scope.loadAllDefects();
@@ -39,12 +40,12 @@ angular.module('lighthouseApp')
         $scope.switchFalsePositiveFlag = function(defect, falsePositive){
             defect.falsePositive = falsePositive;
             Defect.update(defect);
-        }
+        };
 
         $scope.switchNeedManuelCheckFlag = function(defect, needManuelCheck){
             defect.needManuelCheck = needManuelCheck;
             Defect.update(defect);
-        }
+        };
 
 
         //$scope.searchDefects = function (predicateObject) {

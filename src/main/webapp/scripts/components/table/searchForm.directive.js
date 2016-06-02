@@ -6,9 +6,9 @@
 angular.module('lighthouseApp')
     .directive('mySearchForm', function(DefectSearch, ParseLinks, $stateParams, $q) {
         return {
-            restrict: 'E',
+            restrict: 'A',
             transclude: false,
-            //replace: false,
+            replace: false,
             scope:{
                 myCollection : '=',
                 mySearchDto : '=',
@@ -27,7 +27,7 @@ angular.module('lighthouseApp')
                         //console.log("mySearchDTO : " + JSON.stringify(predicateObject));
                         if(!angular.equals(predicateObject, {})){
                             //$scope.search({predicateObject : predicateObject});
-                            $scope.searchMethod({predicateObject : predicateObject});
+                            $scope.searchMethod();
                         }
                     }, true);
 
@@ -38,14 +38,22 @@ angular.module('lighthouseApp')
                 }
             ],
             link: function(scope, element, attrs, ctrl){
+                console.log("table link called");
+                scope.searchMethod();
+
                 //alert(JSON.stringify(element));
                 //alert(JSON.stringify(attrs));
 
-                //scope.$watch("mySearchDto", function(predicateObject){
-                //    if(!angular.equals(predicateObject, {})){
-                //        searchForm.search(predicateObject);
-                //    }
-                //}, true)
+                //scope.searchMethod(scope.mySearchDto);
+                //console.log("COLLECTION 1 : " + JSON.stringify(scope.myCollection));
+                //scope.$watch("myCollection", function(collectionData){
+                //    //console.log("element : " + JSON.stringify(element));
+                //    //console.log("attrs : " + JSON.stringify(attrs));
+                //    //console.log("ctrl : " + JSON.stringify(ctrl));
+                //    //console.log("COLLECTION 2 : " + JSON.stringify(collectionData));
+                //    ctrl.updateCollection(collectionData);
+                //
+                //}, true);
             }
         }
     })
