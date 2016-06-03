@@ -27,28 +27,33 @@ public class PersistenceUtil {
     }
 
 
-    static public List<Predicate> toPredicates(Map<String, String> map, CriteriaBuilder criteriaBuilder, Root<Defect> root) {
-        return toPredicates(map, criteriaBuilder, root, new HashMap<String, Class>());
-    }
-    static public List<Predicate> toPredicates(Map<String, String> map, CriteriaBuilder criteriaBuilder, Root<Defect> root, Map<String, Class> enumParameters) {
+    static public List<Predicate> toPredicates(Map<String, String> map, CriteriaBuilder criteriaBuilder, Root<?> root, Class classz) {
         List<Predicate> predicates = new ArrayList<Predicate>();
-        for (final Map.Entry<String, String> e : map.entrySet()) {
+        for (final Map.Entry<String, String> entry : map.entrySet()) {
 
-            final String key = e.getKey();
-            final String value = e.getValue();
-
-            if ((key != null) && (value != null)) {
-                if (value.contains("%")) {
-                    predicates.add(criteriaBuilder.like(root.<String> get(key), value));
-                } else {
-                    //Bu bir enumeration ise parametrede enum değeri üretmemiz gerekiyor
-                    if (enumParameters.get(key) != null) {
-                        predicates.add(criteriaBuilder.equal(root.get(key), Enum.valueOf(enumParameters.get(key), value)));
-                    }
-                    else{
-                        predicates.add(criteriaBuilder.equal(root.get(key), value));
+            final String key = entry.getKey();
+            final String value = entry.getValue();
+            try {
+                if ((key != null) && (value != null)) {
+                    if (value.contains("%")) {
+                        predicates.add(criteriaBuilder.like(root.<String>get(key), value));
+                    } else {
+                        //Bu bir enumeration ise parametrede enum değeri üretmemiz gerekiyor
+                        if (classz != null && classz.getDeclaredField(key).getType().isEnum()) {
+                            Class<Enum> fieldType = (Class<Enum>) classz.getDeclaredField(key).getType();
+                            Enum anEnum = Enum.valueOf(fieldType, value);
+                            predicates.add(criteriaBuilder.equal(root.get(key), anEnum));
+                        }else if(classz != null && classz.getDeclaredField(key).getType().equals(Boolean.class)){
+                            Boolean aBoolean = Boolean.valueOf(value);
+                            predicates.add(criteriaBuilder.equal(root.get(key), aBoolean));
+                        }
+                        else {
+                            predicates.add(criteriaBuilder.equal(root.get(key), value));
+                        }
                     }
                 }
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
             }
         }
         return predicates;

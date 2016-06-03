@@ -4,28 +4,27 @@
     <div class="table-responsive">
         <table class="jh-table table table-striped table-condensed" my-search-form my-collection="defects" my-search-dto="searchDTO" page="page" size="size" sort="sort" search-method="loadAllDefects()">
             <thead>
-                <tr>
-                    <td><span translate="global.menu.filter"></span></td>
-                    <td><my-search-form-field my-search="sourceIP"></my-search-form-field></td>
-                    <td><my-search-form-field my-search="title" ></my-search-form-field></td>
-                    <td><my-search-form-field my-search="code" ></my-search-form-field></td>
-                    <td>
-                        <my-search-form-enum-field my-search="severity" enum-list="['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFO']" ></my-search-form-enum-field>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
                 <tr jh-sort="predicate" ascending="reverse" callback="loadAllDefects()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="sourceIP"><span translate="lighthouseApp.defect.sourceIP">SourceIP</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="title"><span translate="lighthouseApp.defect.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="code"><span translate="lighthouseApp.defect.code">Code</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="severity"><span translate="lighthouseApp.defect.severity">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="falsePositive"><span translate="lighthouseApp.defect.isFalsePositive">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="needManuelCheck"><span translate="lighthouseApp.defect.needManuelCheck">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="previousDefect"><span translate="lighthouseApp.defect.newDefect">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th></th>
+                    <th jh-sort-by="severity" style='text-align:center'><span translate="lighthouseApp.defect.severity">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="falsePositive" style='text-align:center'><span translate="lighthouseApp.defect.isFalsePositive">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="needManuelCheck" style='text-align:center'><span translate="lighthouseApp.defect.needManuelCheck">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="previousDefect" style='text-align:center'><span translate="lighthouseApp.defect.newDefect">scan</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th align="center"></th>
+                </tr>
+                <tr>
+                    <td><span translate="global.menu.filter"></span></td>
+                    <td><my-search-form-field my-search="sourceIP"></my-search-form-field></td>
+                    <td><my-search-form-field my-search="title" ></my-search-form-field></td>
+                    <td><my-search-form-field my-search="code" ></my-search-form-field></td>
+                    <td align="center"><my-search-form-select-one-field my-search="severity" selection-options="['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFO']" ></my-search-form-select-one-field></td>
+                    <td align="center"><my-search-form-select-one-field my-search="falsePositive" selection-options="['TRUE', 'FALSE']" ></my-search-form-select-one-field></td>
+                    <td align="center"><my-search-form-select-one-field my-search="needManuelCheck" selection-options="['TRUE', 'FALSE']" ></my-search-form-select-one-field></td>
+                    <td align="center"></td>
+                    <td align="center"></td>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +34,7 @@
                     <td>{{defect.sourceIP}}</td>
                     <td>{{defect.title}}</td>
                     <td>{{defect.code}}</td>
-                    <td>{{defect.severity}}</td>
+                    <td align="center">{{defect.severity}}</td>
                     <td align="center" style="width: 10%">
                         <span ng-show="defect.falsePositive" ng-click="switchFalsePositiveFlag(defect, false)" class="glyphicon glyphicon-check" style="color: darkgreen"></span>
                         <span ng-show="!defect.falsePositive" ng-click="switchFalsePositiveFlag(defect, true)" class="glyphicon glyphicon-minus" style="color: gray"></span>

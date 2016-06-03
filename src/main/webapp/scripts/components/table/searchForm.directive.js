@@ -96,8 +96,8 @@ angular.module('lighthouseApp')
 
             }
         };
-    })
-    .directive('mySearchFormEnumField', function() {
+})
+.directive('mySearchFormSelectOneField', function() {
     return {
         restrict: 'E',
         //replace: false,
@@ -107,7 +107,7 @@ angular.module('lighthouseApp')
             mySearch: '@'
         },
         template:
-        '<select ng-model="searchValue" ng-options="enum as enum for enum in enumList" ng-change="search(searchValue)">' +
+        '<select ng-model="searchValue" ng-options="selectionOption as selectionOption for selectionOption in selectionOptions" ng-change="search(searchValue)">' +
             '<option value="">-- Filter --</option>' +
         '</select>',
         controller: ['$scope',
@@ -124,19 +124,19 @@ angular.module('lighthouseApp')
         link: function (scope, element, attrs, searchControl) {
             scope.searchControl = searchControl;
             //Array yaratıyoruz, yoksa string olarak görüyor
-            scope.enumList = scope.$eval(attrs.enumList);
+            scope.selectionOptions = scope.$eval(attrs.selectionOptions);
         }
     };
 })
-    .directive('mySearchKeyListener', function () {
-        return {
-            restrict: 'A',
-            scope: false,
-            require: '^mySearchFormField',
-            link: function (scope, element, attrs, parentCtrl) {
-                element.bind('keydown', function () {
+.directive('mySearchKeyListener', function () {
+    return {
+        restrict: 'A',
+        scope: false,
+        require: '^mySearchFormField',
+        link: function (scope, element, attrs, parentCtrl) {
+            element.bind('keydown', function () {
 
-                });
-            }
-        };
-    });
+            });
+        }
+    };
+});

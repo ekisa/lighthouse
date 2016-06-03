@@ -1,11 +1,8 @@
 package tr.com.turktelecom.lighthouse.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import tr.com.turktelecom.lighthouse.domain.Defect;
 import tr.com.turktelecom.lighthouse.domain.Severity;
@@ -29,13 +26,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
-import javax.persistence.metamodel.EntityType;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -127,15 +120,15 @@ public class DefectResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<DefectDTO>> searchDefects(Pageable pageable, @RequestParam Long scanId, @RequestParam Map<String,String> filterParams)
+    public ResponseEntity<List<DefectDTO>> searchDefects(Pageable pageable, @RequestParam Long scanId, @RequestParam("filterParams") String filterParams)
         throws URISyntaxException {
 
         if (scanId == null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("defect", "noScanId", "Scan ID must be specified")).body(null);
         }
 
-        Map<String, String> responseParams = PaginationUtil.getOnlyFilteringParameters(filterParams, "scanId");
-        if (StringUtils.isEmpty(responseParams.get("filterParams"))) {
+        Map<String, String> filterParamsMap = PaginationUtil.MapUtils.textToMap(filterParams, Defect.class);
+        if (StringUtils.isEmpty(filterParams)) {
             return getAllDefects(pageable, scanId);
         }
 
@@ -143,15 +136,12 @@ public class DefectResource {
         CriteriaBuilder criteriaBuilderToCount = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQueryToCount = criteriaBuilderToCount.createQuery(Long.class);
         Root<Defect> rootToCount = criteriaQueryToCount.from(Defect.class);
-        responseParams = PaginationUtil.extractFilterParams(responseParams);
 
         Integer page = Optional.ofNullable(pageable.getPageNumber()).map(Integer::valueOf).orElse(0);
         Integer size = Optional.ofNullable(pageable.getPageSize()).map(Integer::valueOf).orElse(10);
         Sort sort = Optional.ofNullable(pageable.getSort()).orElse(new Sort("id"));
 
-        Map<String, Class> enumParameters = new HashMap<String, Class>();
-        enumParameters.put("severity", Severity.class);
-        List<Predicate> predicateList = PersistenceUtil.toPredicates(responseParams, criteriaBuilderToCount, rootToCount, enumParameters);
+        List<Predicate> predicateList = PersistenceUtil.toPredicates(filterParamsMap, criteriaBuilderToCount, rootToCount, Defect.class);
         Predicate scanIdPredicate = criteriaBuilderToCount.equal(PersistenceUtil.getPath(Long.class, rootToCount, "scan.id"), scanId);
         predicateList.add(scanIdPredicate);
         Predicate predicatesToCount = criteriaBuilderToCount.and(predicateList.toArray(new Predicate[predicateList.size()]));
@@ -176,7 +166,7 @@ public class DefectResource {
                 }
             });
             criteriaQueryToSearch.orderBy(orderList);
-            predicateList = PersistenceUtil.toPredicates(responseParams, criteriaBuilderToSearch, rootToSearch, enumParameters);
+            predicateList = PersistenceUtil.toPredicates(filterParamsMap, criteriaBuilderToSearch, rootToSearch, Defect.class);
             scanIdPredicate = criteriaBuilderToSearch.equal(PersistenceUtil.getPath(Long.class, rootToSearch, "scan.id"), scanId);
             predicateList.add(scanIdPredicate);
 
@@ -193,7 +183,7 @@ public class DefectResource {
         }
 
 
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageImpl<DefectDTO>(defectDTOList, new PageRequest(page, size, sort), count), "/api/_search/defects/" + scanId, responseParams);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageImpl<DefectDTO>(defectDTOList, new PageRequest(page, size, sort), count), "/api/_search/defects/" + scanId, filterParamsMap);
         return new ResponseEntity<>(defectDTOList, headers, HttpStatus.OK);
     }
 

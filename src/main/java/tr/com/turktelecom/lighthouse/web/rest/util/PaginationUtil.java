@@ -72,44 +72,75 @@ public class PaginationUtil {
         return buffer.toString();
     }
 
-    public static Map<String, String> getOnlyFilteringParameters(Map<String, String> requestParameters, String... requiredParameters) {
-        Map<String, String> parameters = new HashMap<String, String>(requestParameters);
-        parameters.remove("cacheBuster");
-        parameters.remove("page");
-        parameters.remove("size");
-        parameters.remove("sort");
-        if (requiredParameters != null) {
-            for (String requiredParameter : requiredParameters) {
-                parameters.remove(requiredParameter);
-            }
-        }
-        return parameters;
-    }
-
-    public static Map<String, String> extractFilterParams(Map<String, String> filterParams) {
-        return extractFilterParams(filterParams, new HashMap<String, Class>());
-    }
-    public static Map<String, String> extractFilterParams(Map<String, String> filterParams, Map<String, Class> enumParameters) {
-        String[] filterCriterias = filterParams.get("filterParams").split("&");
-        for (String filterParam : filterCriterias) {
-            filterParam = filterParam.trim();
+    public static class MapUtils {
+        public static String urlEncodeUTF8(String s) {
             try {
-                String paramName = filterParam.split("=")[0];
-                String paramVal = filterParam.split("=")[1];
-                if (!StringUtils.isEmpty(paramName) && !StringUtils.isEmpty(paramVal)) {
-                    //Eğer ki bu bir enum değeri ise object yerine name değerini gönderiyoruz
-                    if (enumParameters.get(paramName) != null) {
-                        paramVal = Enum.valueOf(enumParameters.get(paramName), paramVal).name();
-                    }
-                    filterParams.put(URLDecoder.decode(paramName, "UTF8"), URLDecoder.decode(paramVal, "UTF8"));
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                continue;
+                return URLEncoder.encode(s, "UTF-8");
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                throw new UnsupportedOperationException(e);
             }
         }
-        filterParams.remove("filterParams");
-        return filterParams;
+
+        public static String urlDecodeUTF8(String s) {
+            try {
+                return URLDecoder.decode(s, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+
+        public static String mapToText(Map<?, ?> map) {
+            StringBuilder sb = new StringBuilder();
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                if (sb.length() > 0) {
+                    sb.append("&");
+                }
+                sb.append(String.format("%s=%s",
+                    urlEncodeUTF8(entry.getKey().toString()),
+                    urlEncodeUTF8(entry.getValue().toString())
+                ));
+            }
+            return sb.toString();
+        }
+
+        public static Map<String, String> textToMap(String text){
+            return textToMap(text, null);
+        }
+
+        public static Map<String, String> textToMap(String text, Class classz) {
+            Map<String,String> map = new HashMap<String, String>();
+            text = urlDecodeUTF8(text);
+            if (!StringUtils.isEmpty(text)) {
+                String[] parameters = text.split("&");
+                for (String parameter : parameters) {
+                    String[] pair = parameter.split("=");
+                    try {
+                        String paramName = pair[0];
+                        String paramVal = pair[1];
+
+                        //Eğer ki bu bir enum değeri ise String yerine Enum name değerini gönderiyoruz
+                        if (classz != null && classz.getDeclaredField(paramName).getType().isEnum()) {
+                            Class<Enum> fieldType = (Class<Enum>) classz.getDeclaredField(paramName).getType();
+                            paramVal = Enum.valueOf(fieldType, paramVal).name();
+                        }else if(classz != null && classz.getDeclaredField(paramName).getType().equals(Boolean.class)){
+                            paramVal = Boolean.valueOf(paramVal).toString();
+                        }
+
+                        if (StringUtils.isEmpty(map.get(paramName))) {
+                            map.put(paramName, paramVal);
+                        } else {
+                            map.put(paramName, new StringBuffer().append(map.get(paramName)).append("&").append(paramVal).toString());
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        continue;
+                    } catch (NoSuchFieldException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return map;
+        }
+
+
     }
 }

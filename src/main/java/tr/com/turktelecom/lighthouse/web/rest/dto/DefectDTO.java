@@ -16,7 +16,7 @@ public class DefectDTO extends EntityDTO {
     private String code;
     private String scan;
     private String severity;
-    private Boolean falsePositive = Boolean.FALSE;
+    private Boolean falsePositive;
     private String port;
     private String protocol;
     private Boolean needManuelCheck;
