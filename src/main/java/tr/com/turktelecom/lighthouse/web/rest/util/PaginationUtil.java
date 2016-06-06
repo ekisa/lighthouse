@@ -118,14 +118,6 @@ public class PaginationUtil {
                         String paramName = pair[0];
                         String paramVal = pair[1];
 
-                        //Eğer ki bu bir enum değeri ise String yerine Enum name değerini gönderiyoruz
-                        if (classz != null && classz.getDeclaredField(paramName).getType().isEnum()) {
-                            Class<Enum> fieldType = (Class<Enum>) classz.getDeclaredField(paramName).getType();
-                            paramVal = Enum.valueOf(fieldType, paramVal).name();
-                        }else if(classz != null && classz.getDeclaredField(paramName).getType().equals(Boolean.class)){
-                            paramVal = Boolean.valueOf(paramVal).toString();
-                        }
-
                         if (StringUtils.isEmpty(map.get(paramName))) {
                             map.put(paramName, paramVal);
                         } else {
@@ -133,8 +125,6 @@ public class PaginationUtil {
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         continue;
-                    } catch (NoSuchFieldException e) {
-                        e.printStackTrace();
                     }
                 }
             }

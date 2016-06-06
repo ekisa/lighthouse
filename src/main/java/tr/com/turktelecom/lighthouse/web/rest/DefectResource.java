@@ -142,7 +142,7 @@ public class DefectResource {
         Sort sort = Optional.ofNullable(pageable.getSort()).orElse(new Sort("id"));
 
         List<Predicate> predicateList = PersistenceUtil.toPredicates(filterParamsMap, criteriaBuilderToCount, rootToCount, Defect.class);
-        Predicate scanIdPredicate = criteriaBuilderToCount.equal(PersistenceUtil.getPath(Long.class, rootToCount, "scan.id"), scanId);
+        Predicate scanIdPredicate = criteriaBuilderToCount.equal(PersistenceUtil.getPath(rootToCount, "scan.id"), scanId);
         predicateList.add(scanIdPredicate);
         Predicate predicatesToCount = criteriaBuilderToCount.and(predicateList.toArray(new Predicate[predicateList.size()]));
         criteriaQueryToCount.select(criteriaBuilderToCount.count(rootToCount));
@@ -167,7 +167,7 @@ public class DefectResource {
             });
             criteriaQueryToSearch.orderBy(orderList);
             predicateList = PersistenceUtil.toPredicates(filterParamsMap, criteriaBuilderToSearch, rootToSearch, Defect.class);
-            scanIdPredicate = criteriaBuilderToSearch.equal(PersistenceUtil.getPath(Long.class, rootToSearch, "scan.id"), scanId);
+            scanIdPredicate = criteriaBuilderToSearch.equal(PersistenceUtil.getPath(rootToSearch, "scan.id"), scanId);
             predicateList.add(scanIdPredicate);
 
             Predicate predicatesToSearch = criteriaBuilderToSearch.and(predicateList.toArray(new Predicate[predicateList.size()]));

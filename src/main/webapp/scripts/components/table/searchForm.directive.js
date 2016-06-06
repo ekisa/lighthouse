@@ -107,8 +107,8 @@ angular.module('lighthouseApp')
             mySearch: '@'
         },
         template:
-        '<select ng-model="searchValue" ng-options="selectionOption as selectionOption for selectionOption in selectionOptions" ng-change="search(searchValue)">' +
-            '<option value="">-- Filter --</option>' +
+        '<select class="text-center" ng-model="searchValue" ng-options="selectionOption[1] as selectionOption[0] for selectionOption in selectionOptions" ng-change="search(searchValue)">' +
+            '<option value="">-- ALL --</option>' +
         '</select>',
         controller: ['$scope',
             function ($scope) {
