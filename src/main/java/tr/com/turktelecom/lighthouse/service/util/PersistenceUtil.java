@@ -1,11 +1,14 @@
 package tr.com.turktelecom.lighthouse.service.util;
 
+import org.springframework.util.StringUtils;
 import tr.com.turktelecom.lighthouse.domain.Defect;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +49,13 @@ public class PersistenceUtil {
                         }else if(classz != null && classz.getDeclaredField(key).getType().equals(Boolean.class)){
                             Boolean aBoolean = Boolean.valueOf(value);
                             predicates.add(criteriaBuilder.equal(root.get(key), aBoolean));
+                        }else if (classz != null && classz.getDeclaredField(key).getType().getPackage().getName().startsWith("tr.com.turktelecom.lighthouse.")) {
+                            if ("TRUE".equalsIgnoreCase(value)) {
+                                predicates.add(criteriaBuilder.isNull(root.get(key)));
+                            }
+                            else if("FALSE".equalsIgnoreCase(value)) {
+                                predicates.add(criteriaBuilder.isNotNull(root.get(key)));
+                            }
                         }
                         else {
                             predicates.add(criteriaBuilder.equal(root.get(key), value));
