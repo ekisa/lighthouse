@@ -19,6 +19,7 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
 import java.util.Locale;
+import java.util.Properties;
 
 /**
  * Service for sending e-mails.
@@ -104,5 +105,19 @@ public class MailService {
         String subject = messageSource.getMessage("email.reset.title", null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
     }
-    
+
+    @Async
+    public void scanCreatedEmail(User user, String pluginId, String pluginName, String scanId, String baseUrl) {
+        log.debug("Sending scan created e-mail to '{}'", user.getEmail());
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable("user", user);
+        context.setVariable("pluginId", pluginId);
+        context.setVariable("pluginName", pluginName);
+        context.setVariable("scanId", scanId);
+        context.setVariable("baseUrl", baseUrl);
+        String content = templateEngine.process("scanCreatedEmail", context);
+        String subject = messageSource.getMessage("email.scanCreatedEmail.title", null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
+    }
 }

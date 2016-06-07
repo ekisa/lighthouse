@@ -45,7 +45,7 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
     private String folderName;
 
     @Column(name = "schedule")
-    private String schedule;
+    private Long schedule;
 
     @Column(name = "activated")
     private Boolean activated;
@@ -98,11 +98,11 @@ public class Plugin extends AbstractAuditingEntity implements Serializable {
         this.explanation = explanation;
     }
 
-    public String getSchedule() {
+    public Long getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(String schedule) {
+    public void setSchedule(Long schedule) {
         this.schedule = schedule;
     }
 

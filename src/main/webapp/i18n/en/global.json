@@ -122,7 +122,7 @@
         "emailexists": "E-mail is already in use!",
         "idexists": "A new {{ entityName }} cannot already have an ID"
     },
-    "footer": "Created by <b>TT Security Architecture Team</b>",
+    "footer": "Created by <a href=\"mailto:guvenlikmimari@turktelekom.com.tr\"><b>TT Security Architecture Team</b></a>",
     "yes" : "Yes",
     "no" : "No"
 }

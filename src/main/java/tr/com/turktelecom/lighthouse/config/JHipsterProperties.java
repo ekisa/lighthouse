@@ -203,7 +203,7 @@ public class JHipsterProperties {
 
     public static class Mail {
 
-        private String from = "Lighthouse@localhost";
+        private String from = "emre.kisa@turktelekom.com.tr";
 
         public String getFrom() {
             return from;

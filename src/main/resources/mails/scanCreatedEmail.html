@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{email.scanCreatedEmail.title}">A New Scan Is Created</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <p th:text="#{email.reset.greeting(${user.login})}">
+            Dear
+        </p>
+        <p th:text="#{email.scanCreatedEmail.text1(${pluginName})}">
+            A New scan is created by plugin, you should check it out!
+        </p>
+        <p>
+            <a th:href="@{|${baseUrl}/#/plugin/${pluginId}/scan/${scanId}|}"
+               th:text="|${user.login}|">Reset Link</a>
+        </p>
+        <p>
+            <span th:text="#{email.scanCreatedEmail.text2}">Regards, </span>
+            <br/>
+            <em th:text="#{email.signature}">Lighthouse</em>
+        </p>
+    </body>
+</html>

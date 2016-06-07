@@ -46,7 +46,11 @@ spring:
                   logs: target/elasticsearch/log
                   data: target/elasticsearch/data
     mail:
-        host: localhost
+        from: lighthouse@turktelekom.com.tr
+        host: mail.turktelekom.com.tr
+        port: 25
+        username: lighthouse
+        password: lighthouse
     messages:
         cache-seconds: 1
     thymeleaf:
@@ -56,7 +60,9 @@ liquibase:
     contexts: dev
 
 server:
+    url: http://localhost
     port: 8080
+    ui-port: 9000
 
 # ===================================================================
 # JHipster specific properties
@@ -73,7 +79,7 @@ jhipster:
         hazelcast:
             backupCount: 1
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: Lighthouse@localhost
+        from: lighthouse@turktelekom.com.tr
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         spark:
