@@ -42,7 +42,6 @@ public class PluginService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //TODO : Transactional olma gereksinimleri incelenecek
     //TODO : Exceptionlar handle edilecek
     public Scan startNewScan(Plugin plugin) {
         try {

@@ -63,6 +63,9 @@ public class PluginScheduler {
             pluginService.addScan(plugin, lastScan);
             if (lastScan.hasAnyDefectsMoreSevereThan(Severity.HIGH)) {
                 userRepository.findAll().forEach(user -> {
+                    if (!user.getActivated()) {
+                        return;
+                    }
                     String baseUrl = environment.getProperty("server.url") + ":" + environment.getProperty("server.ui-port");
                     mailService.scanCreatedEmail(user, plugin.getId().toString(), plugin.getName(), lastScan.getId().toString(), baseUrl);
                 });
