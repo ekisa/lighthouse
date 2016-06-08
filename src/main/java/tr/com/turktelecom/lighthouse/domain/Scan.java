@@ -122,7 +122,10 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
         for (Defect previousDefect : previousScan.getDefects()) {
             String defectKey = new StringBuffer().append(previousDefect.getSourceIP()).append("-").append(previousDefect.getTitle()).toString();
             if (latestDefects.containsKey(defectKey)) {
-                latestDefects.get(defectKey).setPreviousDefect(previousDefect);
+                Defect newDefect = latestDefects.get(defectKey);
+                newDefect.setPreviousDefect(previousDefect);
+                newDefect.setFalsePositive(previousDefect.getFalsePositive());
+                newDefect.setNeedManuelCheck(previousDefect.getNeedManuelCheck());
             }
         }
     }
