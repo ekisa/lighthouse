@@ -130,10 +130,23 @@ public class Scan extends AbstractAuditingEntity implements Serializable {
     public Boolean hasAnyDefectsMoreSevereThan(Severity severity) {
         for (Defect defect : getDefects()) {
             if (defect.getSeverity().compareTo(severity) >= 0 ) {
-                return Boolean.TRUE;
+                if (!defect.getFalsePositive()) {
+                    return Boolean.TRUE;
+                }
             }
         }
 
         return Boolean.FALSE;
+    }
+
+    public Long countDefects(Severity severity) {
+        long i=0;
+        for (Defect defect : getDefects()) {
+            if (defect.getSeverity().equals(severity)) {
+                i++;
+            }
+        }
+
+        return Long.valueOf(i);
     }
 }

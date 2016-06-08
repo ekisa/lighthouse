@@ -67,7 +67,7 @@ public class PluginScheduler {
                         return;
                     }
                     String baseUrl = environment.getProperty("server.url") + ":" + environment.getProperty("server.ui-port");
-                    mailService.scanCreatedEmail(user, plugin.getId().toString(), plugin.getName(), lastScan.getId().toString(), baseUrl);
+                    mailService.scanCreatedEmail(user, plugin, lastScan, baseUrl);
                 });
             }
             log.debug("Finished running plugin : {}", plugin.getName());

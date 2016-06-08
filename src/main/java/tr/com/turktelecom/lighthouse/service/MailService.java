@@ -1,6 +1,9 @@
 package tr.com.turktelecom.lighthouse.service;
 
 import tr.com.turktelecom.lighthouse.config.JHipsterProperties;
+import tr.com.turktelecom.lighthouse.domain.Plugin;
+import tr.com.turktelecom.lighthouse.domain.Scan;
+import tr.com.turktelecom.lighthouse.domain.Severity;
 import tr.com.turktelecom.lighthouse.domain.User;
 
 import org.apache.commons.lang.CharEncoding;
@@ -107,14 +110,16 @@ public class MailService {
     }
 
     @Async
-    public void scanCreatedEmail(User user, String pluginId, String pluginName, String scanId, String baseUrl) {
+    public void scanCreatedEmail(User user, Plugin plugin, Scan scan, String baseUrl) {
         log.debug("Sending scan created e-mail to '{}'", user.getEmail());
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
         context.setVariable("user", user);
-        context.setVariable("pluginId", pluginId);
-        context.setVariable("pluginName", pluginName);
-        context.setVariable("scanId", scanId);
+        context.setVariable("pluginId", plugin.getId());
+        context.setVariable("pluginName", plugin.getName());
+        context.setVariable("scanId", scan.getId());
+        context.setVariable("criticalDefectsCount", scan.countDefects(Severity.CRITICAL).toString());
+        context.setVariable("highDefectsCount", scan.countDefects(Severity.HIGH).toString());
         context.setVariable("baseUrl", baseUrl);
         String content = templateEngine.process("scanCreatedEmail", context);
         String subject = messageSource.getMessage("email.scanCreatedEmail.title", null, locale);
