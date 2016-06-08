@@ -5,11 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.util.StringUtils;
 import tr.com.turktelecom.lighthouse.domain.Defect;
-import tr.com.turktelecom.lighthouse.domain.Severity;
 import tr.com.turktelecom.lighthouse.repository.DefectRepository;
 import tr.com.turktelecom.lighthouse.repository.search.DefectSearchRepository;
 import tr.com.turktelecom.lighthouse.service.DefectService;
-import tr.com.turktelecom.lighthouse.service.util.PersistenceUtil;
+import tr.com.turktelecom.lighthouse.service.MyFormQueryService;
 import tr.com.turktelecom.lighthouse.web.rest.dto.DefectDTO;
 import tr.com.turktelecom.lighthouse.web.rest.mapper.DefectMapper;
 import tr.com.turktelecom.lighthouse.web.rest.util.HeaderUtil;
@@ -23,9 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -52,8 +48,8 @@ public class DefectResource {
     @Autowired
     private DefectMapper defectMapper;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Inject
+    private MyFormQueryService myFormQueryService;
 
     /**
      * POST  /defects -> Create a new defect.
@@ -133,51 +129,20 @@ public class DefectResource {
         }
 
         log.debug("REST request to search Defects");
-        CriteriaBuilder criteriaBuilderToCount = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> criteriaQueryToCount = criteriaBuilderToCount.createQuery(Long.class);
-        Root<Defect> rootToCount = criteriaQueryToCount.from(Defect.class);
-
         Integer page = Optional.ofNullable(pageable.getPageNumber()).map(Integer::valueOf).orElse(0);
         Integer size = Optional.ofNullable(pageable.getPageSize()).map(Integer::valueOf).orElse(10);
         Sort sort = Optional.ofNullable(pageable.getSort()).orElse(new Sort("id"));
 
-        List<Predicate> predicateList = PersistenceUtil.toPredicates(filterParamsMap, criteriaBuilderToCount, rootToCount, Defect.class);
-        Predicate scanIdPredicate = criteriaBuilderToCount.equal(PersistenceUtil.getPath(rootToCount, "scan.id"), scanId);
-        predicateList.add(scanIdPredicate);
-        Predicate predicatesToCount = criteriaBuilderToCount.and(predicateList.toArray(new Predicate[predicateList.size()]));
-        criteriaQueryToCount.select(criteriaBuilderToCount.count(rootToCount));
-        criteriaQueryToCount.where(predicatesToCount);
-        Long count = entityManager.createQuery(criteriaQueryToCount).getSingleResult();
+        Map<String, Object> requiredParamsMap = new HashMap<String, Object>();
+        requiredParamsMap.put("scan.id", scanId);
 
+        Long count = myFormQueryService.createCountQuery(Defect.class, requiredParamsMap, filterParamsMap);
         List<DefectDTO> defectDTOList = null;
         if(count>0){
-            CriteriaBuilder criteriaBuilderToSearch = entityManager.getCriteriaBuilder();
-            CriteriaQuery<Defect> criteriaQueryToSearch = criteriaBuilderToSearch.createQuery(Defect.class);
-            Root<Defect> rootToSearch = criteriaQueryToSearch.from(Defect.class);
-            List<Order> orderList = new ArrayList<Order>();
-            sort.spliterator().trySplit().forEachRemaining(order -> {
-                if (order.getDirection().equals(Sort.Direction.ASC)) {
-                    Order orderItem = criteriaBuilderToSearch.asc(rootToSearch.get(order.getProperty()));
-                    orderList.add(orderItem);
-                }
-                else if (order.getDirection().equals(Sort.Direction.DESC)) {
-                    Order orderItem = criteriaBuilderToSearch.desc(rootToSearch.get(order.getProperty()));
-                    orderList.add(orderItem);
-                }
-            });
-            criteriaQueryToSearch.orderBy(orderList);
-            predicateList = PersistenceUtil.toPredicates(filterParamsMap, criteriaBuilderToSearch, rootToSearch, Defect.class);
-            scanIdPredicate = criteriaBuilderToSearch.equal(PersistenceUtil.getPath(rootToSearch, "scan.id"), scanId);
-            predicateList.add(scanIdPredicate);
-
-            Predicate predicatesToSearch = criteriaBuilderToSearch.and(predicateList.toArray(new Predicate[predicateList.size()]));
-            criteriaQueryToSearch.where(predicatesToSearch);
-            defectDTOList = entityManager.createQuery(criteriaQueryToSearch.select(rootToSearch))
-                .setMaxResults(size)
-                .setFirstResult(page * size)
-                .getResultList().stream().map(defect -> {
-                    return defectMapper.defectToDefectDTO(defect);
-                }).collect(Collectors.toList());
+            List<Defect> resultList = myFormQueryService.createSearchQuery(Defect.class, requiredParamsMap, filterParamsMap, page, size, sort);
+            defectDTOList= resultList.stream().map(defect -> {
+                return defectMapper.defectToDefectDTO(defect);
+            }).collect(Collectors.toList());
         }else {
             defectDTOList = new ArrayList<DefectDTO>(0);
         }
@@ -186,6 +151,8 @@ public class DefectResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(new PageImpl<DefectDTO>(defectDTOList, new PageRequest(page, size, sort), count), "/api/_search/defects/" + scanId, filterParamsMap);
         return new ResponseEntity<>(defectDTOList, headers, HttpStatus.OK);
     }
+
+
 
     /**
      * GET  /defects/:id -> get the "id" defect.
