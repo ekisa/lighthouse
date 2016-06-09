@@ -1,0 +1,24 @@
+{
+    "register": {
+        "title": "Kayıt ol",
+        "form": {
+            "button": "Kayıt ol"
+        },
+        "messages": {
+            "validate": {
+                "login": {
+                    "required": "Kullanıcı adı gereklidir.",
+                    "minlength": "Kullanıcı adı en az 1 karakter olmalıdır.",
+                    "maxlength": "Kullanıcı adı en falza 50 karakter olmalıdır.",
+                    "pattern": "Kullanıcı adınız yalnızca küçük harf ve rakamlardan oluşabilir"
+                }
+            },
+            "success": "<strong>Kayıt oluşturuldu!</strong> Lütfen e-posta hesabınıza gönderilen doğrulama mailini kontrol ediniz.",
+            "error": {
+                "fail": "<strong>Kayıt oluşturulamadı!</strong> Lütfen daha sonra tekrar deneyiniz.",
+                "userexists": "<strong>Bu kullanıcı adı sistemde tanımlıdır!</strong> Lütfen başka bir kullanıcı adı seçiniz.",
+                "emailexists": "<strong>Bu e-posta sistemde tanımlıdır!</strong> Lütfen başka bir e-posta seçiniz."
+            }
+        }
+    }
+}

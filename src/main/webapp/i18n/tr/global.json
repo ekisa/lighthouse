@@ -1,0 +1,128 @@
+{
+    "global": {
+        "title": "Lighthouse",
+        "browsehappy": "<strong>Güncel olmayan</strong> bir tarayıcı kullanmaktasınız. Lütfen tarayıcınızı <a href=\"http://browsehappy.com/?locale=en\">güncelleyiniz!</a>.",
+        "menu": {
+            "home": "Anasayfa",
+            "filter" : "Filtre : ",
+            "search": "Arama",
+            "search":{
+                "tip": "'%' imlecini kullanarak içinde geçene göre sorgulama yapabilirsiniz (Ör: %john doe%)"
+            } ,
+            "plugins" : "Pluginler",
+            "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+            "entities": {
+                "main": "Entities",
+                "plugin": "Plugin",
+                "defect": "Bulgu",
+                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+            },
+            "account": {
+                "main": "Hesap",
+                "settings": "Ayarlar",
+                "password": "Parola",
+                "sessions": "Oturumlar",
+                "login": "Oturum aç",
+                "logout": "Oturumu kapat",
+                "register": "Kayıt ol"
+            },
+            "admin": {
+                "main": "Yönetim",
+                "user-management": "Kullanıcı yönetimi",
+                "tracker": "Kullanıcı takipcisi",
+                "metrics": "Metrikler",
+                "health": "Sunucu Durumu",
+                "configuration": "Konfigürasyon",
+                "logs": "Loglar",
+                "audits": "Denetimler",
+                "apidocs": "API",
+                "database": "Veritabanı",
+                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+            },
+            "language": "Dil"
+        },
+        "form": {
+            "username": "Kullanıcı adı",
+            "username.placeholder": "Kullanıcı adınız",
+            "newpassword": "Yeni parola",
+            "newpassword.placeholder": "Yeni parola",
+            "confirmpassword": "Yeni parola doğrulaması",
+            "confirmpassword.placeholder": "Yeni parola doğrulaması",
+            "email": "E-posta",
+            "email.placeholder": "E-postanız"
+        },
+        "messages": {
+            "info": {
+                "authenticated": "Lütfen <a class=\"alert-link\" href=\"#/login\">oturum açınız.</a>",
+                "register": "Sistemde bir kullanıcınız yoksa <a class=\"alert-link\" href=\"#/register\">buradan</a> kaydolabilirsiniz."
+            },
+            "error": {
+                "dontmatch": "Parolalar uyuşmuyor!"
+            },
+            "validate": {
+                "newpassword": {
+                    "required": "Parolanızı girmeniz gerekli.",
+                    "minlength": "Parolanız en az 5 karakter olmalıdır.",
+                    "maxlength": "Parolanız 50 karakterden uzun olamaz",
+                    "strength": "Parola karmaşıklığı:"
+                },
+                "confirmpassword": {
+                    "required": "Parola doğrulamasını girmeniz gereklidir.",
+                    "minlength": "Parola doğrulamanız 5 karakterden az olamaz.",
+                    "maxlength": "Parola doğrulamanız 50 karakterden fazla olamaz."
+                },
+                "email": {
+                    "required": "E-posta heasbınızı girmeniz gereklidir.",
+                    "invalid": "Geçersiz E-posta.",
+                    "minlength": "E-posta hesabınız 5 karakterden kısa olamaz.",
+                    "maxlength": "E-posta hesabınız 50 karakterden uzun olamaz."
+                }
+            }
+        },
+        "field": {
+            "id": "ID"
+        }
+    },
+    "entity": {
+        "action": {
+            "addblob": "BLOB ekle",
+            "addimage": "Fotoğraf ekle",
+            "back": "Geri",
+            "cancel": "İptal",
+            "delete": "Sil",
+            "edit": "Düzenle",
+            "save": "Kaydet",
+            "view": "Görüntüle"
+        },
+        "detail": {
+            "field": "Alan",
+            "value": "Değer"
+        },
+        "delete": {
+            "title": "Silme işlemini doğrulayınız."
+        },
+        "validation": {
+            "required": "Bu alanının girilmesi zorunludur.",
+            "minlength": "Bu alana en az{{ min }} karakter girilmelidir.",
+            "maxlength": "Bu alana en fazla {{ max }} karakter girilmelidir.",
+            "min": "Bu alana en az{{ min }} girilmelidir.",
+            "max": "Bu alana en fazla {{ max }} girilmelidir.",
+            "minbytes": "Bu alan {{ min }} byte'dan küçük olamaz.",
+            "maxbytes": "Bu alan {{ max }} byte'dan büyük olamaz.",
+            "pattern": "Bu alana girilen değer {{ pattern }} formatında olmalıdır.",
+            "number": "Bu alana bir sayı girilmelidir.",
+            "datetimelocal": "Bu alana tarih ve saat girilmelidir."
+        }
+    },
+    "error": {
+        "server.not.reachable": "Sunucuya ulaşılamadı",
+        "NotNull": "{{ fieldName }} alanı boş bırakılamaz!",
+        "Size": "{{ fieldName }} alanı min/max kriterlerini sağlamamaktadır!",
+        "userexists": "Bu kullanıcı adı kullanılmaktadır!",
+        "emailexists": "Bu E-posta ile kayıtlı bir başka kullanıcı hesabı bulunmaktadır!",
+        "idexists": "{{ entityName }} ID değerine sahip başka kayıt bulunmaktadır."
+    },
+    "footer": "Created by <a href=\"mailto:guvenlikmimari@turktelekom.com.tr\"><b>TT Security Architecture Team</b></a>",
+    "yes" : "Evet",
+    "no" : "Hayır"
+}

@@ -1,0 +1,27 @@
+{
+    "audits": {
+        "title": "Denetimler",
+        "filter": {
+            "title": "Filter per date",
+            "from": "from",
+            "to": "to",
+            "button": {
+                "weeks": "Haftalar",
+                "today": "bugün",
+                "clear": "temizle",
+                "close": "kapat"
+            }
+        },
+        "table": {
+            "header": {
+                "principal": "Kullanıcı",
+                "date": "Tarih",
+                "status": "Durum",
+                "data": "Ek veri"
+            },
+            "data": {
+                "remoteAddress": "IP:"
+            }
+        }
+    }
+}

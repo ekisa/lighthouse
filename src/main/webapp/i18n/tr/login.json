@@ -1,0 +1,19 @@
+{
+    "login": {
+        "title": "Oturum açınız",
+        "form": {
+            "password": "Parola",
+            "password.placeholder": "Parolanız",
+            "rememberme": "Beni hatırla",
+            "button": "Oturum aç"
+        },
+        "messages": {
+            "error": {
+                "authentication": "<strong>Oturum açma sırasında bir hata oluştu!</strong> Lütfen kullanıcı adı ve parolanızı kontrol edip, tekrar deneyiniz."
+            }
+        },
+        "password" : {
+            "forgot": "Parolanızı mı unuttunuz?"
+        }
+    }
+}

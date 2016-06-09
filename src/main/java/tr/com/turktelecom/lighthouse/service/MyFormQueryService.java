@@ -40,7 +40,6 @@ public class MyFormQueryService {
 
     public <T> List<T> createSearchQuery(Class<T> queryClass, Map<String, Object> requiredParamsMap, Map<String, String> filterParamsMap, Integer page, Integer size, Sort sort) {
         List<Predicate> predicateList;
-        Predicate requiredParamPredicate;
         CriteriaBuilder criteriaBuilderToSearch = entityManager.getCriteriaBuilder();
         CriteriaQuery criteriaQueryToSearch = criteriaBuilderToSearch.createQuery(queryClass);
         Root rootToSearch = criteriaQueryToSearch.from(queryClass);
@@ -60,7 +59,7 @@ public class MyFormQueryService {
         Iterator<Map.Entry<String, Object>> requiredParamMapIterator = requiredParamsMap.entrySet().iterator();
         while (requiredParamMapIterator.hasNext()) {
             Map.Entry<String, Object> entry = requiredParamMapIterator.next();
-            requiredParamPredicate = criteriaBuilderToSearch.equal(PersistenceUtil.getPath(rootToSearch, entry.getKey()), entry.getValue());
+            Predicate requiredParamPredicate = criteriaBuilderToSearch.equal(PersistenceUtil.getPath(rootToSearch, entry.getKey()), entry.getValue());
             predicateList.add(requiredParamPredicate);
         }
 

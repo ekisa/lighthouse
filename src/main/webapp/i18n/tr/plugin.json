@@ -1,0 +1,36 @@
+{
+    "lighthouseApp": {
+        "plugin" : {
+            "home": {
+                "title": "Pluginler",
+                "createLabel": "Plugin Yarat",
+                "createOrEditLabel": "Plugin Yarat / Düzenle",
+                "search": "Plugin Arama"
+            },
+            "created": "{{ param }} ID değeri ile yeni bir Plugin yaratıldı",
+            "updated": "{{ param }} ID değerli plugin başarıyla güncellendi",
+            "deleted": "{{ param }} ID değerli plugin başarıyla silindi",
+            "delete": {
+                "question": "{{ id }} ID değerli Plugin'i silmek istediğinize emin misiniz?"
+            },
+            "detail": {
+                "title": "Plugin",
+                "scans": "Taramalar"
+            },
+            "name": "Ad",
+            "defects": "Bulgular",
+            "explanation" : "Açıklama",
+            "scan" : {
+                "scanTime" : "Tarama Zamanı"
+            },
+            "pluginContext" : {
+                "executableName": "Çalıştırılabilir Adı"
+            },
+            "critical" : "Critical",
+            "high" : "High",
+            "medium" : "Medium",
+            "low" : "Low",
+            "info" : "Info"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "reset": {
+        "request": {
+            "title": "Parolanızı yeniden belirleyin",
+            "form": {
+                "button": "Parola Belirle"
+            },
+            "messages": {
+                "info": "Lütfen sisteme kayıt olduğunuz e-postanızı giriniz",
+                "success": "Parola belirleme için 24 saat süreyle geçerli adımlar e-posta hesabınıza gönderilmiştir.",
+                "notfound": "<strong>Sistemde bu e-posta hesabı tanımlı değildir!</strong> Lütfen tekrar deneyiniz."
+
+            }
+
+        },
+        "finish" : {
+            "title": "Parola belirle",
+            "form": {
+                "button": "Parola Doğrula"
+            },
+            "messages": {
+                "info": "Parolanızı seçiniz",
+                "success": "<strong>Parolanızı başarıyla belirlediniz.</strong> Lütfen <a class=\"alert-link\" href=\"#/login\">oturum açınız</a>.",
+                "keymissing": "Reset key bulunamadı.",
+                "error": "Parolanızı belirlerken bir hata oluştu. E-posta hesabınıza gönderilen link yalnızca 24 saat geçerlidir."
+            }
+        }
+    }
+
+}

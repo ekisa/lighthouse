@@ -1,0 +1,95 @@
+{
+    "metrics": {
+        "title": "Uygulama Metrikleri",
+        "refresh.button": "Yenile",
+        "updating": "Güncelleniyor...",
+        "jvm": {
+            "title": "JVM Metrikleri",
+            "memory": {
+                "title": "Memory",
+                "total": "Toplam Memory",
+                "heap": "Heap Memory",
+                "nonheap": "Non-Heap Memory"
+            },
+            "threads": {
+                "title": "Threadler",
+                "all": "Tüm",
+                "runnable": "Runnable",
+                "timedwaiting": "Timed waiting",
+                "waiting": "Waiting",
+                "blocked": "Blocked",
+                "dump": {
+                    "title": "Threads dump",
+                    "id": "Id: ",
+                    "blockedtime": "Blocked Time",
+                    "blockedcount": "Blocked Count",
+                    "waitedtime": "Waited Time",
+                    "waitedcount": "Waited Count",
+                    "lockname": "Lock name",
+                    "stacktrace": "Stacktrace",
+                    "show": "Show Stacktrace",
+                    "hide": "Hide Stacktrace"
+                }
+            },
+            "gc": {
+                "title": "Garbage collections",
+                "marksweepcount": "Mark Sweep count",
+                "marksweeptime": "Mark Sweep time",
+                "scavengecount": "Scavenge count",
+                "scavengetime": "Scavenge time"
+            },
+            "http": {
+                "title": "HTTP request sayısı (events per second)",
+                "active": "Aktif requestler:",
+                "total": "Toplam requestler:",
+                "table": {
+                    "code": "Kod",
+                    "count": "Adet",
+                    "mean": "Mean Değeri",
+                    "average": "Ortalama"
+                },
+                "code": {
+                    "ok": "Ok",
+                    "notfound": "Bulunamadı",
+                    "servererror": "Sunucu Hatası"
+                }
+            }
+        },
+        "servicesstats": {
+            "title": "Servis istatistikleri (millisecond cinsinde)",
+            "table": {
+                "name": "Servis adı",
+                "count": "Adet",
+                "mean": "Mean Değeri",
+                "min": "Min",
+                "max": "Max",
+                "p50": "p50",
+                "p75": "p75",
+                "p95": "p95",
+                "p99": "p99"
+            }
+        },
+        "ehcache": {
+            "title": "Ehcache istatistikleri",
+            "cachename": "Cache name",
+            "objects": "Objects",
+            "hits": "Hits",
+            "misses": "Misses",
+            "evictioncount": "Eviction count",
+            "mean": "Mean get time (ms)"
+        },
+        "datasource": {
+        	"usage": "Usage",
+            "title": "DataSource istatistikleri (millisecond cinsinde)",
+            "name": "Pool usage",
+            "count": "Count",
+            "mean": "Mean Değeri",
+            "min": "Min",
+            "max": "Max",
+            "p50": "p50",
+            "p75": "p75",
+            "p95": "p95",
+            "p99": "p99"
+        }
+    }
+}

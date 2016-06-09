@@ -1,0 +1,32 @@
+{
+    "settings": {
+        "title": "[<b>{{username}}</b>] kullanıcı ayarları",
+        "form": {
+            "firstname": "Ad",
+            "firstname.placeholder": "Adınız",
+            "lastname": "Soyad",
+            "lastname.placeholder": "Soyadınız",
+            "language": "Dil",
+            "button": "Kaydet"
+        },
+        "messages": {
+            "error": {
+                "fail": "<strong>Hata oluştu!</strong> Ayarlar kaydedilemedi.",
+                "emailexists": "<strong>E-posta hesabı kullanılmaktadır!</strong> Lütfen başka bir tane seçiniz."
+            },
+            "success": "<strong>Ayarlar kaydedildi!</strong>",
+            "validate": {
+                "firstname": {
+                    "required": "Adınız gereklidir.",
+                    "minlength": "Adınız en az 1 karakter olabilir",
+                    "maxlength": "Adınız en fazla 50 karakter olabilir"
+                },
+                "lastname": {
+                    "required": "Soyadınız gereklidir.",
+                    "minlength": "Soyadınız en az 1 karakter olabilir",
+                    "maxlength": "Soyadınız en fazla 50 karakter olabilir"
+                }
+            }
+        }
+    }
+}

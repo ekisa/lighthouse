@@ -1,0 +1,31 @@
+{
+    "lighthouseApp": {
+        "defect" : {
+            "home": {
+                "title": "Bulgu Detayları",
+                "createLabel": "Yeni Bulgu Yarat",
+                "createOrEditLabel": "Bulgu Yarat / Güncelle",
+                "search": "Bulgu Ara"
+            },
+            "created": "Bulgu yaratıldı. ID: {{ param }}",
+            "updated": "Bulgu güncellendi. ID: {{ param }}",
+            "deleted": "Bulgu silindi. ID: {{ param }}",
+            "delete": {
+                "question": "{{ id }} ID'li bu bulguyu silmek istedğinizden emin misiniz?"
+            },
+            "detail": {
+                "title": "Bulgu Detayları"
+            },
+            "title": "Başlık",
+            "explanation": "Açıklama",
+            "code": "Kodu",
+            "plugin": "Plugin",
+            "severity" : "Önem Derecesi",
+            "isFalsePositive" : "False Positive",
+            "scan" : "Tarama",
+            "newDefect" : "Yeni Bulgu",
+            "needManuelCheck" : "Manuel İnceleme Gerekli",
+            "sourceIP" : "Kaynak IP"
+        }
+    }
+}

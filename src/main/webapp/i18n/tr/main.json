@@ -1,0 +1,15 @@
+{
+    "main": {
+        "title": "Merhaba, {{username}}!",
+        "subtitle": "Pluginlerin durumları aşağıdaki gibidir",
+        "logged": {
+            "message": "\"{{username}}\" olarak oturum açtınız."
+        },
+        "usefulLinks": "Yaratlı linkler;",
+        "link": {
+            "exploit-db": "Exploit-db arama"
+        },
+        "like": "like",
+        "github": "github"
+    }
+}

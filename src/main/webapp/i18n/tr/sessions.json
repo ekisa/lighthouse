@@ -1,0 +1,15 @@
+{
+    "sessions": {
+        "title": "[<b>{{username}}</b>] kullanıcısı için aktif oturumlar",
+        "table": {
+            "ipaddress": "IP adresi",
+            "useragent": "User Agent",
+            "date": "Tarih",
+            "button": "Sil"
+        },
+        "messages": {
+            "success": "<strong>Oturum silindi!</strong>",
+            "error": "<strong>Hata oluştu!</strong> Oturum silinemedi."
+        }
+    }
+}

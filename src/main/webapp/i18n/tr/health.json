@@ -1,0 +1,28 @@
+{
+    "health": {
+        "title": "Sunucu durumu",
+        "refresh.button": "Yenile",
+        "stacktrace": "Stacktrace",
+        "details": {
+            "details": "Detaylar",
+            "properties": "Özellikler",
+            "name": "Ad",
+            "value": "Değer",
+            "error": "Hata"
+        },
+        "indicator": {
+            "diskSpace": "Disk alanı",
+            "mail": "Eposta",
+            "elasticsearch": "Elasticsearch",
+            "db": "Veritabanı"
+        },
+        "table": {
+            "service": "Servis adı",
+            "status": "Durum"
+        },
+        "status": {
+            "UP": "ÇALIŞIYOR",
+            "DOWN": "ÇALIŞMIYOR"
+        }
+    }
+}

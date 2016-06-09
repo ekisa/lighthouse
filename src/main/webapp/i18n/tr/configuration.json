@@ -1,0 +1,10 @@
+{
+    "configuration": {
+        "title": "Konfigürasyon",
+        "filter": "Filtre (ön ada göre)",
+        "table": {
+            "prefix": "Ön Ad",
+            "properties": "Özellikler"
+        }
+    }
+}

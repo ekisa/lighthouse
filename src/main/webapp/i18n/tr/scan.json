@@ -1,0 +1,23 @@
+{
+    "lighthouseApp": {
+        "scan" : {
+            "home": {
+                "title": "{{count}} Bulgu",
+                "createLabel": "Yeni Tarama Yarat",
+                "createOrEditLabel": "Tarama Yarat / Düzenle",
+                "search": "Tarama Arama"
+            },
+            "created": "{{ param }} ID değerli yeni bir tarama yaratıldı.",
+            "updated": "{{ param }} ID değerli tarama güncellendi.",
+            "deleted": "{{ param }} ID değerli tarama başarıyla silindi.",
+            "delete": {
+                "question": "{{ param }} ID değerli taramayı silmek istedğinizden emin misiniz?"
+            },
+            "detail": {
+                "title": "Tarama"
+            },
+            "name": "Ad",
+            "scanTime": "Tarama Zamanı"
+        }
+    }
+}
