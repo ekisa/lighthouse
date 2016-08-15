@@ -51,7 +51,9 @@ liquibase:
     contexts: prod
 
 server:
+    url: http://localhost
     port: 8080
+    ui-port: 9000
     compression:
         enabled: true
         mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
@@ -93,6 +95,6 @@ pluginRunner:
     bash:
         home: ~
     perl:
-        home: T:\Swf\Lang\Perl\Strawberry\perl\bin
+        home: /usr/bin
     T:\Swf\Lang\Perl\Strawberry\perl\bin\perl.exe:
         home: T:\Swf\Lang\Perl\Strawberry\perl\bin

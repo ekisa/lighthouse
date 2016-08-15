@@ -13,10 +13,7 @@ import tr.com.turktelecom.lighthouse.service.util.DateTimeUtil;
 import java.io.*;
 import java.nio.file.Paths;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 010235 on 29.04.2016.
@@ -76,7 +73,7 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
 
     private void setProcessPath(ExecutablePluginContext executablePluginContext, ProcessBuilder processBuilder) {
         String executableHomeDir = environment.getProperty("pluginRunner." + executablePluginContext.getCommand() +".home");
-        String oldPath = processBuilder.environment().get("Path");
+        String oldPath = Optional.ofNullable(processBuilder.environment().get("PATH")).orElse(processBuilder.environment().get("Path"));
         String newPath = null;
         if(oldPath.contains(executableHomeDir)) {
             newPath = oldPath;

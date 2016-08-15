@@ -63,7 +63,7 @@ gulp.task('copy', function() {
         gulp.src(config.app + 'i18n/**')
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist + 'i18n/'))
-        .pipe(gulp.dest(config.dist + 'i18n/')), 
+        .pipe(gulp.dest(config.dist + 'i18n/')),
         gulp.src(config.app + 'bower_components/bootstrap/fonts/*.*')
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist + 'assets/fonts/'))
