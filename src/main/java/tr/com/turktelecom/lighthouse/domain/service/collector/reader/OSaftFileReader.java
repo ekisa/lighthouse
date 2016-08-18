@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -288,7 +289,7 @@ public class OSaftFileReader implements FileReader {
                     scan.addDefect(defect);
                 }
 
-                System.out.println("Defect count : " + scan.getDefects().size());
+                System.out.println("NEW O-SAFT SCAN COMPLETED! Defect count : " + scan.getDefects() != null ? scan.getDefects().size() : "0");
             }
         }catch (Exception e){
             e.printStackTrace();

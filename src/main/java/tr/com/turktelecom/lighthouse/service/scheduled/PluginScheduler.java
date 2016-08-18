@@ -56,21 +56,21 @@ public class PluginScheduler {
         List<Plugin> plugins = pluginRepository.findDistinctByActivatedIsTrueAndNextRunDateBefore(now);
         for (Plugin plugin : plugins) {
             log.debug("Running plugin : {}", plugin.getName());
-            Scan lastScan =  pluginService.startNewScan(plugin);
+            Scan newScan =  pluginService.startNewScan(plugin);
             if (!"dev".equals(environment.getProperty("spring.profiles.active"))) {
-                plugin.setNextRunDate(now.plusHours(plugin.getSchedule()));
+                plugin.setNextRunDate(ZonedDateTime.now().plusHours(plugin.getSchedule()));
             }
-            pluginService.addScan(plugin, lastScan);
-            if (lastScan.hasAnyDefectsMoreSevereThan(Severity.HIGH)) {
+            Plugin updatedPlugin = pluginService.addScan(plugin, newScan);
+            if (newScan.hasAnyDefectsMoreSevereThan(Severity.HIGH)) {
                 userRepository.findAll().forEach(user -> {
                     if (!user.getActivated()) {
                         return;
                     }
                     String baseUrl = environment.getProperty("server.url") + ":" + environment.getProperty("server.ui-port");
-                    mailService.scanCreatedEmail(user, plugin, lastScan, baseUrl);
+                    mailService.scanCreatedEmail(user, updatedPlugin, newScan, baseUrl);
                 });
             }
-            log.debug("Finished running plugin : {}", plugin.getName());
+            log.debug("Finished running plugin : {}", updatedPlugin.getName());
         }
     }
 }

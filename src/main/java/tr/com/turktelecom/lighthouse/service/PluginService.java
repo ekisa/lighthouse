@@ -58,9 +58,9 @@ public class PluginService {
     @Transactional
     public Plugin addScan(Plugin plugin, Scan scan) {
         //DebugUtils.showTransactionStatus("PluginService.addScan");
-        plugin = entityManager.merge(plugin);
-        plugin.addScan(scan);
-        return plugin;
+        Plugin updatedPlugin = entityManager.merge(plugin);
+        updatedPlugin.addScan(scan);
+        return updatedPlugin;
         //DebugUtils.showTransactionStatus("PluginService.addScan");
     }
 
