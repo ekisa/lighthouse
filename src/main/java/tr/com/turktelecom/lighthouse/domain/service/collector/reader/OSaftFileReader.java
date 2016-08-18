@@ -69,10 +69,10 @@ public class OSaftFileReader implements FileReader {
                 if (givenHostNamePattern.matcher(strLine).find()) {
                     hostName = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                 }
-                if (ipForGivenHostNamePattern.matcher(strLine).find()) {
+                else if (ipForGivenHostNamePattern.matcher(strLine).find()) {
                     sourceIP = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                 }
-                if (selectedCipherPattern.matcher(strLine).find()) {
+                else if (selectedCipherPattern.matcher(strLine).find()) {
                     selectedCipher = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     Defect defect = new Defect();
                     defect.setTitle("Selected Cipher : " + selectedCipher);
@@ -83,7 +83,7 @@ public class OSaftFileReader implements FileReader {
                     defect.setSourceIP(sourceIP);
                     scan.addDefect(defect);
                 }
-                if (tlsSessionTicketRandomPattern.matcher(strLine).find()) {
+                else if (tlsSessionTicketRandomPattern.matcher(strLine).find()) {
                     tlsSessionTicketRandom = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(tlsSessionTicketRandom)) {
                         Defect defect = new Defect();
@@ -96,7 +96,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (noRC4CiphersPattern.matcher(strLine).find()) {
+                else if (noRC4CiphersPattern.matcher(strLine).find()) {
                     noRC4Ciphers = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(noRC4Ciphers)) {
                         Defect defect = new Defect();
@@ -110,7 +110,7 @@ public class OSaftFileReader implements FileReader {
                     }
 
                 }
-                if (safeToFreakPattern.matcher(strLine).find()) {
+                else if (safeToFreakPattern.matcher(strLine).find()) {
                     safeToFreak = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(safeToFreak)) {
                         Defect defect = new Defect();
@@ -123,7 +123,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (safeToBEASTPattern.matcher(strLine).find()) {
+                else if (safeToBEASTPattern.matcher(strLine).find()) {
                     safeToBEAST = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(safeToBEAST)) {
                         Defect defect = new Defect();
@@ -136,7 +136,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (safeToLogjamPattern.matcher(strLine).find()) {
+                else if (safeToLogjamPattern.matcher(strLine).find()) {
                     safeToLogjam = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(safeToLogjam)) {
                         Defect defect = new Defect();
@@ -149,7 +149,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (safeToHeartbleedPattern.matcher(strLine).find()) {
+                else if (safeToHeartbleedPattern.matcher(strLine).find()) {
                     safeToHeartbleed = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(safeToHeartbleed)) {
                         Defect defect = new Defect();
@@ -162,7 +162,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (safeToCRIMEPattern.matcher(strLine).find()) {
+                else if (safeToCRIMEPattern.matcher(strLine).find()) {
                     safeToCRIME = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(safeToCRIME)) {
                         Defect defect = new Defect();
@@ -175,7 +175,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (signatureIsSHA2Pattern.matcher(strLine).find()) {
+                else if (signatureIsSHA2Pattern.matcher(strLine).find()) {
                     signatureIsSHA2 = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(signatureIsSHA2)) {
                         Defect defect = new Defect();
@@ -188,7 +188,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (safeToPOODLEPattern.matcher(strLine).find()) {
+                else if (safeToPOODLEPattern.matcher(strLine).find()) {
                     safeToPOODLE = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(safeToPOODLE)) {
                         Defect defect = new Defect();
@@ -201,7 +201,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (fingerprintNotMD5Pattern.matcher(strLine).find()) {
+                else if (fingerprintNotMD5Pattern.matcher(strLine).find()) {
                     fingerprintNotMD5 = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(fingerprintNotMD5)) {
                         Defect defect = new Defect();
@@ -214,7 +214,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (noExportCiphersPattern.matcher(strLine).find()) {
+                else if (noExportCiphersPattern.matcher(strLine).find()) {
                     noExportCiphers = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(noExportCiphers)) {
                         Defect defect = new Defect();
@@ -227,7 +227,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (noNULLCiphersPattern.matcher(strLine).find()) {
+                else if (noNULLCiphersPattern.matcher(strLine).find()) {
                     noNULLCiphers = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(noNULLCiphers)) {
                         Defect defect = new Defect();
@@ -240,7 +240,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (PCICompliantPattern.matcher(strLine).find()) {
+                else if (PCICompliantPattern.matcher(strLine).find()) {
                     PCICompliant = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(PCICompliant)) {
                         Defect defect = new Defect();
@@ -253,7 +253,7 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                if (noSSLV3Pattern.matcher(strLine).find()) {
+                else if (noSSLV3Pattern.matcher(strLine).find()) {
                     noSSLV3 = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if ("no".equalsIgnoreCase(noSSLV3)) {
                         Defect defect = new Defect();
@@ -267,7 +267,7 @@ public class OSaftFileReader implements FileReader {
                     }
                 }
                 // Read Supported SSL Algorithms to find if there is a vulnerable one
-                if (weakYes.matcher(strLine).find()) {
+                else if (weakYes.matcher(strLine).find()) {
                     Defect defect = new Defect();
                     defect.setTitle("Supported cipher is weak : " + strLine);
                     defect.setSeverity(Severity.HIGH);
@@ -277,7 +277,7 @@ public class OSaftFileReader implements FileReader {
                     defect.setSourceIP(sourceIP);
                     scan.addDefect(defect);
                 }
-                if (mediumYes.matcher(strLine).find()) {
+                else if (mediumYes.matcher(strLine).find()) {
                     Defect defect = new Defect();
                     defect.setTitle("Supported cipher is not recommended : " + strLine);
                     defect.setSeverity(Severity.MEDIUM);
@@ -287,6 +287,8 @@ public class OSaftFileReader implements FileReader {
                     defect.setSourceIP(sourceIP);
                     scan.addDefect(defect);
                 }
+
+                System.out.println("Defect count : " + scan.getDefects().size());
             }
         }catch (Exception e){
             e.printStackTrace();
