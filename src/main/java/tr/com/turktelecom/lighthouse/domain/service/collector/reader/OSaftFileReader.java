@@ -46,9 +46,7 @@ public class OSaftFileReader implements FileReader {
             Pattern safeToFreakPattern = Pattern.compile("Safe to FREAK:\\s*([^\\n\\r]*)");
             Pattern safeToBEASTPattern = Pattern.compile("Safe to BEAST (cipher):\\s*([^\\n\\r]*)");
             Pattern safeToLogjamPattern = Pattern.compile("Safe to Logjam:\\s*([^\\n\\r]*)");
-            Pattern safeToLucky13Pattern = Pattern.compile("Safe to Lucky 13:\\s*([^\\n\\r]*)");
             Pattern safeToRC4attackPattern = Pattern.compile("Safe to RC4 attack:\\s*([^\\n\\r]*)");
-            Pattern safeToBREACHPattern = Pattern.compile("Safe to BREACH:\\s*([^\\n\\r]*)");
             Pattern safeToHeartbleedPattern = Pattern.compile("Safe to Heartbleed:\\s*([^\\n\\r]*)");
             Pattern safeToCRIMEPattern = Pattern.compile("Safe to CRIME:\\s*([^\\n\\r]*)");
             Pattern signatureIsSHA2Pattern = Pattern.compile("Signature is SHA2:\\s*([^\\n\\r]*)");
@@ -65,7 +63,7 @@ public class OSaftFileReader implements FileReader {
             String sourceIP = null, hostName = null; //, port = null, protocol = null, pluginName = null,  resultCode = null;
             String selectedCipher = null, tlsSessionTicketRandom = null, noRC4Ciphers = null, safeToFreak = null, safeToBEAST = null, safeToLogjam = null,
                 safeToHeartbleed = null, safeToCRIME = null, signatureIsSHA2 = null, safeToPOODLE = null, fingerprintNotMD5 = null, noExportCiphers = null,
-                noNULLCiphers = null, PCICompliant = null, noSSLV3 = null, safeToLucky13 = null, safeToRC4attack = null, safeToBREACH = null;
+                noNULLCiphers = null, PCICompliant = null, noSSLV3 = null, safeToRC4attack = null;
 
             //Read File line by line
             while (strLine != null)   {
@@ -157,19 +155,6 @@ public class OSaftFileReader implements FileReader {
                         scan.addDefect(defect);
                     }
                 }
-                else if (safeToLucky13Pattern.matcher(strLine).find()) {
-                    safeToLucky13 = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
-                    if (!"yes".equalsIgnoreCase(safeToLucky13) &&  !"no (no reply)".equalsIgnoreCase(safeToLucky13)) {
-                        Defect defect = new Defect();
-                        defect.setTitle("Safe to Lucky 13 : " + safeToLucky13);
-                        defect.setSeverity(Severity.HIGH);
-                        defect.setExplanation("Safe to Lucky 13 : " + safeToLucky13);
-                        defect.setHostName(hostName);
-                        defect.setNeedManuelCheck(Boolean.FALSE);
-                        defect.setSourceIP(sourceIP);
-                        scan.addDefect(defect);
-                    }
-                }
                 else if (safeToRC4attackPattern.matcher(strLine).find()) {
                     safeToRC4attack = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
                     if (!"yes".equalsIgnoreCase(safeToRC4attack) &&  !"no (no reply)".equalsIgnoreCase(safeToRC4attack)) {
@@ -204,19 +189,6 @@ public class OSaftFileReader implements FileReader {
                         defect.setTitle("Safe to CRIME : " + safeToCRIME);
                         defect.setSeverity(Severity.HIGH);
                         defect.setExplanation("Safe to CRIME : " + safeToCRIME);
-                        defect.setHostName(hostName);
-                        defect.setNeedManuelCheck(Boolean.FALSE);
-                        defect.setSourceIP(sourceIP);
-                        scan.addDefect(defect);
-                    }
-                }
-                else if (safeToBREACHPattern.matcher(strLine).find()) {
-                    safeToBREACH = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
-                    if (!"yes".equalsIgnoreCase(safeToBREACH) &&  !"no (no reply)".equalsIgnoreCase(safeToBREACH)) {
-                        Defect defect = new Defect();
-                        defect.setTitle("Safe to BREACH : " + safeToBREACH);
-                        defect.setSeverity(Severity.HIGH);
-                        defect.setExplanation("Safe to BREACH : " + safeToBREACH);
                         defect.setHostName(hostName);
                         defect.setNeedManuelCheck(Boolean.FALSE);
                         defect.setSourceIP(sourceIP);
