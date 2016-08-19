@@ -35,7 +35,7 @@ public class OSaftFileReader implements FileReader {
 
             br = new BufferedReader(new InputStreamReader(fstream));
 
-            String strLine;
+            String strLine = "";
 
             //Create RegEx patterns to extract meaningful data
             Pattern givenHostNamePattern = Pattern.compile("Given hostname:\\s*([^\\n\\r]*)");
@@ -65,7 +65,11 @@ public class OSaftFileReader implements FileReader {
                 noNULLCiphers = null, PCICompliant = null, noSSLV3 = null;
 
             //Read File line by line
-            while (!StringUtils.isEmpty(strLine = br.readLine()))   {
+            while (strLine != null)   {
+                strLine = br.readLine();
+                if (StringUtils.isEmpty(strLine)) {
+                    continue;
+                }
                 // Read Host SSL Configuration details
                 if (givenHostNamePattern.matcher(strLine).find()) {
                     hostName = strLine.substring(strLine.indexOf("\t"), strLine.length()).trim();
@@ -289,7 +293,7 @@ public class OSaftFileReader implements FileReader {
                     scan.addDefect(defect);
                 }
 
-                System.out.println("NEW O-SAFT SCAN COMPLETED! Defect count : " + scan.getDefects() != null ? scan.getDefects().size() : "0");
+                //System.out.println("NEW O-SAFT SCAN COMPLETED! Defect count : " + scan.getDefects() != null ? scan.getDefects().size() : "0");
             }
         }catch (Exception e){
             e.printStackTrace();

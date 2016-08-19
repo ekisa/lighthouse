@@ -80,7 +80,13 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
         }else{
             newPath = ((String) oldPath) + ";" + executableHomeDir;
         }
-        processBuilder.environment().put("Path", newPath);
+        final String finalNewPath = newPath;
+        Optional.ofNullable(processBuilder.environment().get("PATH")).map(p -> {
+            return processBuilder.environment().put("PATH", finalNewPath);
+        }).orElse(processBuilder.environment().put("Path", finalNewPath));
+
+        //processBuilder.environment().put("Path", newPath);
+        //processBuilder.environment().put("PATH", newPath);
     }
 
     private void addOptionalArgs(Plugin plugin, List<String> args) {
