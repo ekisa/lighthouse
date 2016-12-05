@@ -85,7 +85,7 @@ gulp.task('images', function() {
 });
 
 gulp.task('styles', [], function() {
-    return gulp.src(config.app + 'assest/styles')
+    return gulp.src(config.app + 'assets/styles')
         .pipe(browserSync.reload({stream: true}));
 });
 

@@ -8,8 +8,7 @@
     "src/main/webapp/bower_components"
   ],
   "dependencies": {
-    "bower": "^1.6.3",
-    "message-format": "^2.0.0"
+    "bower": "^1.6.3"
   },
   "devDependencies": {
     "browser-sync": "2.10.0",
