@@ -25,9 +25,9 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
     protected void runInternal(Plugin plugin, ZonedDateTime pluginStartTimestamp) throws PluginContextNotSupportedException, PluginRunFailedException{
         ExecutablePluginContext executablePluginContext = this.findPluginContext(plugin);
         File errorLogFile = this.createLogFile("error", plugin, pluginStartTimestamp);
-        File outputLogFile = this.createLogFile("output", plugin, pluginStartTimestamp);
+        //File outputLogFile = this.createLogFile("output", plugin, pluginStartTimestamp);
         try {
-            this.logToFile(outputLogFile, "\nRun started at " + DateTimeUtil.formatTimeStamp(pluginStartTimestamp, DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
+            //this.logToFile(outputLogFile, "\nRun started at " + DateTimeUtil.formatTimeStamp(pluginStartTimestamp, DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
 
             List<String> args = new ArrayList<String>();
             String command = executablePluginContext.getCommand();
@@ -48,11 +48,11 @@ public class PluginRunnerExecutableImpl extends AbstractPluginRunner {
             this.setProcessPath(executablePluginContext, processBuilder);
             processBuilder.directory(this.findWorkingDirectory(plugin));
             processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(errorLogFile));
-            processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(outputLogFile));
+            //processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(outputLogFile));
             Process process = processBuilder.start();
             int returnVal = process.waitFor();
 
-            this.logToFile(outputLogFile, "\nRun completed successfully at " + DateTimeUtil.formatTimeStamp(ZonedDateTime.now(), DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
+            //this.logToFile(outputLogFile, "\nRun completed successfully at " + DateTimeUtil.formatTimeStamp(ZonedDateTime.now(), DateTimeUtil.PATTERN.DATE_TIME_PATTERN) + "\n");
             errorLogFile.delete();
         } catch (IOException e) {
             try {
