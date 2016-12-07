@@ -4,7 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import org.springframework.data.domain.*;
 import tr.com.turktelecom.lighthouse.domain.Plugin;
 import tr.com.turktelecom.lighthouse.repository.PluginRepository;
-import tr.com.turktelecom.lighthouse.repository.search.PluginSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.PluginSearchRepository;
 import tr.com.turktelecom.lighthouse.service.PluginService;
 import tr.com.turktelecom.lighthouse.web.rest.dto.PluginHomeDTO;
 import tr.com.turktelecom.lighthouse.web.rest.util.HeaderUtil;
@@ -41,8 +41,7 @@ public class PluginResource {
     @Inject
     private PluginRepository pluginRepository;
 
-    @Inject
-    private PluginSearchRepository pluginSearchRepository;
+//    @Inject private PluginSearchRepository pluginSearchRepository;
 
     /**
      * POST  /plugins -> Create a new plugin.
@@ -57,7 +56,7 @@ public class PluginResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("plugin", "idexists", "A new plugin cannot already have an ID")).body(null);
         }
         Plugin result = pluginRepository.save(plugin);
-        pluginSearchRepository.save(result);
+//        pluginSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/plugins/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("plugin", result.getId().toString()))
             .body(result);
@@ -76,7 +75,7 @@ public class PluginResource {
             return createPlugin(plugin);
         }
         Plugin result = pluginRepository.save(plugin);
-        pluginSearchRepository.save(result);
+//        pluginSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("plugin", plugin.getId().toString()))
             .body(result);
@@ -166,7 +165,7 @@ public class PluginResource {
     public ResponseEntity<Void> deletePlugin(@PathVariable Long id) {
         log.debug("REST request to delete Plugin : {}", id);
         pluginRepository.delete(id);
-        pluginSearchRepository.delete(id);
+//        pluginSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("plugin", id.toString())).build();
     }
 
@@ -179,9 +178,10 @@ public class PluginResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<Plugin> searchPlugins(@PathVariable String query) {
-        log.debug("REST request to search Plugins for query {}", query);
-        return StreamSupport
-            .stream(pluginSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+//        log.debug("REST request to search Plugins for query {}", query);
+//        return StreamSupport
+//            .stream(pluginSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

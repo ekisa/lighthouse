@@ -22,7 +22,7 @@ import java.util.*;
 @Entity
 @Table(name = "plugin")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "plugin")
+//@Document(indexName = "plugin")
 @NamedEntityGraphs(value = {
     @NamedEntityGraph(name = "graph.Plugin.args", attributeNodes = @NamedAttributeNode("args"))
 })

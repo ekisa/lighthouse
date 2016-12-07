@@ -3,7 +3,7 @@ package tr.com.turktelecom.lighthouse.web.rest;
 import tr.com.turktelecom.lighthouse.Application;
 import tr.com.turktelecom.lighthouse.domain.Plugin;
 import tr.com.turktelecom.lighthouse.repository.PluginRepository;
-import tr.com.turktelecom.lighthouse.repository.search.PluginSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.PluginSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,8 +48,7 @@ public class PluginResourceIntTest {
     @Inject
     private PluginRepository pluginRepository;
 
-    @Inject
-    private PluginSearchRepository pluginSearchRepository;
+//    @Inject private PluginSearchRepository pluginSearchRepository;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -65,7 +64,7 @@ public class PluginResourceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         PluginResource pluginResource = new PluginResource();
-        ReflectionTestUtils.setField(pluginResource, "pluginSearchRepository", pluginSearchRepository);
+//        ReflectionTestUtils.setField(pluginResource, "pluginSearchRepository", pluginSearchRepository);
         ReflectionTestUtils.setField(pluginResource, "pluginRepository", pluginRepository);
         this.restPluginMockMvc = MockMvcBuilders.standaloneSetup(pluginResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

@@ -19,7 +19,7 @@ import java.util.*;
 @Entity
 @Table(name = "SCAN")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "scan")
+//@Document(indexName = "scan")
 @NamedEntityGraph(name = "graph.Scan.defects", attributeNodes = @NamedAttributeNode("defects"))
 public class Scan extends AbstractAuditingEntity implements Serializable {
 

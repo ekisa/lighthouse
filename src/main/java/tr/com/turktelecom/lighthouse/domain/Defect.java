@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "defect")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "defect")
+//@Document(indexName = "defect")
 public class Defect extends AbstractAuditingEntity implements Serializable {
 
     @Id

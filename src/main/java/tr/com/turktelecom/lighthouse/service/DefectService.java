@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tr.com.turktelecom.lighthouse.domain.*;
 import tr.com.turktelecom.lighthouse.repository.*;
-import tr.com.turktelecom.lighthouse.repository.search.DefectSearchRepository;
-import tr.com.turktelecom.lighthouse.repository.search.UserSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.DefectSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.UserSearchRepository;
 import tr.com.turktelecom.lighthouse.security.SecurityUtils;
 import tr.com.turktelecom.lighthouse.service.util.RandomUtil;
 import tr.com.turktelecom.lighthouse.web.rest.dto.DefectDTO;
@@ -37,8 +37,7 @@ public class DefectService {
     @Inject
     private DefectRepository defectRepository;
 
-    @Inject
-    private DefectSearchRepository defectSearchRepository;
+//    @Inject private DefectSearchRepository defectSearchRepository;
 
     @Inject
     private DefectMapper defectMapper;
@@ -48,7 +47,7 @@ public class DefectService {
     public DefectDTO createDefect(DefectDTO defectDTO) {
         return Optional.ofNullable(defectMapper.defectDTOToDefect(defectDTO)).map(defect -> {
             Defect newDefect = defectRepository.save(defect);
-            defectSearchRepository.save(defect);
+//            defectSearchRepository.save(defect);
             log.debug("Created Defect: {}", newDefect);
             return defectMapper.defectToDefectDTO(newDefect);
         }).orElse(null);
@@ -104,7 +103,7 @@ public class DefectService {
 //            });
 
             Defect updatedDefect = defectRepository.save(defect);
-            defectSearchRepository.save(defect);
+//            defectSearchRepository.save(defect);
             log.debug("Updated Defect: {}", updatedDefect);
             return defectMapper.defectToDefectDTO(updatedDefect);
         }).orElse(null);

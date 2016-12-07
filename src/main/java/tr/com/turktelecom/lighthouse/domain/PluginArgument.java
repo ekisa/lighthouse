@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "plugin_argument")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "plugin_argument")
+//@Document(indexName = "plugin_argument")
 public class PluginArgument extends AbstractAuditingEntity{
 
     @Id

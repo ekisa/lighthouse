@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tr.com.turktelecom.lighthouse.domain.Scan;
 import tr.com.turktelecom.lighthouse.repository.ScanRepository;
-import tr.com.turktelecom.lighthouse.repository.search.ScanSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.ScanSearchRepository;
 import tr.com.turktelecom.lighthouse.web.rest.util.HeaderUtil;
 import tr.com.turktelecom.lighthouse.web.rest.util.PaginationUtil;
 
@@ -38,8 +38,7 @@ public class ScanResource {
     @Inject
     private ScanRepository scanRepository;
 
-    @Inject
-    private ScanSearchRepository scanSearchRepository;
+//    @Inject private ScanSearchRepository scanSearchRepository;
 
     /**
      * POST  /scans -> Create a new scan.
@@ -54,7 +53,7 @@ public class ScanResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("scan", "idexists", "A new scan cannot already have an ID")).body(null);
         }
         Scan result = scanRepository.save(scan);
-        scanSearchRepository.save(result);
+//        scanSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/scans/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("scan", result.getId().toString()))
             .body(result);
@@ -73,7 +72,7 @@ public class ScanResource {
             return createScan(scan);
         }
         Scan result = scanRepository.save(scan);
-        scanSearchRepository.save(result);
+//        scanSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("scan", scan.getId().toString()))
             .body(result);
@@ -121,7 +120,7 @@ public class ScanResource {
     public ResponseEntity<Void> deleteScan(@PathVariable Long id) {
         log.debug("REST request to delete Scan : {}", id);
         scanRepository.delete(id);
-        scanSearchRepository.delete(id);
+//        scanSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("scan", id.toString())).build();
     }
 
@@ -134,9 +133,10 @@ public class ScanResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<Scan> searchScans(@PathVariable String query) {
-        log.debug("REST request to search Scans for query {}", query);
-        return StreamSupport
-            .stream(scanSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+//        log.debug("REST request to search Scans for query {}", query);
+//        return StreamSupport
+//            .stream(scanSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

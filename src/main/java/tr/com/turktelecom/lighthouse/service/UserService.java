@@ -6,7 +6,7 @@ import tr.com.turktelecom.lighthouse.domain.User;
 import tr.com.turktelecom.lighthouse.repository.AuthorityRepository;
 import tr.com.turktelecom.lighthouse.repository.PersistentTokenRepository;
 import tr.com.turktelecom.lighthouse.repository.UserRepository;
-import tr.com.turktelecom.lighthouse.repository.search.UserSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.UserSearchRepository;
 import tr.com.turktelecom.lighthouse.security.SecurityUtils;
 import tr.com.turktelecom.lighthouse.service.util.RandomUtil;
 import tr.com.turktelecom.lighthouse.web.rest.dto.ManagedUserDTO;
@@ -38,8 +38,7 @@ public class UserService {
     @Inject
     private UserRepository userRepository;
 
-    @Inject
-    private UserSearchRepository userSearchRepository;
+//    @Inject private UserSearchRepository userSearchRepository;
 
     @Inject
     private PersistentTokenRepository persistentTokenRepository;
@@ -55,7 +54,7 @@ public class UserService {
                 user.setActivated(true);
                 user.setActivationKey(null);
                 userRepository.save(user);
-                userSearchRepository.save(user);
+//                userSearchRepository.save(user);
                 log.debug("Activated user: {}", user);
                 return user;
             });
@@ -111,7 +110,7 @@ public class UserService {
         authorities.add(authority);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
-        userSearchRepository.save(newUser);
+//        userSearchRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }
@@ -140,7 +139,7 @@ public class UserService {
         user.setResetDate(ZonedDateTime.now());
         user.setActivated(true);
         userRepository.save(user);
-        userSearchRepository.save(user);
+//        userSearchRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;
     }
@@ -152,7 +151,7 @@ public class UserService {
             u.setEmail(email);
             u.setLangKey(langKey);
             userRepository.save(u);
-            userSearchRepository.save(u);
+//            userSearchRepository.save(u);
             log.debug("Changed Information for User: {}", u);
         });
     }
@@ -160,7 +159,7 @@ public class UserService {
     public void deleteUserInformation(String login) {
         userRepository.findOneByLogin(login).ifPresent(u -> {
             userRepository.delete(u);
-            userSearchRepository.delete(u);
+//            userSearchRepository.delete(u);
             log.debug("Deleted User: {}", u);
         });
     }
@@ -229,7 +228,7 @@ public class UserService {
         for (User user : users) {
             log.debug("Deleting not activated user {}", user.getLogin());
             userRepository.delete(user);
-            userSearchRepository.delete(user);
+//            userSearchRepository.delete(user);
         }
     }
 }

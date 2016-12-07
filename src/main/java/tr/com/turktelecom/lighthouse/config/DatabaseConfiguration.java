@@ -32,7 +32,7 @@ import java.util.Arrays;
 @EnableJpaRepositories("tr.com.turktelecom.lighthouse.repository")
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
-@EnableElasticsearchRepositories("tr.com.turktelecom.lighthouse.repository.search")
+//@EnableElasticsearchRepositories("tr.com.turktelecom.lighthouse.repository.search")
 public class DatabaseConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);

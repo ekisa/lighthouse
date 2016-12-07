@@ -6,7 +6,7 @@ import org.springframework.data.domain.*;
 import org.springframework.util.StringUtils;
 import tr.com.turktelecom.lighthouse.domain.Defect;
 import tr.com.turktelecom.lighthouse.repository.DefectRepository;
-import tr.com.turktelecom.lighthouse.repository.search.DefectSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.DefectSearchRepository;
 import tr.com.turktelecom.lighthouse.service.DefectService;
 import tr.com.turktelecom.lighthouse.service.MyFormQueryService;
 import tr.com.turktelecom.lighthouse.web.rest.dto.DefectDTO;
@@ -39,8 +39,7 @@ public class DefectResource {
     @Inject
     private DefectRepository defectRepository;
 
-    @Inject
-    private DefectSearchRepository defectSearchRepository;
+//    @Inject private DefectSearchRepository defectSearchRepository;
 
     @Inject
     private DefectService defectService;
@@ -180,7 +179,7 @@ public class DefectResource {
     public ResponseEntity<Void> deleteDefect(@PathVariable Long id) {
         log.debug("REST request to delete Defect : {}", id);
         defectRepository.delete(id);
-        defectSearchRepository.delete(id);
+//        defectSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("defect", id.toString())).build();
     }
 

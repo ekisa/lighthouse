@@ -5,7 +5,7 @@ import tr.com.turktelecom.lighthouse.domain.Authority;
 import tr.com.turktelecom.lighthouse.domain.User;
 import tr.com.turktelecom.lighthouse.repository.AuthorityRepository;
 import tr.com.turktelecom.lighthouse.repository.UserRepository;
-import tr.com.turktelecom.lighthouse.repository.search.UserSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.UserSearchRepository;
 import tr.com.turktelecom.lighthouse.security.AuthoritiesConstants;
 import tr.com.turktelecom.lighthouse.service.MailService;
 import tr.com.turktelecom.lighthouse.service.UserService;
@@ -78,8 +78,7 @@ public class UserResource {
     @Inject
     private UserService userService;
 
-    @Inject
-    private UserSearchRepository userSearchRepository;
+//    @Inject private UserSearchRepository userSearchRepository;
 
     /**
      * POST  /users -> Creates a new user.
@@ -216,8 +215,9 @@ public class UserResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<User> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

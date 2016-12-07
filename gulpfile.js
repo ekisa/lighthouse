@@ -79,7 +79,7 @@ gulp.task('images', function() {
     return gulp.src(config.app + 'assets/images/**')
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist + 'assets/images'))
-        .pipe(imagemin({optimizationLevel: 5}))
+        //.pipe(imagemin({optimizationLevel: 5}))
         .pipe(gulp.dest(config.dist + 'assets/images'))
         .pipe(browserSync.reload({stream: true}));
 });

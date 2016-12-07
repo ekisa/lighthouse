@@ -3,7 +3,7 @@ package tr.com.turktelecom.lighthouse.web.rest;
 import tr.com.turktelecom.lighthouse.Application;
 import tr.com.turktelecom.lighthouse.domain.Defect;
 import tr.com.turktelecom.lighthouse.repository.DefectRepository;
-import tr.com.turktelecom.lighthouse.repository.search.DefectSearchRepository;
+//import tr.com.turktelecom.lighthouse.repository.search.DefectSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -52,8 +52,7 @@ public class DefectResourceIntTest {
     @Inject
     private DefectRepository defectRepository;
 
-    @Inject
-    private DefectSearchRepository defectSearchRepository;
+//    @Inject private DefectSearchRepository defectSearchRepository;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -69,7 +68,7 @@ public class DefectResourceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         DefectResource defectResource = new DefectResource();
-        ReflectionTestUtils.setField(defectResource, "defectSearchRepository", defectSearchRepository);
+//        ReflectionTestUtils.setField(defectResource, "defectSearchRepository", defectSearchRepository);
         ReflectionTestUtils.setField(defectResource, "defectRepository", defectRepository);
         this.restDefectMockMvc = MockMvcBuilders.standaloneSetup(defectResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
